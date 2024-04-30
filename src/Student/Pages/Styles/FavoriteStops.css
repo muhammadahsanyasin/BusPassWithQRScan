@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    min-height: 100vh;
+    width:100vw;
+    background-color: rgb(11, 95, 83);
+    text-align: center;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .scroll-view {
+    display:block; 
+  }
+  
+  .item {
+    width: 15vw; 
+    height: 5vh; 
+    margin-top: 10px; 
+    background-color: #567377;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+  }
+  

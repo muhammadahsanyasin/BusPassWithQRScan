@@ -1,0 +1,58 @@
+.addnewbus-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(28, 102, 91);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .icon-container-addbus {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .icon-container-addbus img {
+    width: 200px;
+    height: 100px;
+  }
+  
+  .stop-info {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .addnewbusform-container {
+    background-color: rgb(34, 149, 132);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 335px;
+  }
+  
+  .addnewbusform-container input, .addnewbusform-container select {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .addnewbus-button {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    background: #FFFFFF;
+    margin: 10px 10px 10px 10px;
+    display: flex;
+    font-weight: bolder;
+    justify-content: center;
+    padding: 11.1px 1.4px 9.9px 0;
+    width: 20vw;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container {
+      width: 90%;
+    }
+  }
+  

@@ -1,0 +1,545 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+  }
+  .notification {
+    background: #168070;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 69.5px;
+    box-sizing: border-box;
+  }
+  .group-247 {
+    border-radius: 10px;
+    position: relative;
+    margin: 0 12px 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: calc(100% - 32px);
+    box-sizing: border-box;
+  }
+  .qr-code-scanned-remaining-journeys-24 {
+    margin: 11.5px 42.2px 1px 0;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .qr-code-scanned-remaining-journeys-24-sub3 {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.333;
+  }
+  .checked-out-at-university {
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .check-out {
+    margin-bottom: 2px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .checked-into-bus-1-at-chandni-chowk {
+    margin-right: 4.2px;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .check-in {
+    margin-bottom: 1px;
+    display: inline-block;
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .wednesday-600-am {
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .today-830-am {
+    margin-bottom: 38.5px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .today-800-am {
+    align-self: flex-end;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .my-stop-container {
+    border-radius: 20px;
+    background: url('https://fn12.com/api/clusters/cluster-fn12-prod-europe-west1/projects/6e1cnyVXniKFaJU7eJPppg/assets/images/5fa6ffe50806c7bf9c53bec56cdcf2bb9d6bc525?Expires=1711202130&KeyName=fn12-cdn&Signature=MG7irGOO6GUotZ7KpTIjXzOyQZM=');
+    margin: 5.5px 4px 0 0;
+    height: 45px;
+    flex-grow: 1;
+    flex-basis: 52px;
+  }
+  .my-stop-container-5 {
+    border-radius: 20px;
+    background: url('https://fn12.com/api/clusters/cluster-fn12-prod-europe-west1/projects/6e1cnyVXniKFaJU7eJPppg/assets/images/b3b8fa5ec3e442f7d4ae831aa7fbbe53ddaf01bb?Expires=1711202130&KeyName=fn12-cdn&Signature=J7mm603hFMrT5y04dctcstFN__0=') 50% / cover no-repeat;
+    margin-top: 8.5px;
+    height: 43px;
+    flex-grow: 1;
+    flex-basis: 53px;
+  }
+  .icons-8-qr-code-481 {
+    background: url('https://fn12.com/api/clusters/cluster-fn12-prod-europe-west1/projects/6e1cnyVXniKFaJU7eJPppg/assets/images/0141b0b0aa58316b1212ebeac4b0d4d9b37d328b?Expires=1711202130&KeyName=fn12-cdn&Signature=VzTuSjrXqwG-fGzQOuqsf1wW7o8=');
+    margin: 13.5px 13px 0 0;
+    height: 35px;
+    flex-grow: 1;
+    flex-basis: 32px;
+  }
+  .today-806-am {
+    margin-bottom: 36.5px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .my-stop-container-6 {
+    border-radius: 20px;
+    background: url('https://fn12.com/api/clusters/cluster-fn12-prod-europe-west1/projects/6e1cnyVXniKFaJU7eJPppg/assets/images/af0152b3ad1d45b338e6f9297f6dea972e489234?Expires=1711202130&KeyName=fn12-cdn&Signature=ddt9lSDKl9Wc8D9KUp0CFo1UGKI=') 50% / cover no-repeat;
+    margin-bottom: 6px;
+    width: 53px;
+    height: 48px;
+  }
+  .my-stop-container-7 {
+    border-radius: 20px;
+    background: url('https://fn12.com/api/clusters/cluster-fn12-prod-europe-west1/projects/6e1cnyVXniKFaJU7eJPppg/assets/images/fcec3e755ac12502addb7e7f511bffac1c8b29b1?Expires=1711202130&KeyName=fn12-cdn&Signature=Io5MMFTD_wv-fadBwZA6IiBN-fg=') 50% / cover no-repeat;
+    margin: 4.5px 0 3.5px 0;
+    width: 56px;
+    height: 46px;
+  }
+  .you-have-25-remaining-journeys {
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .university-will-stay-close-for-today {
+    margin: 10.5px 0 11.4px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .Notificationtime {
+    margin-bottom: 1px;
+    display: inline-block;
+    align-self: flex-end;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .Notificationtime {
+    margin: 0 0px 5.5px 0px;
+    display: inline-block;
+    align-self: flex-end;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .vector {
+    transform: rotate(-25deg);
+    margin-right: 11.1px;
+    width: 39.9px;
+    height: 39.9px;
+  }
+  .vector-8 {
+    transform: rotate(-25deg);
+    margin-top: 6.5px;
+    width: 39.9px;
+    height: 39.9px;
+  }
+  .vector-9 {
+    transform: rotate(-25deg);
+    margin-top: 6.5px;
+    width: 39.9px;
+    height: 39.9px;
+  }
+  .vector-10 {
+    transform: rotate(-25deg);
+    margin: 7.5px 0 1.6px 0;
+    width: 39.9px;
+    height: 39.9px;
+  }
+  .bus-will-get-5-minutes-late-today-because-of-traffic {
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .new-stops-added-press-map-to-review {
+    margin-right: 1.2px;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .bus-arrived-bus-has-arrived-at-chandni-chowk-wait-time-is-10-minutes {
+    position: relative;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .bus-arrived-bus-has-arrived-at-chandni-chowk-wait-time-is-10-minutes-sub3 {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.333;
+  }
+  .today-805-am {
+    position: absolute;
+    top: 4px;
+    right: 7px;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .bus-en-route-bus-will-reach-chandni-chowk-in-5-minutes {
+    position: relative;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 15px;
+    color: #FFFFFF;
+  }
+  .bus-en-route-bus-will-reach-chandni-chowk-in-5-minutes-sub3 {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.333;
+  }
+  .today-800-am-11 {
+    position: absolute;
+    top: 4.5px;
+    right: 7px;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .today-800-am-12 {
+    margin-bottom: 6.5px;
+    display: inline-block;
+    align-self: flex-end;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .notificationtime {
+    margin-bottom: 7px;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  .student-bottom-nav-bar {
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    translate: -50% 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 51.2px 28.6px 18px 25.1px;
+    width: 375px;
+    box-sizing: border-box;
+  }
+  .app-bar {
+    background: #2FAA98;
+    position: relative;
+    margin-bottom: 26px;
+    padding: 19px 21px 14px 21px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .text {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.3px;
+    color: #FFFFFF;
+  }
+  .container-13 {
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    margin: 0 6px 6px 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5.5px 7px 14.1px 8px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-14 {
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    margin: 0 6px 6px 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 6.5px 7px 13.1px 8px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-15 {
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    margin: 0 6px 6px 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 6px 0 6px 3px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-16 {
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    margin: 0 6px 7px 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5.5px 0 6.5px 3px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-17 {
+    margin-right: 31.8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .container-18 {
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    margin: 0 7px 6px 0;
+    display: flex;
+    flex-direction: row;
+    padding: 3.5px 6px 14px 15px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-19 {
+    margin-bottom: 9.9px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 268px;
+    box-sizing: border-box;
+  }
+  .container-20 {
+    margin-bottom: 2.5px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 270px;
+    box-sizing: border-box;
+  }
+  .container-21 {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 270px;
+    box-sizing: border-box;
+  }
+  .container-22 {
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    margin: 0 6px 6px 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2.5px 7px 14.5px 8px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-23 {
+    margin-bottom: 9.4px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-grow: 1;
+    flex-basis: 270px;
+    box-sizing: border-box;
+  }
+  .container-24 {
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    background: #2FAA98;
+    position: relative;
+    margin: 0 7px 6px 0;
+    display: flex;
+    flex-direction: row;
+    padding: 3.5px 6px 12px 4px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-25 {
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    position: relative;
+    margin: 0 6px 5.5px 1px;
+    display: flex;
+    flex-direction: column;
+    padding: 2.5px 7px 6.1px 8px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-26 {
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    background: #2FAA98;
+    position: relative;
+    margin: 0 6px 6px 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.5px 7px 13px 3px;
+    width: calc(100% - 7px);
+    box-sizing: border-box;
+  }
+  .container-27 {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    width: fit-content;
+    box-sizing: border-box;
+  }
+  .container-28 {
+    margin: 9px 30px 3.5px 0;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 172.1px;
+    box-sizing: border-box;
+  }
+  .profile {
+    margin: 12.9px 0 9.9px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 20.8px;
+    height: 26px;
+    box-sizing: border-box;
+  }
+  .vector-31 {
+    width: 20.8px;
+    height: 26px;
+  }
+  .home {
+    position: relative;
+    margin: 12.4px 0 10.4px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 24.7px;
+    height: 26px;
+    box-sizing: border-box;
+  }
+  .vector-32 {
+    width: 24.7px;
+    height: 26px;
+  }
+  .map {
+    position: relative;
+    margin: 12.3px 0 10.3px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 26.2px;
+    height: 26.2px;
+    box-sizing: border-box;
+  }
+  .assistant-direction {
+    width: 26.2px;
+    height: 26.2px;
+  }
+  .notification-33 {
+    margin: 0 0.8px 4.8px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 24px;
+    height: 29px;
+    box-sizing: border-box;
+  }
+  .notification-34 {
+    overflow-wrap: break-word;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 12px;
+    color: #FFFFFF;
+  }
+  .group-239 {
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    translate: -50% 0;
+    width: 375px;
+    height: 118px;
+  }
+  .vector-35 {
+    width: 24px;
+    height: 29px;
+  }

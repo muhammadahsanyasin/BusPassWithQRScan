@@ -1,0 +1,71 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.parentdashboard-container {
+  display: flex;
+flex-direction: column;
+align-items: center;
+background-color: rgb(11, 95, 83);
+}
+.favorit-stops-parent {
+  height: 500px;
+  width: 350px;
+  background-color: rgb(18, 110, 97);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.white-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+  background-color: rgba(240, 248, 255, 0.836);
+  border-radius: 10px 10px 0 0;
+}
+
+.card {
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  width: 300px;
+  padding: 30px;
+  border-radius: 10px;
+  background: rgb(34, 149, 132);
+  box-shadow: 0 15px 25px rgba(46, 45, 45, 0.979);
+}
+.stops {
+  display: flex;
+  justify-content: space-between;
+}
+.stop-containers {
+  margin-top: 20px;
+  margin-right: 10px;
+  background-color: rgb(28, 139, 122);
+  color: white;
+  height: 20vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 5px 5px rgb(26, 113, 100);
+  border-radius: 10px;
+  width: 9vw;
+}
+.parenttrackbuses-button{
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      border-radius: 6px;
+      background: #FFFFFF;
+      margin: 10px 10px 10px 10px;
+      color: black;
+      font-weight: bolder;
+      display:flex;
+      justify-content: center;
+      padding: 11.1px 1.4px 9.9px 0;
+      width: 20vw;
+}
