@@ -40,6 +40,7 @@ function ParentDashboard({ progress }) {
                 ></button>
               </div>
               <div class="carousel-inner">
+              {/* <div className="radial-progress" style={{"--value":70}} role="progressbar">70%</div> */}
                 <div class="carousel-item active card">
                   <h2>shamsabad</h2>
                   <div class="row">

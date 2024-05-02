@@ -6,7 +6,6 @@ import './Login.css';
 import useStore from './store';
 
 
-
 const Login = () => {
   const { loginstatus, setloginstatus, addloginstatus } = useStore();
  
@@ -56,12 +55,15 @@ const Login = () => {
             
           } else if (data.Parents) {
             console.log("logged in parent", data.Parents);
+            setloginstatus(true)
              navigate('/ParentDashboard');
           } else if (data.Conductors) {
             console.log("logged in conductor", data.Conductors);
+            setloginstatus(true)
             navigate('/ConductorDashboard');
           } else if (data.Students) {
             console.log("logged in student", data.Students);
+            setloginstatus(true)
             navigate('/StudentDashboard');
           }
         } else {

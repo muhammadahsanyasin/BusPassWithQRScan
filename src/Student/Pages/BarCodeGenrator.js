@@ -11,7 +11,7 @@ function BarCodeGenrator() {
         </div>
 
         <div className="person-details">
-          <h2>Ghulam Yasin</h2>
+          <h2>Muhammad Ahsan</h2>
           <p>32402-2852063-3</p>
         </div>
 

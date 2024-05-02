@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route , useNavigate, Navigate, useLocation} from "react-router-dom";
-import "./App.css";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import useStore from "./store";
+import Login from "./Login";
 import ChangePassword from "./Parents/Components/ChangePassword";
-import GoogleMapComponent from"./Parents/Components/GoogleMapComponent";
+import GoogleMapComponent from "./Parents/Components/GoogleMapComponent";
 import ParentsNotification from "./Parents/Pages/ParentsNotification";
 import AddExistingStops from "./Admin/Pages/AddExistingStops";
 import EditStopInfo from "./Admin/Pages/EditStopInfo";
@@ -18,47 +19,43 @@ import AdminProfile from "./Admin/Pages/AdminProfile";
 import ConductorProfile from "./Conductor/Pages/ConductorProfile";
 import ParentProfile from "./Parents/Pages/ParentProfile";
 import BarCodeGenrator from "./Student/Pages/BarCodeGenrator";
-import Login from "./Login";
 import StudentProfile from "./Student/Pages/StudentProfile";
-import useStore from "./store";
-
-
-
-
 
 function App() {
-
-  const { loginstatus, setloginstatus, addloginstatus } = useStore();
-
+  const { loginstatus } = useStore();
 
   return (
     <BrowserRouter>
-
-
       <Routes>
-     
-        <Route path="/" element={<h1>Fuckin app</h1>} />
-        {<Route path="/login"/> && loginstatus && <Route path="/login" element={<h1>Fuckin app</h1>} />} 
-        {!loginstatus && <Route path="/login" element={<Login/>} />}
-        <Route path="/ChangePassword" element={<ChangePassword />} />
-        <Route path="/GoogleMapComponent" element={<GoogleMapComponent />} />
-        <Route path="/ParentsNotification" element={<ParentsNotification />} />
-        <Route path="/EditStopInfo" element={<EditStopInfo/>} />
-        <Route path="/AddExistingStops" element={<AddExistingStops />} />
-        <Route path="/AddNewConductor" element={<AddNewConductor />} />
-        <Route path="/AddNewBus" element={<AddNewBus />} />
-        <Route path="/AddNewAdmin" element={<AddNewAdmin/>} />
-        <Route path="/ParentDashboard" element={<ParentDashboard progress={50}/>} /> 
-        <Route path="/AdminDashboard" element={< AdminDashboard progress={59}/>} />
-        <Route path="/BarCodeScanner " element={<BarCodeScanner/>} />
-        <Route path="/StudentDashboard" element={<StudentDashboard progress={70}/>} />
-        <Route path="/AdminProfile" element={<AdminProfile/>} />
-        <Route path="/ConductorProfile" element={<ConductorProfile/>} />
-        <Route path="/ParentProfile" element={<ParentProfile/>} />
-        <Route path="/BarCodeGenrator" element={<BarCodeGenrator/>} />
-        <Route path="/ConductorDashboard" element={<ConductorDashboard progress={35}/>} />
-        <Route path="/StudentProfile" element={<StudentProfile/>} />
+        {/* Route to login page */}
+        <Route path="/login" element={<Login />} />
 
+        {/* Protected routes */}
+        {loginstatus ? (
+          <>
+            <Route path="/ParentDashboard"element={<ParentDashboard progress={59} />}/>
+            <Route path="/ChangePassword" element={<ChangePassword />} />
+            <Route path="/GoogleMapComponent" element={<GoogleMapComponent />} />    
+            <Route path="/ParentsNotification" element={<ParentsNotification />} />
+            <Route path="/EditStopInfo" element={<EditStopInfo />} />
+            <Route path="/AddExistingStops" element={<AddExistingStops />} />
+            <Route path="/AddNewConductor" element={<AddNewConductor />} />
+            <Route path="/AddNewBus" element={<AddNewBus />} />
+            <Route path="/AddNewAdmin" element={<AddNewAdmin />} />
+            <Route path="/AdminDashboard"element={<AdminDashboard progress={59} />}/>
+            <Route path="/BarCodeScanner" element={<BarCodeScanner />} />
+            <Route path="/StudentDashboard" element={<StudentDashboard progress={70} />} />
+            <Route path="/AdminProfile" element={<AdminProfile />} />
+            <Route path="/ConductorProfile" element={<ConductorProfile />} />
+            <Route path="/ParentProfile" element={<ParentProfile />} />
+            <Route path="/BarCodeGenrator" element={<BarCodeGenrator />} />
+            <Route path="/ConductorDashboard" element={<ConductorDashboard progress={35} />}/>
+            <Route path="/StudentProfile" element={<StudentProfile />} />
+          </>
+        ) : (
+          // Render login page if not logged in
+          <Route path="/" element={<Login />} />
+        )}
       </Routes>
     </BrowserRouter>
   );
