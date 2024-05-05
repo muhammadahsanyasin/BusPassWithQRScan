@@ -34,6 +34,15 @@ function StudentNavbar() {
                     BarCodeGenrator
                   </Link>
                 </li>
+
+                <li className="nav-item">
+                  <Link
+                    className="nav-link color hover active"
+                    to="/StudentHistory"
+                  >
+                    StudentHistory
+                  </Link>
+                </li>
                 
                 
     

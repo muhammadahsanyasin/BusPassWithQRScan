@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { IoIosLogIn } from 'react-icons/io';
-import { useNavigate, Navigate } from 'react-router-dom';
-import './Login.css';
-import useStore from './store';
-
+import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { IoIosLogIn } from "react-icons/io";
+import { useNavigate, Navigate } from "react-router-dom";
+import "./Login.css";
+import useStore from "./store";
 
 const Login = () => {
   const { loginstatus, setloginstatus, addloginstatus } = useStore();
- 
+
   const [showPassword, setShowPassword] = useState(false);
-  const [UserName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [UserName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  
-  
+
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
   };
@@ -31,17 +29,16 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
-      const response = await fetch(`http://localhost/WebApi/api/users/login?username=${UserName}&password=${password} `, 
+      const response = await fetch(
+        `http://localhost/WebApi/api/users/login?username=${UserName}&password=${password} `,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
 
-  
-  
       if (response.ok) {
         const data = await response.json();
         // Check the role of the user and navigate accordingly
@@ -50,21 +47,20 @@ const Login = () => {
           // For example:
           if (data.Admins) {
             console.log("logged in admin", data.Admins);
-            setloginstatus(true)
-            navigate('/AdminDashboard')
-            
+            setloginstatus(true);
+            navigate("/AdminDashboard");
           } else if (data.Parents) {
             console.log("logged in parent", data.Parents);
-            setloginstatus(true)
-             navigate('/ParentDashboard');
+            setloginstatus(true);
+            navigate("/ParentDashboard");
           } else if (data.Conductors) {
             console.log("logged in conductor", data.Conductors);
-            setloginstatus(true)
-            navigate('/ConductorDashboard');
+            setloginstatus(true);
+            navigate("/ConductorDashboard");
           } else if (data.Students) {
             console.log("logged in student", data.Students);
-            setloginstatus(true)
-            navigate('/StudentDashboard');
+            setloginstatus(true);
+            navigate("/StudentDashboard");
           }
         } else {
           setError(data);
@@ -74,10 +70,10 @@ const Login = () => {
         setError(errorMessage);
       }
     } catch (error) {
-      setError('Login failed: ' + error.message);
+      setError("Login failed: " + error.message);
     }
   };
-  
+
   return (
     <div className="login-container">
       <h1 className="logintitle">Bus Pass With QRScan</h1>
@@ -100,7 +96,7 @@ const Login = () => {
             <label>Password</label>
             <div className="password-input">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={handlePasswordChange}
@@ -114,7 +110,9 @@ const Login = () => {
               </button>
             </div>
           </div>
-          <button className="login-button" type="submit">Login</button>
+          <button className="login-button" type="submit">
+            Login
+          </button>
         </form>
         <p className="signup-link">
           Don't have an account? <a href="/signup">Sign up</a>

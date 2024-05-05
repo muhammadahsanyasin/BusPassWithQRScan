@@ -10,9 +10,8 @@ function AdminDashboard({progress}) {
     <div className="admin-dashboard">
       <AdminNavbar/>
 
-      
       <div className="progress-container">
-        <div className="progress-label">Journeys Used: {progress}</div>
+        <div className="progress-label">Booked Seats: {progress}</div>
         <svg className="progress-ring" width="120" height="120">
           <circle
             className="progress-ring-circle"
@@ -96,11 +95,11 @@ function AdminDashboard({progress}) {
                   <div class="row">
                     <div className="stops">
                       <div className="stop-containers">
-                        <p>Route No </p>
+                        <p>Student Checkedin </p>
                         <p className="bold">03</p>
                       </div>
                       <div className="stop-containers">
-                        <p>Stop Timing</p>
+                        <p>Remaing Seats</p>
                         <p className="bold">08:50</p>
                       </div>
                     </div>

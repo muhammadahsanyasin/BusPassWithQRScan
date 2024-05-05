@@ -1,6 +1,7 @@
 import React from "react";
 import "../Pages/Styles/StudentDashboard.css";
 import StudentNavbar from "../Components/StudentNavbar";
+import { Link } from "react-router-dom";
 
 function StudentDashboard({ progress }) {
   const radius = 50;
@@ -126,9 +127,11 @@ function StudentDashboard({ progress }) {
               </div>
             </div>
           </section>
-          <div className="student-button">
-            <span className="edit-stops">Edit Favorite Stops</span>
-          </div>
+          <Link to="/StudentFavStop">
+          
+            <span className=" student-button edit-stops">Edit Favorite Stops</span>
+        
+          </Link>
         </div>
       </div>
     </div>

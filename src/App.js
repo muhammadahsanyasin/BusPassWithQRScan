@@ -20,6 +20,8 @@ import ConductorProfile from "./Conductor/Pages/ConductorProfile";
 import ParentProfile from "./Parents/Pages/ParentProfile";
 import BarCodeGenrator from "./Student/Pages/BarCodeGenrator";
 import StudentProfile from "./Student/Pages/StudentProfile";
+import StudentFavStop from "./Student/Pages/StudentFavStop";
+import StudentHistory from "./Student/Pages/StudentHistory";
 
 function App() {
   const { loginstatus } = useStore();
@@ -51,6 +53,8 @@ function App() {
             <Route path="/BarCodeGenrator" element={<BarCodeGenrator />} />
             <Route path="/ConductorDashboard" element={<ConductorDashboard progress={35} />}/>
             <Route path="/StudentProfile" element={<StudentProfile />} />
+            <Route path="/StudentFavStop" element={<StudentFavStop/>} />
+            <Route path="/StudentHistory" element={<StudentHistory/>} />
           </>
         ) : (
           // Render login page if not logged in

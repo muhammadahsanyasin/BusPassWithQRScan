@@ -16,6 +16,7 @@
     "postcss": "^8.4.37",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
+    "react-datetime-picker": "^6.0.1",
     "react-dom": "^18.2.0",
     "react-qr-code": "^2.0.12",
     "react-qrcode-scanner": "^1.1.7",

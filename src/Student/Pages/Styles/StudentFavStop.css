@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.student-fav-stop-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #168070;
+  padding-top: 20px; /* Adjust as needed */
+}
+
+
+
+.remove-btn-container {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    z-index: 1;
+  }
+  
+  .btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+  }
+.stop-list {
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.flatListRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 20px;
+  margin: 7px;
+  padding: 10px;
+}
+
+
+
+.StopNametextStyle {
+  color: white;
+  font-size: 2.5vw;
+  font-weight: bold;
+}
+
+.RouteNotextStyle {
+  color: white;
+  font-size: 2vw;
+}
+
+.checkBox {
+  width: 3vw;
+  height: 3vw;
+  border-radius: 1.5vw;
+  border: 2px solid white;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.checkedBox {
+  background-color: white;
+}
+
+.checkIcon {
+  color: #168070;
+  font-size: 2vw;
+}
+
+@media screen and (max-width: 600px) {
+  .StopNametextStyle {
+    font-size: 4vw;
+  }
+  
+  .RouteNotextStyle {
+    font-size: 3vw;
+  }
+  
+  .checkBox {
+    width: 6vw;
+    height: 6vw;
+    border-radius: 3vw;
+  }
+  
+  .checkIcon {
+    font-size: 4vw;
+  }
+}
