@@ -38,9 +38,9 @@ function StudentNavbar() {
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/StudentHistory"
+                    to="/StudentNotificationDetails"
                   >
-                    StudentHistory
+                    StudentNotificationDetails
                   </Link>
                 </li>
                 
@@ -49,7 +49,7 @@ function StudentNavbar() {
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/GoogleMapComponent"
+                    to="/GoogleMap"
                   >
                     GoogleMap
                   </Link>

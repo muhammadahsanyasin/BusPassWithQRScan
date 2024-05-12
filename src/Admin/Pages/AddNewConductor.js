@@ -30,13 +30,13 @@ function AddNewConductor() {
 
       <form className="input-container" onSubmit={savedata}>
         <div className="stop-info">
-          <h2 style={{userSelect: 'none'}}>Stop Information</h2>
+          <h2 style={{userSelect: 'none'}}>Conductor Information</h2>
         </div>
 
         <input type="text" placeholder="Name" name="Name" onChange={handleinput} />
-        <input type="text" placeholder="Pickup time" name="PickupTime"  onChange={handleinput}/>
-        <input type="text" placeholder="Drop off time" name="DropoffTime" onChange={handleinput} />
-        <input type="text" placeholder="Stop No" name="StopNo"  onChange={handleinput} />
+        <input type="text" placeholder="Password" name="PickupTime"  onChange={handleinput}/>
+        <input type="text" placeholder="Contact No" name="DropoffTime" onChange={handleinput} />
+        <input type="text" placeholder="Bus ID" name="StopNo"  onChange={handleinput} />
 
 
         <button className=" addnewconductor-button  edit-stops">ADD</button>

@@ -1,0 +1,69 @@
+.studentnotificationdetailscontainer {
+    flex: 1;
+    background-color: #168070;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+ 
+  .notificationdetails{
+    height: 50vh;
+    width: 40vw;
+   
+  }
+  /* .topContainer {
+    background-color: #2FAA98;
+    width: 100%;
+    border-bottom-left-radius: 17.5vw; 
+    border-bottom-right-radius: 17.5vw;
+    align-items: center;
+    padding-top: 5vw;
+    padding-bottom: 5vw;
+  } */
+  
+  .bottomContainer {
+    background-color: white;
+   
+    margin-top: 3vw;
+   /* Assuming elevation is represented by box-shadow */
+    border-radius: 7px;
+  }
+  
+  .notificationType {
+    color: white;
+    font-size: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .notificationDescriptionHeader {
+    color: #168070;
+    font-size: 1.5rem;
+    opacity: 0.8;
+    margin-top: 5px;
+  }
+  
+  .notificationDescriptionData {
+    color: #168070;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .divider {
+    width: 100%;
+    height: 0.375vw;
+    background-color: #168070;
+    margin-top: 5vw;
+    margin-bottom: 2.5vw;
+  }
+   
+  @media screen and (max-width: 480px) {
+    .notificationType {
+      font-size: 4vw;
+    }
+    
+    .notificationDescriptionHeader,
+    .notificationDescriptionData {
+      font-size: 2.5vw;
+    }
+  }

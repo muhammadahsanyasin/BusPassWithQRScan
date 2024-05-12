@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState}from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import useStore from "./store";
 import Login from "./Login";
@@ -22,9 +22,14 @@ import BarCodeGenrator from "./Student/Pages/BarCodeGenrator";
 import StudentProfile from "./Student/Pages/StudentProfile";
 import StudentFavStop from "./Student/Pages/StudentFavStop";
 import StudentHistory from "./Student/Pages/StudentHistory";
+import StudentNotificationDetails from "./Student/Pages/StudentNotificationDetails";
+import GoogleMap from "./Student/Pages/GoogleMap";
+
+
 
 function App() {
   const { loginstatus } = useStore();
+  const [selectPosition, setSelectPosition] = useState(null);
 
   return (
     <BrowserRouter>
@@ -54,7 +59,11 @@ function App() {
             <Route path="/ConductorDashboard" element={<ConductorDashboard progress={35} />}/>
             <Route path="/StudentProfile" element={<StudentProfile />} />
             <Route path="/StudentFavStop" element={<StudentFavStop/>} />
-            <Route path="/StudentHistory" element={<StudentHistory/>} />
+            <Route path="/StudentNotificationDetails" element={<StudentNotificationDetails/>} />
+           <Route path="/GoogleMap" element={<GoogleMap/>} />
+         
+           <Route path="/GoogleMap" element={<GoogleMap  selectPosition={selectPosition}/>} />
+           
           </>
         ) : (
           // Render login page if not logged in

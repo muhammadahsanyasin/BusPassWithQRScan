@@ -49,6 +49,7 @@ function ParentProfile() {
                 <h4>{data.Parents.ChildrenEnroll}</h4>
               </div>
             </div>
+            <hr className="dividerparent" />
             <div class="row">
               <div class="col">
                 Parent ID
