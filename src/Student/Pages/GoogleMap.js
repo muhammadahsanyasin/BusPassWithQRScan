@@ -43,13 +43,7 @@ function GoogleMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://api.maptiler.com/maps/bright-v2/256/{z}/{x}/{y}.png?key=RBRODA7cHl7LOG0fTgd6"
         />
-        {markerPosition && (
-          <Marker position={markerPosition} icon={customIcon}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
-        )}
+       
 
         {/* Adding child markers */}
         {childLocations.map((location, index) => (

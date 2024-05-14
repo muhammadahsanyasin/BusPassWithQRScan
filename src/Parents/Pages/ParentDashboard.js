@@ -3,12 +3,16 @@ import "../Pages/Styles/ParentDashboard.css";
 import ParentNavbar from "../Components/ParentNavbar";
 import { Link } from "react-router-dom";
 function ParentDashboard({ progress }) {
+  const radius = 50;
+  const circumference = 2 * Math.PI * radius;
+  const progressOffset = ((100 - progress) / 100) * circumference;
   return (
     <div className="parent-dashboard">
       <ParentNavbar />
+
       <div className="parentdashboard-container">
         <div className="white-container">
-          <h2>Track Buses</h2>
+          <h2>Childrens</h2>
         </div>
         <div className="favorit-stops-parent">
           <section className="dashboard-container">
@@ -40,94 +44,202 @@ function ParentDashboard({ progress }) {
                 ></button>
               </div>
               <div class="carousel-inner">
-              {/* <div className="radial-progress" style={{"--value":70}} role="progressbar">70%</div> */}
                 <div class="carousel-item active card">
-                  <h2>shamsabad</h2>
+                  <div className="progress-container">
+                    <div className="progress-label">
+                      Journeys Used: {progress}
+                    </div>
+                    <svg className="progress-ring" width="120" height="120">
+                      <circle
+                        className="progress-ring-circle"
+                        stroke="#2FAA98"
+                        strokeWidth="7"
+                        fill="transparent"
+                        r={radius}
+                        cx="60"
+                        cy="60"
+                        style={{
+                          strokeDasharray: circumference,
+                          strokeDashoffset: progressOffset,
+                        }}
+                      />
+                      <text
+                        x="50%"
+                        y="50%"
+                        dominantBaseline="middle"
+                        textAnchor="middle"
+                        className="progress-text"
+                      >
+                        {progress}/100
+                      </text>
+                    </svg>
+                  </div>
+
+                  <h2>ZaiD</h2>
                   <div class="row">
+                  <p>Pickup Timings</p>
                     <div className="stops">
-                      <div className="stop-containers">
-                        <p>Route No </p>
-                        <p className="bold">03</p>
+                      <div className="parentstop-containers">
+                        <p>Check In</p>
+                        <p className="bold">08:00 am</p>
                       </div>
-                      <div className="stop-containers">
-                        <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                      <div className="parentstop-containers">
+                        <p>Check Out</p>
+                        <p className="bold">08:30 am</p>
                       </div>
                     </div>
                   </div>
                   <div class="row">
+                  <p>Dropoff Timings</p>
                     <div className="stops">
-                      <div className="stop-containers">
-                        <p>Route No </p>
-                        <p className="bold">03</p>
+                      <div className="parentstop-containers">
+                        <p>Check In</p>
+                        <p className="bold">04:30 pm</p>
                       </div>
-                      <div className="stop-containers">
-                        <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                      <div className="parentstop-containers">
+                        <p>Check Out</p>
+                        <p className="bold">05:30 pm</p>
                       </div>
                     </div>
                   </div>
+                  <Link to="/GoogleMap">
+                    <button className=" parenttrackbuses-button edit-stops">
+                    Track Child
+                    </button>
+                  </Link>
+                </div>
+
+                <div class="carousel-item card">
+                  <div className="progress-container">
+                    <div className="progress-label">
+                      Journeys Used: {progress}
+                    </div>
+                    <svg className="progress-ring" width="120" height="120">
+                      <circle
+                        className="progress-ring-circle"
+                        stroke="#2FAA98"
+                        strokeWidth="7"
+                        fill="transparent"
+                        r={radius}
+                        cx="60"
+                        cy="60"
+                        style={{
+                          strokeDasharray: circumference,
+                          strokeDashoffset: progressOffset,
+                        }}
+                      />
+                      <text
+                        x="50%"
+                        y="50%"
+                        dominantBaseline="middle"
+                        textAnchor="middle"
+                        className="progress-text"
+                      >
+                        {progress}/100
+                      </text>
+                    </svg>
+                  </div>
+
+                  <h2>HuzaiFA</h2>
+                  <div class="row">
+                  <p>Pickup Timings</p>
+                    <div className="stops">
+                      <div className="parentstop-containers">
+                        <p>Check In</p>
+                        <p className="bold">08:00 am</p>
+                      </div>
+                      <div className="parentstop-containers">
+                        <p>Check Out</p>
+                        <p className="bold">08:30 am</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                  <p>Dropoff Timings</p>
+                    <div className="stops">
+                      <div className="parentstop-containers">
+                        <p>Check In</p>
+                        <p className="bold">04:30 pm</p>
+                      </div>
+                      <div className="parentstop-containers">
+                        <p>Check Out</p>
+                        <p className="bold">05:30 pm</p>
+                      </div>
+                    </div>
+                  </div>
+                  <Link to="/GoogleMap">
+                    <button className=" parenttrackbuses-button edit-stops">
+                    Track Child
+                    </button>
+                  </Link>
                 </div>
                 <div class="carousel-item card">
-                  <h2>Chandni Chock</h2>
+                  <div className="parentprogress-container">
+                    <div className="progress-label">
+                      Journeys Used: {progress}
+                    </div>
+                    <svg className="progress-ring" width="120" height="120">
+                      <circle
+                        className="progress-ring-circle"
+                        stroke="#2FAA98"
+                        strokeWidth="7"
+                        fill="transparent"
+                        r={radius}
+                        cx="60"
+                        cy="60"
+                        style={{
+                          strokeDasharray: circumference,
+                          strokeDashoffset: progressOffset,
+                        }}
+                      />
+                      <text
+                        x="50%"
+                        y="50%"
+                        dominantBaseline="middle"
+                        textAnchor="middle"
+                        className="progress-text"
+                      >
+                        {progress}/100
+                      </text>
+                    </svg>
+                  </div>
+
+                  <h2>ShahiD</h2>
+                  <p>Pickup Timings</p>
                   <div class="row">
                     <div className="stops">
-                      <div className="stop-containers">
-                        <p>Route No </p>
-                        <p className="bold">03</p>
+                      <div className="parentstop-containers">
+                        <p>Check In</p>
+                        <p className="bold">08:00 am</p>
                       </div>
-                      <div className="stop-containers">
-                        <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                      <div className="parentstop-containers">
+                        <p>Check Out</p>
+                        <p className="bold">08:30 am</p>
                       </div>
                     </div>
                   </div>
                   <div class="row">
+                    <p>Dropoff Timig</p>
                     <div className="stops">
-                      <div className="stop-containers">
-                        <p>Route No </p>
-                        <p className="bold">03</p>
+                      <div className="parentstop-containers">
+                        <p>Check In </p>
+                        <p className="bold">04:30 pm</p>
                       </div>
-                      <div className="stop-containers">
-                        <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                      <div className="parentstop-containers">
+                        <p>Check Out</p>
+                        <p className="bold">05:30 pm</p>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="carousel-item card">
-                  <h2>6th Road</h2>
-                  <div class="row">
-                    <div className="stops">
-                      <div className="stop-containers">
-                        <p>Route No </p>
-                        <p className="bold">03</p>
-                      </div>
-                      <div className="stop-containers">
-                        <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div className="stops">
-                      <div className="stop-containers">
-                        <p>Route No </p>
-                        <p className="bold">03</p>
-                      </div>
-                      <div className="stop-containers">
-                        <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
-                      </div>
-                    </div>
-                  </div>
+                  <Link to="/GoogleMap">
+                    <button className=" parenttrackbuses-button edit-stops">
+                      Track Child
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
           </section>
-          <Link to='/GoogleMapComponent'>
-            <button className=" parenttrackbuses-button edit-stops">Track Bus</button>
-          </Link>
         </div>
       </div>
     </div>

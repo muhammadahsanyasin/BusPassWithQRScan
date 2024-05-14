@@ -39,9 +39,9 @@ function ParentNavbar() {
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/GoogleMapComponent"
+                    to="/ParentMap"
                   >
-                    GoogleMap
+                    Google Map
                   </Link>
                 </li>
               </ul>

@@ -31,7 +31,7 @@ function StudentNavbar() {
                     className="nav-link color hover active"
                     to="/BarCodeGenrator"
                   >
-                    BarCodeGenrator
+                    BarCode Genrator
                   </Link>
                 </li>
 
@@ -40,7 +40,7 @@ function StudentNavbar() {
                     className="nav-link color hover active"
                     to="/StudentNotificationDetails"
                   >
-                    StudentNotificationDetails
+                    Student Notification Details
                   </Link>
                 </li>
                 
@@ -49,9 +49,9 @@ function StudentNavbar() {
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/GoogleMap"
+                    to="/ParentMap"
                   >
-                    GoogleMap
+                    Google Map
                   </Link>
                 </li>
               </ul>

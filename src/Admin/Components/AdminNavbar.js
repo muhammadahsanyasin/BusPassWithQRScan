@@ -26,7 +26,7 @@ function AdminNavbar() {
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <Link className="nav-link color hover active" to="/EditStopInfo">
-                    EditStopInfo
+                    Edit Stop 
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -34,7 +34,7 @@ function AdminNavbar() {
                     className="nav-link color hover active"
                     to="/AddExistingStops"
                   >
-                    AddExistingStops
+                    Existing Stops
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -42,7 +42,7 @@ function AdminNavbar() {
                     className="nav-link color hover active"
                     to="/AddNewConductor"
                   >
-                    AddNewConductor
+                    Add Conductor
                   </Link>
                 </li>
     
@@ -51,7 +51,7 @@ function AdminNavbar() {
                     className="nav-link color hover active"
                     to="/ChangePassword"
                   >
-                    ChangePassword
+                    Change Password
                   </Link>
                 </li>
                 
@@ -61,7 +61,7 @@ function AdminNavbar() {
                     className="nav-link color hover active"
                     to="/AddNewBus"
                   >
-                    AddNewBus
+                    Add Bus
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -69,7 +69,7 @@ function AdminNavbar() {
                     className="nav-link color hover active"
                     to="/AddNewAdmin"
                   >
-                    AddNewAdmin
+                    Add Admin
                   </Link>
                 </li>
                 {/* <li className="nav-item">
@@ -86,9 +86,9 @@ function AdminNavbar() {
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/GoogleMapComponent"
+                    to="/ParentMap"
                   >
-                    GoogleMap
+                    Google Map
                   </Link>
                 </li>
               </ul>

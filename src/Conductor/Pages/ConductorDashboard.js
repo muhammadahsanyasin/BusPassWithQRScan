@@ -48,11 +48,11 @@ function ConductorDashboard({ progress }) {
             <div class="row">
               <div className="conductorstop-containers">
                 <p>Route No </p>
-                <p className="bold">03</p>
+                <p className="bold">1111</p>
               </div>
               <div className="conductorstop-containers">
                 <p>Stop Timing</p>
-                <p className="bold">08:50</p>
+                <p className="bold">08:00 am</p>
               </div>
             </div>
           </section>
@@ -66,12 +66,12 @@ function ConductorDashboard({ progress }) {
             <div class="row">
               <div className="stops">
                 <div className="conductorstop-containers">
-                  <p>Route No </p>
-                  <p className="bold">03</p>
+                  <p>Student Checkin </p>
+                  <p className="bold">15</p>
                 </div>
                 <div className="conductorstop-containers">
-                  <p>Stop Timing</p>
-                  <p className="bold">08:50</p>
+                  <p>Remaing Seats</p>
+                  <p className="bold">35</p>
                 </div>
               </div>
             </div>

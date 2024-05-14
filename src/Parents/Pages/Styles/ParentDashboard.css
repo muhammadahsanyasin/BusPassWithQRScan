@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -7,20 +7,20 @@
 
 .parentdashboard-container {
   display: flex;
-flex-direction: column;
-align-items: center;
-background-color: rgb(11, 95, 83);
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(11, 95, 83);
 }
 .favorit-stops-parent {
-  height: 500px;
   width: 350px;
   background-color: rgb(18, 110, 97);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+ 
 }
-.white-container{
+.white-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,9 +30,11 @@ background-color: rgb(11, 95, 83);
 }
 
 .card {
+
   align-items: center;
   justify-content: center;
-  height: 400px;
+  text-align: center;
+  height: 535px;
   width: 300px;
   padding: 30px;
   border-radius: 10px;
@@ -43,29 +45,47 @@ background-color: rgb(11, 95, 83);
   display: flex;
   justify-content: space-between;
 }
-.stop-containers {
-  margin-top: 20px;
+.parentstop-containers{
+  
   margin-right: 10px;
+  margin-bottom: 2px;
   background-color: rgb(28, 139, 122);
   color: white;
-  height: 20vh;
+  height: 12vh;
+  width: 8vw;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   box-shadow: 5px 5px rgb(26, 113, 100);
   border-radius: 10px;
-  width: 9vw;
+ 
 }
-.parenttrackbuses-button{
+.parenttrackbuses-button {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      border-radius: 6px;
-      background: #FFFFFF;
-      margin: 10px 10px 10px 10px;
-      color: black;
-      font-weight: bolder;
-      display:flex;
-      justify-content: center;
-      padding: 11.1px 1.4px 9.9px 0;
-      width: 20vw;
+  border-radius: 6px;
+  background: #ffffff;
+  margin: 10px 10px 10px 10px;
+  color: black;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  padding: 11.1px 1.4px 9.9px 0;
+  width: 15vw;
+}
+.parentprogress-container {
+  text-align: center;
+  background-color:  rgb(34, 149, 132);
+  
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media screen and (max-width: 600px) {
+  .parentstop-containers{
+    width: 50%;
+    height: 100%; /* Adjust as needed for smaller screens */
+  }
+  .parenttrackbuses-button {
+    width: 80%; /* Adjust as needed for smaller screens */
+  }
 }

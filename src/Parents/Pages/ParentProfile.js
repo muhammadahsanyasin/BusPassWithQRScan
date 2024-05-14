@@ -63,7 +63,7 @@ function ParentProfile() {
           </div>
          
         </div>
-        <Link>
+        <Link to='/StudentHistory'>
             <button className=" parenthistory-button edit-stops">History</button>
           </Link>
           <Link to="/ChangePassword">

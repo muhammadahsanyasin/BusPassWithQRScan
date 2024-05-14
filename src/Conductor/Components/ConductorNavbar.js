@@ -43,7 +43,7 @@ function ConductorNavbar() {
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/GoogleMapComponent"
+                    to="/GoogleMap"
                   >
                     GoogleMap
                   </Link>

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import useStore from "./store";
 import Login from "./Login";
 import ChangePassword from "./Parents/Components/ChangePassword";
-import GoogleMapComponent from "./Parents/Components/GoogleMapComponent";
+
 import ParentsNotification from "./Parents/Pages/ParentsNotification";
 import AddExistingStops from "./Admin/Pages/AddExistingStops";
 import EditStopInfo from "./Admin/Pages/EditStopInfo";
@@ -24,6 +24,7 @@ import StudentFavStop from "./Student/Pages/StudentFavStop";
 import StudentHistory from "./Student/Pages/StudentHistory";
 import StudentNotificationDetails from "./Student/Pages/StudentNotificationDetails";
 import GoogleMap from "./Student/Pages/GoogleMap";
+import ParentMap from "./Parents/Pages/ParentMap";
 
 
 
@@ -42,7 +43,7 @@ function App() {
           <>
             <Route path="/ParentDashboard"element={<ParentDashboard progress={59} />}/>
             <Route path="/ChangePassword" element={<ChangePassword />} />
-            <Route path="/GoogleMapComponent" element={<GoogleMapComponent />} />    
+            <Route path="/ParentMap" element={<ParentMap />} />    
             <Route path="/ParentsNotification" element={<ParentsNotification />} />
             <Route path="/EditStopInfo" element={<EditStopInfo />} />
             <Route path="/AddExistingStops" element={<AddExistingStops />} />

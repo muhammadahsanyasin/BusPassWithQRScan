@@ -87,7 +87,7 @@ function StudentDashboard({ progress }) {
                       </div>
                       <div className="studentstop-containers">
                         <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                        <p className="bold">08:50 am</p>
                       </div>
                     </div>
                   </div>
@@ -103,7 +103,7 @@ function StudentDashboard({ progress }) {
                       </div>
                       <div className="studentstop-containers">
                         <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                        <p className="bold">08:40 am</p>
                       </div>
                     </div>
                   </div>
@@ -119,7 +119,7 @@ function StudentDashboard({ progress }) {
                       </div>
                       <div className="studentstop-containers">
                         <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                        <p className="bold">08:30 am</p>
                       </div>
                     </div>
                   </div>

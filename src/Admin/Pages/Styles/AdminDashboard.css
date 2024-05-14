@@ -67,4 +67,13 @@
     padding: 11.1px 1.4px 9.9px 0;
     width: 20vw;
   }
+
+  /* Media Queries for Mobile Responsiveness */
+@media screen and (max-width: 600px) {
+  .stop-containers{
+    width: 50%;
+    height: 100%; /* Adjust as needed for smaller screens */
+  }
+ 
+}
   

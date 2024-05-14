@@ -72,4 +72,12 @@
     border-radius: 10px;
     width: 9vw;
   }
+
+  @media screen and (max-width: 600px) {
+    .conductorstop-containers{
+      width: 80%;
+      height: 70%; /* Adjust as needed for smaller screens */
+    }
+   
+  }
   

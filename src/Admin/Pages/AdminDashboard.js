@@ -84,7 +84,7 @@ function AdminDashboard({progress}) {
                       </div>
                       <div className="stop-containers">
                         <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                        <p className="bold">08:50 am</p>
                       </div>
                     </div>
                   </div>
@@ -100,7 +100,7 @@ function AdminDashboard({progress}) {
                       </div>
                       <div className="stop-containers">
                         <p>Remaing Seats</p>
-                        <p className="bold">08:50</p>
+                        <p className="bold">08:50 am</p>
                       </div>
                     </div>
                   </div>
@@ -116,7 +116,7 @@ function AdminDashboard({progress}) {
                       </div>
                       <div className="stop-containers">
                         <p>Stop Timing</p>
-                        <p className="bold">08:50</p>
+                        <p className="bold">08:50 am</p>
                       </div>
                     </div>
                   </div>
@@ -124,7 +124,7 @@ function AdminDashboard({progress}) {
               </div>
             </div>
           </section>
-          <Link to="/GoogleMapComponent">
+          <Link to="/GoogleMap">
           
             <button className=" admin-button edit-stops">Track Buses</button>
           

@@ -31,7 +31,7 @@ background-color: rgb(11, 95, 83);
 
 .student-card {
   align-items: center;
-  
+  text-align: center;
   height: 300px;
   width: 300px;
   padding: 30px;
@@ -59,7 +59,7 @@ background-color: rgb(11, 95, 83);
 }
 .progress-container {
   text-align: center;
-  background-color: rgb(11, 95, 83);
+  background-color:  rgb(11, 95, 83);
   
 }
 
@@ -89,4 +89,15 @@ background-color: rgb(11, 95, 83);
   justify-content: center;
   padding: 11.1px 1.4px 9.9px 0;
   width: 20vw;
+}
+
+@media screen and (max-width: 600px) {
+  .studentstop-containers{
+    width: 80%;
+    height: 100%; /* Adjust as needed for smaller screens */
+  }
+  .student-button {
+    width: 100%;
+  }
+ 
 }
