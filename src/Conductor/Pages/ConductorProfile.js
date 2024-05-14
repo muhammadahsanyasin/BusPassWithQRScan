@@ -38,7 +38,7 @@ function ConductorProfile() {
           </div>
         </div>
       </div>
-      <Link>
+      <Link to='/ConductorHistory' >
         
           <button className=" conductorhistory-button edit-stops">History</button>
        

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-
 import markerIcon from "../../Assets/marker.png";
 
 const customIcon = L.icon({
@@ -11,6 +10,12 @@ const customIcon = L.icon({
 });
 
 const initialPosition = [33.64340057674401, 73.0790521153456];
+const point1 = [33.65221479100481, 73.06464916506403];
+const point2 = [33.64325572431809, 73.06407053297772];
+const point3 = [33.64266730832196, 73.07319440734358];
+const point4 = [33.64179296464606, 73.07699834732112];
+const point5 = [33.64331651749647, 73.07780627129169];
+const point6 = [33.64314132414114, 73.07901841479297];
 
 function ParentMap() {
   const [markerPosition, setMarkerPosition] = useState(null);
@@ -29,7 +34,8 @@ function ParentMap() {
       );
     };
 
-    getCurrentLocation(); // Call the function when component mounts
+    // You might want to get the current location when the component mounts
+    getCurrentLocation();
 
     // You might want to clear the marker position when component unmounts
     return () => {
@@ -39,6 +45,18 @@ function ParentMap() {
 
   const handleMapClick = (event) => {
     setMarkerPosition(event.latlng);
+  };
+
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setMarkerPosition([latitude, longitude]);
+      },
+      (error) => {
+        console.error("Error getting current location:", error);
+      }
+    );
   };
 
   return (
@@ -63,7 +81,13 @@ function ParentMap() {
             </Popup>
           </Marker>
         )}
+
+        {/* Draw polyline between points */}
+        <Polyline positions={[point1, point2, point3, point4, point5, point6]} color="blue" />
       </MapContainer>
+      
+      {/* Button to get current location */}
+      <button onClick={getCurrentLocation}>Get Current Location</button>
     </div>
   );
 }

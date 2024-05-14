@@ -63,7 +63,7 @@ function AdminProfile() {
           </div>
         
         </div>
-        <Link  to='/StudentHistory' >
+        <Link  to='/AdminHistory' >
           <button className=" adminhistory-button edit-stops">History</button>
           </Link>
 
