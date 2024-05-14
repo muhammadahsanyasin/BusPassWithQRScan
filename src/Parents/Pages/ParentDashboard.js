@@ -45,7 +45,7 @@ function ParentDashboard({ progress }) {
               </div>
               <div class="carousel-inner">
                 <div class="carousel-item active card">
-                  <div className="progress-container">
+                  <div className="parentprogress-container">
                     <div className="progress-label">
                       Journeys Used: {progress}
                     </div>
@@ -110,7 +110,7 @@ function ParentDashboard({ progress }) {
                 </div>
 
                 <div class="carousel-item card">
-                  <div className="progress-container">
+                  <div className="parentprogress-container">
                     <div className="progress-label">
                       Journeys Used: {progress}
                     </div>

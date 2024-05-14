@@ -32,7 +32,7 @@ function AdminNavbar() {
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/AddExistingStops"
+                    to="/AddNewStudent"
                   >
                     Existing Stops
                   </Link>

@@ -25,6 +25,7 @@ import StudentHistory from "./Student/Pages/StudentHistory";
 import StudentNotificationDetails from "./Student/Pages/StudentNotificationDetails";
 import GoogleMap from "./Student/Pages/GoogleMap";
 import ParentMap from "./Parents/Pages/ParentMap";
+import AddNewStudent from "./Admin/Pages/AddNewStudent";
 
 
 
@@ -62,7 +63,7 @@ function App() {
             <Route path="/StudentFavStop" element={<StudentFavStop/>} />
             <Route path="/StudentNotificationDetails" element={<StudentNotificationDetails/>} />
            <Route path="/GoogleMap" element={<GoogleMap/>} />
-         
+         <Route path="/AddNewStudent" element={<AddNewStudent/>} />
            <Route path="/GoogleMap" element={<GoogleMap  selectPosition={selectPosition}/>} />
            
           </>

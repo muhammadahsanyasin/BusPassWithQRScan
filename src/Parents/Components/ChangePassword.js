@@ -1,12 +1,14 @@
 import React from "react";
 import "../Components/Styles/ChangePassword.css";
+import Lock from "../../Assets/lock.png";
 function ChangePassword() {
   return (
     <div className="changepasword-screen">
       <div className="changepasword-container">
         <div className="lock-icon">
-          <img src="lock-icon.png" alt="Lock Icon" />
+          <img src={Lock} alt="Lock Icon" />
         </div>
+        
         <div className="password-fields">
           <input type="password" placeholder="Old Password" />
           <input type="password" placeholder="New Password" />
