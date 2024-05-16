@@ -12,6 +12,8 @@ const customIcon = L.icon({
 });
 
 const initialPosition = [33.64340057674401, 73.0790521153456];
+const markPosition = [35.64340057674401, 76.0790521153456];
+
 
 const childLocations = [
   { latitude: 33.62143941364173, longitude: 73.06649344534786 },
@@ -23,7 +25,6 @@ const childLocations = [
   { latitude: 33.59059836860913, longitude: 73.07861567925173 },
   { latitude: 33.59545700923111, longitude: 73.07889345288326 },
 ];
-
 function GoogleMap() {
   const [markerPosition, setMarkerPosition] = useState(null);
 
@@ -31,19 +32,23 @@ function GoogleMap() {
     setMarkerPosition(event.latlng);
   };
 
+  const handleClick = () => {
+    console.log("Hello");
+  };
+
   return (
     <div className="googlemap-container">
       <MapContainer
         center={initialPosition}
         zoom={13}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "100%", position: "relative" }}
         onClick={handleMapClick}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://api.maptiler.com/maps/bright-v2/256/{z}/{x}/{y}.png?key=RBRODA7cHl7LOG0fTgd6"
         />
-       
+      
 
         {/* Adding child markers */}
         {childLocations.map((location, index) => (
@@ -53,11 +58,18 @@ function GoogleMap() {
             icon={customIcon}
           >
             <Popup>
-              Child {index + 1} location. <br /> Latitude:{" "}
-              {location.latitude}, Longitude: {location.longitude}.
+              Child {index + 1} location. <br /> Latitude: {location.latitude},
+              Longitude: {location.longitude}.
             </Popup>
           </Marker>
         ))}
+        <button
+          onClick={handleClick}
+          className="hello-button"
+          style={{ position: "absolute", top: 10, left: 10 }}
+        >
+          Say Hello
+        </button>
       </MapContainer>
     </div>
   );

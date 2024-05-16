@@ -29,6 +29,10 @@ import AddNewStudent from "./Admin/Pages/AddNewStudent";
 import AdminHistory from "./Admin/Pages/AdminHistory";
 import ConductorHistory from "./Conductor/Pages/ConductorHistory";
 import ParentHistory from "./Parents/Pages/ParentHistory";
+import AdminMap from "./Admin/Pages/AdminMap";
+import StudentMap from "./Student/Pages/StudentMap";
+
+
 
 
 
@@ -72,6 +76,8 @@ function App() {
            <Route path="/AdminHistory" element={<AdminHistory/>} />
            <Route path="/ConductorHistory" element={<ConductorHistory/>} />
            <Route path="/ParentHistory" element={<ParentHistory/>} />
+           <Route path="/AdminMap" element={<AdminMap/>} />
+           <Route path="/StudentMap" element={<StudentMap/>} />
            
            
           </>

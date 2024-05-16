@@ -43,13 +43,22 @@ function StudentNavbar() {
                     Student Notification Details
                   </Link>
                 </li>
+
+                {/* <li className="nav-item">
+                  <Link
+                    className="nav-link color hover active"
+                    to="/Student"
+                  >
+                    Student 
+                  </Link>
+                </li> */}
                 
                 
     
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/ParentMap"
+                    to="/StudentMap"
                   >
                     Google Map
                   </Link>

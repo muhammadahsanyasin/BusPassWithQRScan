@@ -86,7 +86,7 @@ function AdminNavbar() {
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/ParentMap"
+                    to="/AdminMap"
                   >
                     Google Map
                   </Link>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoIosLogIn } from "react-icons/io";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, Navigate, } from "react-router-dom";
 import "./Login.css";
 import useStore from "./store";
 
@@ -78,8 +78,10 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      
       <h1 className="logintitle">Bus Pass With QRScan</h1>
       <div className="loginform-container">
+      
         <h2 className="form-title">
           Login <IoIosLogIn />
         </h2>
