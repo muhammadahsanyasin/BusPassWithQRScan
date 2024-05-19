@@ -1,0 +1,55 @@
+.verification-screen{
+    background-color: #1f4b44;
+    height: 100vh;
+    width: 100vw;
+    padding-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+
+.verification-container {
+    background-color: #2FAA98; /* Change this to your desired background color */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+    
+}
+
+.verification-image {
+    width: 100px;
+    height: auto;
+    
+    margin-bottom: 20px;
+}
+
+.status {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center; /* Center the status text */
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders are not doubled */
+    margin-bottom: 20px;
+}
+
+.info-table th,
+.info-table td {
+    border: 1px solid #000; /* Makes borders of the table visible */
+    padding: 10px;
+    text-align: center; /* Center-aligns the table content */
+}
+
+.info-table th {
+    background-color: #e0e0e0; /* Header background color */
+}

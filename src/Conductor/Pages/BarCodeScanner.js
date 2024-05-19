@@ -1,58 +1,29 @@
-import React from 'react'
-import {QrScanner} from "react-qrcode-scanner";
+import React from "react";
+import { QrScanner } from "react-qrcode-scanner";
+import '../Pages/Styles/BarCodeScanner.css';
+import bus from "../../Assets/buslogo.png";
+
 function BarCodeScanner() {
-    const handleScan = (value) => {
-        console.log({value})
-    }
+  const handleScan = (value) => {
+    console.log({ value });
+  };
 
-    const handleError = (error) => {
-        console.log({error})
-    }
+  const handleError = (error) => {
+    console.log({ error });
+  };
 
-    return (
-        <div className="App">
-            
-            <QrScanner
-                onScan={handleScan}
-                onError={handleError}
-
-                /** Default props
-
-                 onError = (error) => console.log({error}),
-                 
-                 onScan = (value) => console.log({value}),
-                 
-                 facingMode = 'environment', // environment|face
-                 
-                 constraints = null, //device constraints
-                 
-                 onLoad = (val :{mirrorVideo, streamLabel}) => null,
-                 
-                 flipHorizontally = false, //flip or reflect the video output based on facing mode
-                 
-                 style, //section styling can be added here
-                 
-                 className, //classnames will be added to the section wrapper
-                 
-                 delay = 800, //delay between each scan
-                 
-                 resolution = 600, //canvas resolution
-                 
-                 aspectRatio = '16:9',
-                       
-                 showViewFinder = true,
-                 
-                 viewFinder = { //any valid JS-CSS can be added here
-                    border: '12px solid rgba(255,255,255,0.3)',
-                    position: 'absolute',
-                    borderRadius: '5px',
-                    width: '250px',
-                    height: '250px'
-                }
-                 */
-            />
+  return (
+    <div className="scanner-screen">
+      <div className="scanner-container">
+        <div className="scannerbus-img">
+          <img src={bus} alt="Bus" style={{ width: "200px", height: "200px", objectFit: "cover" }} />
         </div>
-    );
+        <div className="barcode-scanner">
+          <QrScanner onScan={handleScan} onError={handleError} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default BarCodeScanner
+export default BarCodeScanner;

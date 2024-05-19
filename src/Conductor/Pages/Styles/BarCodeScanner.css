@@ -1,0 +1,49 @@
+.scanner-screen{
+    background-color: #168070;
+    height: 100vh;
+    width: 100vw;
+}
+.scanner-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .scanner-screen {
+        background:  #0b5345;
+       
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .scanner-container {
+        border: 2px solid #fff;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .scannerbus-img {
+        margin-bottom: 20px;
+    }
+    
+    .barcode-scanner {
+        margin-top: 20px;
+        height: 300px;
+        width: 300px;
+    }
+    
+}
+.scannerbus-img{
+    height: 100px;
+    width: 100px;
+    margin-bottom: 20px;
+
+}
+.barcode-scanner{
+    margin-top: 20px;
+ height: 300px;   
+ width: 300px;   
+}

@@ -31,6 +31,8 @@ import ConductorHistory from "./Conductor/Pages/ConductorHistory";
 import ParentHistory from "./Parents/Pages/ParentHistory";
 import AdminMap from "./Admin/Pages/AdminMap";
 import StudentMap from "./Student/Pages/StudentMap";
+import ConductorMap from "./Conductor/Pages/ConductorMap";
+import ConductorVerification from "./Conductor/Pages/ConductorVerification";
 
 
 
@@ -78,6 +80,8 @@ function App() {
            <Route path="/ParentHistory" element={<ParentHistory/>} />
            <Route path="/AdminMap" element={<AdminMap/>} />
            <Route path="/StudentMap" element={<StudentMap/>} />
+           <Route path="/ConductorMap" element={<ConductorMap/>} />
+           <Route path="/ConductorVerification" element={<ConductorVerification/>} />
            
            
           </>

@@ -1,11 +1,39 @@
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import "../Pages/Styles/AdminDashboard.css";
 import AdminNavbar from "../Components/AdminNavbar";
 import { Link } from "react-router-dom";
 function AdminDashboard({progress}) {
+  const [api, setapi] = useState(
+    "http://localhost/WebApi/api/users/GetUserById?id=3"
+  );
+  const [data, setdata] = useState("");
+
+  useEffect(() => {
+    const adminsdata = async () => {
+      const response = await fetch(api, {
+        method: "GET", //POST, PUT,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const d = await response.json();
+        setdata(d);
+        console.log(data);
+      }
+    };
+    adminsdata();
+  }, []); //[] call only once
+
+
+
+
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const progressOffset = ((100 - progress) / 100) * circumference;
+
+  if(data)
   return (
     <div className="admin-dashboard">
       <AdminNavbar/>

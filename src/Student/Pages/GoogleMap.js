@@ -32,9 +32,7 @@ function GoogleMap() {
     setMarkerPosition(event.latlng);
   };
 
-  const handleClick = () => {
-    console.log("Hello");
-  };
+ 
 
   return (
     <div className="googlemap-container">
@@ -63,13 +61,7 @@ function GoogleMap() {
             </Popup>
           </Marker>
         ))}
-        <button
-          onClick={handleClick}
-          className="hello-button"
-          style={{ position: "absolute", top: 10, left: 10 }}
-        >
-          Say Hello
-        </button>
+       
       </MapContainer>
     </div>
   );

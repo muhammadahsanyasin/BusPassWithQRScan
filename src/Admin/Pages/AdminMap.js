@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, Marker, Popup, TileLayer, Polyline, useMap } from "react-leaflet";
+import {  MapContainer,  Marker,  Popup, TileLayer,  Polyline,  useMap,} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
 import { Modal, Button } from "react-bootstrap";
+import checkin from "../../Assets/checkin.png";
 
 const customIcon = L.icon({
   iconUrl: markerIcon,
@@ -20,7 +21,7 @@ const point6 = [33.64314132414114, 73.07901841479297];
 
 function AdminMap() {
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showMarkerModal, setShowMarkerModal] = useState(false);
 
   const handleMapClick = (event) => {
     setMarkerPosition(event.latlng);
@@ -46,73 +47,80 @@ function AdminMap() {
     };
   }, []);
 
-  const handleHelloButtonClick = () => {
-    setShowModal(true);
+  // Handler for marker click to show modal
+  const handleMarkerClick = () => {
+    setShowMarkerModal(true);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+  // Handler to close the marker modal
+  const handleCloseMarkerModal = () => {
+    setShowMarkerModal(false);
   };
-
-  // Custom button component
-  function StackButton() {
-    const map = useMap();
-
-    return (
-      <div className="leaflet-top leaflet-right">
-        <div className="leaflet-control">
-          <button className="leaflet-bar leaflet-control-custom" onClick={handleHelloButtonClick}>
-            Say Hello
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="googlemap-container">
-      {/* Modal for displaying "hello" message */}
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Hello</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Hello</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Close
-          </Button>
-        </Modal.Footer>
+      {/* Modal for displaying marker information */}
+      <Modal show={showMarkerModal} onHide={handleCloseMarkerModal}>
+        <div style={{ backgroundColor: "#2FAA98" }}>
+          <Modal.Header closeButton>
+            <Modal.Title>Marker Information</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="favorit-stops-conductor">
+              <section className="dashboard-container">
+                <div class="row">
+                  <div className="stops">
+                    <div className="conductorstop-containers">
+                      <div className="person-icon">
+                        <img src={checkin} alt="Person Icon" />
+                      </div>
+                      <p>Student Checkin </p>
+                      <p className="bold">15</p>
+                    </div>
+                    <div className="conductorstop-containers">
+                      <p>Remaing Seats</p>
+                      <p className="bold">35</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </Modal.Body>
+          <Modal.Footer></Modal.Footer>
+        </div>
       </Modal>
-      
+
       {/* Map */}
       <MapContainer
         center={markerPosition || initialPosition}
-        zoom={13}
+        zoom={25}
         style={{ width: "100%", height: "100%" }}
         onClick={handleMapClick}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          // attribution='&copy; <a href="https://www.openstreetmap.org/copyright"></a> '
           url="https://api.maptiler.com/maps/bright-v2/256/{z}/{x}/{y}.png?key=RBRODA7cHl7LOG0fTgd6"
         />
 
         {/* Render marker if position is available */}
         {markerPosition && (
-          <Marker position={markerPosition} icon={customIcon}>
-            <Popup>
+          <Marker
+            position={markerPosition}
+            icon={customIcon}
+            eventHandlers={{ click: handleMarkerClick }}
+          >
+            {/* <Popup className="custom-popup">
               Your current location. <br /> Latitude: {markerPosition[0]},
               Longitude: {markerPosition[1]}.
-            </Popup>
+            </Popup> */}
           </Marker>
         )}
 
         {/* Draw polyline between points */}
-        <Polyline positions={[point1, point2, point3, point4, point5, point6]} color="blue" />
-
-        {/* Custom button */}
-        <StackButton />
+        <Polyline
+          positions={[point1, point2, point3, point4, point5, point6]}
+          color="blue"
+        />
       </MapContainer>
     </div>
   );

@@ -24,17 +24,17 @@ function AdminNavbar() {
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link color hover active" to="/EditStopInfo">
                     Edit Stop 
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
                     to="/AddNewStudent"
                   >
-                    Existing Stops
+                    Add Student
                   </Link>
                 </li>
                 <li className="nav-item">

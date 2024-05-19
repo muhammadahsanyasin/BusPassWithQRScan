@@ -38,12 +38,22 @@ function ConductorNavbar() {
                   </Link>
                 </li>
                 
+               
+                <li className="nav-item">
+                  <Link
+                    className="nav-link color hover active"
+                    to="/ConductorVerification"
+                  >
+                    BarCode Verification
+                  </Link>
+                </li>
+                
                 
     
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/GoogleMap"
+                    to="/ConductorMap"
                   >
                     GoogleMap
                   </Link>
