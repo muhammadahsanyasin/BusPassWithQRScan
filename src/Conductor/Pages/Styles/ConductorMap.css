@@ -1,0 +1,35 @@
+
+  
+  .studentmap-container {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(11, 95, 83);
+ 
+  }
+  .show-stops-conductormap {
+    border-radius: 10px 10px 10px 10px;
+    height: 200px;
+    width: 350px;
+    background-color: rgb(18, 110, 97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+ 
+  .conductormapstop-containers{
+    
+    margin-right: 10px;
+    background-color: rgb(28, 139, 122);
+    color: white;
+    height: 15vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 5px 5px rgb(26, 113, 100);
+    border-radius: 10px;
+    width: 9vw;
+    margin-bottom: 20px;
+  }

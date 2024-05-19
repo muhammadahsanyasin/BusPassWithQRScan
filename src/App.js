@@ -33,6 +33,7 @@ import AdminMap from "./Admin/Pages/AdminMap";
 import StudentMap from "./Student/Pages/StudentMap";
 import ConductorMap from "./Conductor/Pages/ConductorMap";
 import ConductorVerification from "./Conductor/Pages/ConductorVerification";
+import AdminSearchUpdate from "./Admin/Pages/AdminSearchUpdate";
 
 
 
@@ -82,6 +83,7 @@ function App() {
            <Route path="/StudentMap" element={<StudentMap/>} />
            <Route path="/ConductorMap" element={<ConductorMap/>} />
            <Route path="/ConductorVerification" element={<ConductorVerification/>} />
+           <Route path="/AdminSearchUpate" element={<AdminSearchUpdate/>} />
            
            
           </>

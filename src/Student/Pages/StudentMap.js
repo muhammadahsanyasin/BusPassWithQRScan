@@ -5,6 +5,7 @@ import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
 import { Modal, Button } from "react-bootstrap";
 import checkin from "../../Assets/checkin.png";
+import '../Pages/Styles/StudentMap.css';
 
 const customIcon = L.icon({
   iconUrl: markerIcon,
@@ -85,23 +86,26 @@ function StudentMap() {
             <Modal.Title>Marker Information</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="favorit-stops-conductor">
+            <div className="add-stops-studentmap">
               <section className="dashboard-container">
                 <div className="row">
                   <div className="stops">
-                    <div className="conductorstop-containers">
-                      <div className="person-icon">
+                    <div className="studentmapstop-containers">
+                      {/* <div className="person-icon">
                         <img src={checkin} alt="Person Icon" />
-                      </div>
+                      </div> */}
                       <p>Student Checkin </p>
                       <p className="bold">15</p>
                     </div>
-                    <div className="conductorstop-containers">
+                    <div className="studentmapstop-containers">
                       <p>Remaining Seats</p>
                       <p className="bold">35</p>
                     </div>
                   </div>
                 </div>
+                <button className=" student-button edit-stops">
+                  ADD Favorite Stop
+                </button>
               </section>
             </div>
           </Modal.Body>
@@ -136,9 +140,9 @@ function StudentMap() {
             icon={customIcon}
             eventHandlers={{ click: () => handleMarkerClick(point) }}
           >
-            <Popup>
+            {/* <Popup>
               Point {index + 1} <br /> Latitude: {point[0]}, Longitude: {point[1]}.
-            </Popup>
+            </Popup> */}
           </Marker>
         ))}
 

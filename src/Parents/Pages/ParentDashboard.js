@@ -102,7 +102,7 @@ function ParentDashboard({ progress }) {
                       </div>
                     </div>
                   </div>
-                  <Link to="/GoogleMap">
+                  <Link to="/ParentMap">
                     <button className=" parenttrackbuses-button edit-stops">
                     Track Child
                     </button>
@@ -167,7 +167,7 @@ function ParentDashboard({ progress }) {
                       </div>
                     </div>
                   </div>
-                  <Link to="/GoogleMap">
+                  <Link to="/ParentMap">
                     <button className=" parenttrackbuses-button edit-stops">
                     Track Child
                     </button>
@@ -231,7 +231,7 @@ function ParentDashboard({ progress }) {
                       </div>
                     </div>
                   </div>
-                  <Link to="/GoogleMap">
+                  <Link to="/ParentMap">
                     <button className=" parenttrackbuses-button edit-stops">
                       Track Child
                     </button>

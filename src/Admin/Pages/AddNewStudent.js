@@ -3,34 +3,55 @@ import "../Pages/Styles/AddNewStudent.css";
 
 function AddNewStudent() {
   const [isNewParent, setIsNewParent] = useState(true);
+ 
+  const [formdata, setFormData] = useState({ })
 
-  const [formdata, setFormData] = useState({});
+ 
+  const studentdata = async () => {
+    console.log('Form Data:', formdata);
 
-  const handleinput = (e) => {
-    const { name, value } = e.target;
+    try {
+      const response = await fetch("http://localhost/WebApi/api/users/InsertStudent", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json', // Set headers for JSON data
+        },
+        body: JSON.stringify(formdata),
+      });
+
+      if (response.ok) {
+        console.log('Data saved to server');
+        alert('Data saved successfully!');
+      } else {
+        const errorData = await response.json();
+        console.error('Error saving data:', errorData);
+        alert(`Error saving data: ${errorData}`);
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      alert(`Errrr saving data: ${error.message}`);
+    }
+  };
+  
+  const handleinput = (e) =>{
+    const {name, value} = e.target;
     setFormData({
-      ...formdata, //spread opt
-      [name]: value,
-    });
+      ...formdata,//spread opt
+      [name]: value})
 
-    console.log(formdata);
-  };
-
-  const savedata = (e) => {
-    e.preventDefault();
-    console.log("data  saved ");
-  };
+      console.log(formdata)
+  }
 
   return (
     <div className="container">
-      <form  className="addstudent-form"  onSubmit={savedata}>
+      
         <h2>Student Information</h2>
         <div>
           {/* <label htmlFor="name">Name:</label> */}
           <input
             type="text"
-            id="name"
-            name="name"
+            id="Name"
+            name="Name"
             placeholder="Name"
            onChange={handleinput}
           />
@@ -39,8 +60,8 @@ function AddNewStudent() {
           {/* <label htmlFor="registrationNo">Registration No:</label> */}
           <input
             type="text"
-            id="registrationNo"
-            name="registrationNo"
+            id="RegNo"
+            name="RegNo"
             placeholder="Registration No"
             onChange={handleinput}
           />
@@ -49,8 +70,8 @@ function AddNewStudent() {
           {/* <label htmlFor="password">Password:</label> */}
           <input
             type="password"
-            id="password"
-            name="password"
+            id="Password"
+            name="Password"
             placeholder="Password"
             onChange={handleinput}
           />
@@ -59,8 +80,8 @@ function AddNewStudent() {
           {/* <label htmlFor="contactNo">Contact No:</label> */}
           <input
             type="text"
-            id="contactNo"
-            name="contactNo"
+            id="Contact"
+            name="Contact"
             placeholder="Contact No"
             onChange={handleinput}
           />
@@ -103,8 +124,8 @@ function AddNewStudent() {
               {/* <label htmlFor="parentName">Name:</label> */}
               <input
                 type="text"
-                id="parentName"
-                name="parentName"
+                id="UserName"
+                name="UserName"
                 placeholder="Name"
                 onChange={handleinput}
               />
@@ -113,8 +134,8 @@ function AddNewStudent() {
               {/* <label htmlFor="parentPassword">Password:</label> */}
               <input
                 type="password"
-                id="parentPassword"
-                name="parentPassword"
+                id="Password"
+                name="Password"
                 placeholder="Password"
                 onChange={handleinput}
               />
@@ -140,8 +161,9 @@ function AddNewStudent() {
             </select>
           </div>
         )}
+        <button onClick={studentdata} className=" addnewconductor-button  edit-stops">ADD</button>
         {/* <button>Submit</button> */}
-      </form>
+      
     </div>
   );
 }

@@ -3,9 +3,15 @@ import { MapContainer, Marker, Popup, TileLayer, Polyline } from "react-leaflet"
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
+import childloc from "../../Assets/childloc.png";
 
 const customIcon = L.icon({
   iconUrl: markerIcon,
+  iconSize: [38, 38],
+});
+
+const childlocIcon = L.icon({
+  iconUrl: childloc ,
   iconSize: [38, 38],
 });
 
@@ -21,7 +27,6 @@ function ParentMap() {
   const [markerPosition, setMarkerPosition] = useState(null);
 
   useEffect(() => {
-    // Function to get current location
     const getCurrentLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -34,14 +39,12 @@ function ParentMap() {
       );
     };
 
-    // You might want to get the current location when the component mounts
     getCurrentLocation();
 
-    // You might want to clear the marker position when component unmounts
     return () => {
       setMarkerPosition(null);
     };
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  }, []);
 
   const handleMapClick = (event) => {
     setMarkerPosition(event.latlng);
@@ -63,7 +66,7 @@ function ParentMap() {
     <div className="googlemap-container">
       <MapContainer
         center={markerPosition || initialPosition}
-        zoom={13}
+        zoom={23}
         style={{ width: "100%", height: "100%" }}
         onClick={handleMapClick}
       >
@@ -72,7 +75,6 @@ function ParentMap() {
           url="https://api.maptiler.com/maps/bright-v2/256/{z}/{x}/{y}.png?key=RBRODA7cHl7LOG0fTgd6"
         />
 
-        {/* Render marker if position is available */}
         {markerPosition && (
           <Marker position={markerPosition} icon={customIcon}>
             <Popup>
@@ -82,12 +84,16 @@ function ParentMap() {
           </Marker>
         )}
 
-        {/* Draw polyline between points */}
         <Polyline positions={[point1, point2, point3, point4, point5, point6]} color="blue" />
+
+        <Marker position={point6} icon={childlocIcon}>
+          <Popup>
+            Loctaion of a child  <br /> Latitude: {point6[0]}, Longitude: {point6[1]}.
+          </Popup>
+        </Marker>
       </MapContainer>
       
-      {/* Button to get current location */}
-      <button onClick={getCurrentLocation}>Get Current Location</button>
+      {/* <button onClick={getCurrentLocation}>Get Current Location</button> */}
     </div>
   );
 }

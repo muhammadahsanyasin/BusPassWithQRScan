@@ -25,8 +25,8 @@ function AdminNavbar() {
             <div class="collapse navbar-collapse" id="navbarText">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {/* <li className="nav-item">
-                  <Link className="nav-link color hover active" to="/EditStopInfo">
-                    Edit Stop 
+                  <Link className="nav-link color hover active" to="/AdminSearchUpdate">
+                    Search&Update
                   </Link>
                 </li> */}
                 <li className="nav-item">
