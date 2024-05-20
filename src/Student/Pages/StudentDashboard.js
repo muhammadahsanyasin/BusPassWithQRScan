@@ -4,7 +4,7 @@ import StudentNavbar from "../Components/StudentNavbar";
 import { Link } from "react-router-dom";
 
 function StudentDashboard({ progress }) {
-  const [data, setdata] = useState("");
+  const [data, setdata] = useState([]);
   useEffect(() => {
     const studentdata = async () => {
       const response = await fetch(
@@ -17,7 +17,7 @@ function StudentDashboard({ progress }) {
         }
       );
       if (response.ok) {
-        const data = await response.json();
+        setdata( await response.json());
         console.log(data);
         return data;
       }
@@ -33,6 +33,8 @@ function StudentDashboard({ progress }) {
     return (
       <div className="student-dashboard">
         <StudentNavbar />
+        <div>
+      {data.map((stop, index) => (
         <form>
           <div className="progress-container">
             <div className="progress-label">Journeys Used: {progress}%</div>
@@ -82,7 +84,7 @@ function StudentDashboard({ progress }) {
                       aria-current="true"
                       aria-label="Slide 1"
                     ></button>
-                    <button
+                    {/* <button
                       type="button"
                       data-bs-target="#carouselExampleIndicators"
                       data-bs-slide-to="1"
@@ -93,25 +95,29 @@ function StudentDashboard({ progress }) {
                       data-bs-target="#carouselExampleIndicators"
                       data-bs-slide-to="2"
                       aria-label="Slide 3"
-                    ></button>
+                    ></button> */}
                   </div>
                   <div class="carousel-inner">
+                    
                     <div class="carousel-item active student-card">
-                      <h2>Chandni Chok</h2>
+    
+                      <h2>{stop.Name}</h2>
 
                       <div class="row">
                         <div className="stops">
                           <div className="studentstop-containers">
-                            <p> {data.studentda} Route No </p>
-                            <p className="bold">03</p>
+                            <p>  Route No </p>
+                            <p className="bold">{stop.Route}</p>
                           </div>
                           <div className="studentstop-containers">
                             <p>Stop Timing</p>
-                            <p className="bold">08:50 am</p>
+                            <p className="bold">{stop.Timing}</p>
                           </div>
                         </div>
                       </div>
+                      
                     </div>
+{/*                   
                     <div class="carousel-item admin-card">
                       <h2>6th Road</h2>
 
@@ -143,7 +149,7 @@ function StudentDashboard({ progress }) {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </section>
@@ -155,6 +161,8 @@ function StudentDashboard({ progress }) {
             </div>
           </div>
         </form>
+          ))}
+          </div>
       </div>
     );
 }

@@ -1,8 +1,32 @@
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import profile from "../../Assets/profile.png";
 import { Link } from "react-router-dom";
 import '../Pages/Styles/ConductorProfile.css';
 function ConductorProfile() {
+  const [api, setapi] = useState(
+    "http://localhost/WebApi/api/users/GetUserById?id=4"
+  );
+  const [data, setdata] = useState("");
+
+  useEffect(() => {
+    const conductordata = async () => {
+      const response = await fetch(api, {
+        method: "GET", //POST, PUT,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const d = await response.json();
+        setdata(d);
+        console.log(data);
+      }
+    };
+    conductordata();
+  }, []); //[] call only once
+
+  if (data)
   return (
     <div className="conductor-profile">
       <div className="conductorprofile-container ">
@@ -11,7 +35,7 @@ function ConductorProfile() {
         </div>
 
         <div className="person-details">
-          <h2>Shehbaz Shrif</h2>
+          <h2>{data.Conductors.Name}</h2>
           <p>32402-2852063-3</p>
         </div>
 
@@ -19,21 +43,21 @@ function ConductorProfile() {
           <div class="row">
             <div class="col">
               Contact No
-              <h4>22344555</h4>
+              <h4>{data.Conductors.Contact}</h4>
             </div>
             <div class="col">
-              Gender
-              <h4>Male</h4>
+              UserName
+              <h4>{data.Conductors.UserName}</h4>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              Pass ID
-              <h4>22344555</h4>
+             Conductor ID
+              <h4>{data.Conductors.UserId}</h4>
             </div>
             <div class="col">
-              Pass Expiry Date
-              <h4>234567</h4>
+              Bus ID
+              <h4>{data.Conductors.Id}</h4>
             </div>
           </div>
         </div>

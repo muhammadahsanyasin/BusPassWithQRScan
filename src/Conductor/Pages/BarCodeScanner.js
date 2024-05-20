@@ -1,7 +1,7 @@
 import React from "react";
 import { QrScanner } from "react-qrcode-scanner";
 import '../Pages/Styles/BarCodeScanner.css';
-import verified from "../../Assets/verified.png";
+import bus from "../../Assets/buslogo.png";
 
 function BarCodeScanner() {
   const handleScan = (value) => {
@@ -16,7 +16,7 @@ function BarCodeScanner() {
     <div className="scanner-screen">
       <div className="scanner-container">
         <div className="scannerbus-img">
-          <img src={verified} alt="Bus" style={{ width: "200px", height: "200px", objectFit: "cover" }} />
+          <img src={bus} alt="Bus" style={{ width: "200px", height: "200px", objectFit: "cover" }} />
         </div>
         <div className="barcode-scanner">
           <QrScanner onScan={handleScan} onError={handleError} />

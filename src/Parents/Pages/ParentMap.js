@@ -11,7 +11,7 @@ const customIcon = L.icon({
 });
 
 const childlocIcon = L.icon({
-  iconUrl: childloc ,
+  iconUrl: childloc,
   iconSize: [38, 38],
 });
 
@@ -40,39 +40,23 @@ function ParentMap() {
     };
 
     getCurrentLocation();
-
-    return () => {
-      setMarkerPosition(null);
-    };
   }, []);
 
   const handleMapClick = (event) => {
     setMarkerPosition(event.latlng);
   };
 
-  const getCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setMarkerPosition([latitude, longitude]);
-      },
-      (error) => {
-        console.error("Error getting current location:", error);
-      }
-    );
-  };
-
   return (
-    <div className="googlemap-container">
+    <div className="googlemap-container" style={{ height: "500px" }}>
       <MapContainer
         center={markerPosition || initialPosition}
-        zoom={23}
+        zoom={15}
         style={{ width: "100%", height: "100%" }}
         onClick={handleMapClick}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://api.maptiler.com/maps/bright-v2/256/{z}/{x}/{y}.png?key=RBRODA7cHl7LOG0fTgd6"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         {markerPosition && (
@@ -88,12 +72,10 @@ function ParentMap() {
 
         <Marker position={point6} icon={childlocIcon}>
           <Popup>
-            Loctaion of a child  <br /> Latitude: {point6[0]}, Longitude: {point6[1]}.
+            Location of a child <br /> Latitude: {point6[0]}, Longitude: {point6[1]}.
           </Popup>
         </Marker>
       </MapContainer>
-      
-      {/* <button onClick={getCurrentLocation}>Get Current Location</button> */}
     </div>
   );
 }

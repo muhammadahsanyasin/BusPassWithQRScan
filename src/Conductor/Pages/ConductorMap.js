@@ -5,7 +5,6 @@ import {
   Popup,
   TileLayer,
   Polyline,
-  useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -13,11 +12,13 @@ import markerIcon from "../../Assets/marker.png";
 import { Modal, Button } from "react-bootstrap";
 import "../Pages/Styles/ConductorMap.css";
 
+// Define the custom icon
 const customIcon = L.icon({
   iconUrl: markerIcon,
   iconSize: [38, 38],
 });
 
+// Initial position and predefined points
 const initialPosition = [33.64340057674401, 73.0790521153456];
 const points = [
   [33.65221479100481, 73.06464916506403],
@@ -27,6 +28,7 @@ const points = [
   [33.64331651749647, 73.07780627129169],
   [33.64314132414114, 73.07901841479297],
 ];
+
 function ConductorMap() {
   const [markerPosition, setMarkerPosition] = useState(null);
   const [showMarkerModal, setShowMarkerModal] = useState(false);
@@ -59,18 +61,6 @@ function ConductorMap() {
     setMarkerPosition(event.latlng);
   };
 
-  const getCurrentLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setMarkerPosition([latitude, longitude]);
-      },
-      (error) => {
-        console.error("Error getting current location:", error);
-      }
-    );
-  };
-
   // Handler for marker click to show modal
   const handleMarkerClick = (location) => {
     setSelectedLocation(location);
@@ -81,8 +71,9 @@ function ConductorMap() {
   const handleCloseMarkerModal = () => {
     setShowMarkerModal(false);
   };
+
   return (
-    <div className="googlemap-container">
+    <div className="googlemap-container" style={{ width: "100%", height: "100vh" }}>
       {/* Modal for displaying marker information */}
       <Modal show={showMarkerModal} onHide={handleCloseMarkerModal}>
         <div style={{ backgroundColor: "#2FAA98" }}>
@@ -95,21 +86,15 @@ function ConductorMap() {
                 <div className="row">
                   <div className="stops">
                     <div className="conductormapstop-containers">
-                      {/* <div className="person-icon">
-                          <img src={checkin} alt="Person Icon" />
-                        </div> */}
-                      <p>Student Checkin </p>
-                      <p className="bold">15</p>
+                      <p>Pickup</p>
+                      <p className="bold">8:00am</p>
                     </div>
                     <div className="conductormapstop-containers">
-                      <p>Remaining Seats</p>
-                      <p className="bold">35</p>
+                      <p>Dropoff</p>
+                      <p className="bold">8:10am</p>
                     </div>
                   </div>
                 </div>
-                {/* <button className=" student-button edit-stops">
-                  ADD Favorite Stop
-                </button> */}
               </section>
             </div>
           </Modal.Body>
@@ -123,14 +108,13 @@ function ConductorMap() {
         style={{ width: "100%", height: "100%" }}
         onClick={handleMapClick}
       >
-        <TileLayer url="https://api.maptiler.com/maps/bright-v2/256/{z}/{x}/{y}.png?key=RBRODA7cHl7LOG0fTgd6" />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
         {/* Render marker if position is available */}
         {markerPosition && (
           <Marker
             position={markerPosition}
             icon={customIcon}
-            eventHandlers={{ click: getCurrentLocation }}
           >
             <Popup>
               Your current location. <br /> Latitude: {markerPosition[0]},
@@ -146,11 +130,7 @@ function ConductorMap() {
             position={point}
             icon={customIcon}
             eventHandlers={{ click: () => handleMarkerClick(point) }}
-          >
-            {/* <Popup>
-                Point {index + 1} <br /> Latitude: {point[0]}, Longitude: {point[1]}.
-              </Popup> */}
-          </Marker>
+          />
         ))}
 
         {/* Draw polyline between points */}

@@ -1,49 +1,27 @@
-.scanner-screen{
-    background-color: #168070;
-    height: 100vh;
-    width: 100vw;
+.scanner-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #154941;
 }
-.scanner-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    .scanner-screen {
-        background:  #0b5345;
-       
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .scanner-container {
-        border: 2px solid #fff;
-        border-radius: 10px;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .scannerbus-img {
-        margin-bottom: 20px;
-    }
-    
-    .barcode-scanner {
-        margin-top: 20px;
-        height: 300px;
-        width: 300px;
-    }
-    
+ 
+.scanner-container {
+  background-color: #75c5b8;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ 
 }
-.scannerbus-img{
-    height: 100px;
-    width: 100px;
-    margin-bottom: 20px;
 
+.scannerbus-img {
+  margin-bottom: 20px;
 }
-.barcode-scanner{
-    margin-top: 20px;
- height: 300px;   
- width: 300px;   
-}
+
+.barcode-scanner {
+    border-radius: 10px;
+  width:270px;
+  height: 200px;
+margin-top: 50px;
+  border: 2px solid black;
+} 

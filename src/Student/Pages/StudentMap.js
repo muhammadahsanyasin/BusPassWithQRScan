@@ -4,9 +4,10 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
 import { Modal, Button } from "react-bootstrap";
-import checkin from "../../Assets/checkin.png";
+
 import '../Pages/Styles/StudentMap.css';
 
+// Custom marker icon
 const customIcon = L.icon({
   iconUrl: markerIcon,
   iconSize: [38, 38],
@@ -51,7 +52,7 @@ function StudentMap() {
   }, []); // Empty dependency array ensures this effect runs only once on mount
 
   const handleMapClick = (event) => {
-    setMarkerPosition(event.latlng);
+    setMarkerPosition([event.latlng.lat, event.latlng.lng]);
   };
 
   const getCurrentLocation = () => {
@@ -78,7 +79,7 @@ function StudentMap() {
   };
 
   return (
-    <div className="googlemap-container">
+    <div className="googlemap-container" style={{ width: "100%", height: "100vh" }}>
       {/* Modal for displaying marker information */}
       <Modal show={showMarkerModal} onHide={handleCloseMarkerModal}>
         <div style={{ backgroundColor: "#2FAA98" }}>
@@ -120,7 +121,7 @@ function StudentMap() {
         onClick={handleMapClick}
       >
         <TileLayer
-          url="https://api.maptiler.com/maps/bright-v2/256/{z}/{x}/{y}.png?key=RBRODA7cHl7LOG0fTgd6"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         {/* Render marker if position is available */}
@@ -149,9 +150,6 @@ function StudentMap() {
         {/* Draw polyline between points */}
         <Polyline positions={points} color="blue" />
       </MapContainer>
-
-      
-      
     </div>
   );
 }

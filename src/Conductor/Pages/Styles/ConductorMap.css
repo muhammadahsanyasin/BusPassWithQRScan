@@ -9,7 +9,7 @@
   }
   .show-stops-conductormap {
     border-radius: 10px 10px 10px 10px;
-    height: 200px;
+    height: 150px;
     width: 350px;
     background-color: rgb(18, 110, 97);
     display: flex;

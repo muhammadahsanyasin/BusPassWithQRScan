@@ -39,6 +39,7 @@ import AdminSearchUpdate from "./Admin/Pages/AdminSearchUpdate";
 
 
 
+
 function App() {
   const { loginstatus } = useStore();
   const [selectPosition, setSelectPosition] = useState(null);
@@ -52,6 +53,7 @@ function App() {
         {/* Protected routes */}
         {loginstatus ? (
           <>
+        
             <Route path="/ParentDashboard"element={<ParentDashboard progress={59} />}/>
             <Route path="/ChangePassword" element={<ChangePassword />} />
             <Route path="/ParentMap" element={<ParentMap />} />    

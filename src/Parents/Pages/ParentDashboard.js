@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../Pages/Styles/ParentDashboard.css";
 import ParentNavbar from "../Components/ParentNavbar";
 import { Link } from "react-router-dom";
 function ParentDashboard({ progress }) {
+
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+    const childrendata = async () => {
+      const response = await fetch(
+        "http://localhost/WebApi/api/Parent/GetChildren?id=10",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        setdata( await response.json());
+        console.log(data);
+        return data;
+      }
+    };
+    childrendata();
+  }, []);
+
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const progressOffset = ((100 - progress) / 100) * circumference;
   return (
     <div className="parent-dashboard">
       <ParentNavbar />
-
+      <div>
+      {data.map((Children, index) => (
       <div className="parentdashboard-container">
         <div className="white-container">
           <h2>Childrens</h2>
@@ -75,7 +98,7 @@ function ParentDashboard({ progress }) {
                     </svg>
                   </div>
 
-                  <h2>ZaiD</h2>
+                  <h2>{Children.Name}</h2>
                   <div class="row">
                   <p>Pickup Timings</p>
                     <div className="stops">
@@ -242,6 +265,8 @@ function ParentDashboard({ progress }) {
           </section>
         </div>
       </div>
+       ))}
+       </div>
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import '../Pages/Styles/ConductorVerification.css';
-import checkin from '../../Assets/checkin.png'
+import verified from '../../Assets/verified.png'
 function ConductorVerification() {
     return (
         <div className="verification-screen">
         <div className="verification-container">
-            <img src={checkin} alt="Verification" className="verification-image" />
+            <img src={verified} alt="Verification" className="verification-image" />
             <div className="status">Status: Valid</div>
             <table className="info-table">
                 <thead>
