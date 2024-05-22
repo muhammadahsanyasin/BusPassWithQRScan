@@ -43,7 +43,7 @@ function AddNewStudent() {
   }
 
   return (
-    <div className="container">
+    <div className="studentinfo-container">
       
         <h2>Student Information</h2>
         <div>
@@ -87,7 +87,7 @@ function AddNewStudent() {
           />
         </div>
         <div>
-          <label>Gender:</label>
+        <label>Gender:</label>
           <label>
             <input type="radio" name="gender" value="male" onChange={handleinput} />
             Male

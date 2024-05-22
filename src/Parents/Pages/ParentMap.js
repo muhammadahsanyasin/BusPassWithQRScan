@@ -47,7 +47,7 @@ function ParentMap() {
   };
 
   return (
-    <div className="googlemap-container" style={{ height: "500px" }}>
+    <div className="googlemap-container" style={{ height: "100vh" }}>
       <MapContainer
         center={markerPosition || initialPosition}
         zoom={15}

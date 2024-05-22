@@ -84,7 +84,7 @@ function StudentMap() {
       <Modal show={showMarkerModal} onHide={handleCloseMarkerModal}>
         <div style={{ backgroundColor: "#2FAA98" }}>
           <Modal.Header closeButton>
-            <Modal.Title>Marker Information</Modal.Title>
+            <Modal.Title>Chandni Chowk</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="add-stops-studentmap">
@@ -95,17 +95,17 @@ function StudentMap() {
                       {/* <div className="person-icon">
                         <img src={checkin} alt="Person Icon" />
                       </div> */}
-                      <p>Student Checkin </p>
-                      <p className="bold">15</p>
+                      <p>Pickup </p>
+                      <p className="bold">8:00am</p>
                     </div>
                     <div className="studentmapstop-containers">
-                      <p>Remaining Seats</p>
-                      <p className="bold">35</p>
+                      <p>Rout No</p>
+                      <p className="bold">3</p>
                     </div>
                   </div>
                 </div>
                 <button className=" student-button edit-stops">
-                  ADD Favorite Stop
+                  ADD To Favorite Stop
                 </button>
               </section>
             </div>
@@ -116,7 +116,7 @@ function StudentMap() {
 
       <MapContainer
         center={markerPosition || initialPosition}
-        zoom={20}
+        zoom={15}
         style={{ width: "100%", height: "100%" }}
         onClick={handleMapClick}
       >

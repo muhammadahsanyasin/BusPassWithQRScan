@@ -1,0 +1,33 @@
+.add-more-journeys-screen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #168070;
+}
+
+
+.add-more-journeys-container {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24vw;
+    background-color: #1b685e;
+   
+}
+.daypicker-container{
+    margin-top: 15px;
+}
+
+
+.verification-section{
+    margin-top: 20px;
+   
+}
+  
+ 
+ 
+  
+  

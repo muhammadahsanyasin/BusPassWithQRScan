@@ -59,6 +59,7 @@
     margin: 10px 10px 10px 10px;
     color: black;
     justify-content: center;
+    font-weight: bolder;
     padding: 11.1px 1.4px 9.9px 0;
     width: 20vw;
     
@@ -70,6 +71,7 @@
     margin: 10px 10px 10px 10px;
     color: black;
     justify-content: center;
+    font-weight: bolder;
     padding: 11.1px 1.4px 9.9px 0;
     width: 20vw;
     
@@ -79,6 +81,7 @@
     border-radius: 6px;
     background: #FFFFFF;
     margin: 10px 10px 10px 10px;
+    font-weight: bolder;
     color: black;
     justify-content: center;
     padding: 11.1px 1.4px 9.9px 0;

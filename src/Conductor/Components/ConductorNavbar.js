@@ -38,7 +38,7 @@ function ConductorNavbar() {
                   </Link>
                 </li>
                 
-               
+{/*                
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
@@ -46,7 +46,7 @@ function ConductorNavbar() {
                   >
                     BarCode Verification
                   </Link>
-                </li>
+                </li> */}
                 
                 
     

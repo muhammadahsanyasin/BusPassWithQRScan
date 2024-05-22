@@ -31,18 +31,18 @@ function StudentNavbar() {
                     className="nav-link color hover active"
                     to="/BarCodeGenrator"
                   >
-                    BarCode Genrator
+                    BarCode 
                   </Link>
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
                     to="/StudentNotificationDetails"
                   >
                     Student Notification Details
                   </Link>
-                </li>
+                </li> */}
 
                 {/* <li className="nav-item">
                   <Link

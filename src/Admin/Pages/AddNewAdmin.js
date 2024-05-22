@@ -60,7 +60,7 @@ function AddNewAdmin() {
           <label>
             <input type="radio" name="gender" value="male" onChange={handleinput} />
             Male
-            <input type="radio" name="gender" value="female"  onChange={handleinput}/>
+            <input  type="radio" name="gender" value="female"  onChange={handleinput}/>
             Female
           </label>
         

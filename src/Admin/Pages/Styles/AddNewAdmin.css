@@ -37,6 +37,7 @@
   
   .form-container {
     margin-top: 20px;
+    width: 20vw;
   }
   
   input[type='text'] {

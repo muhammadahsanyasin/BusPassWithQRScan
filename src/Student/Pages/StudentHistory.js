@@ -67,8 +67,8 @@ function StudentHistory() {
                 {data.map((item, index) => (
                     <div className="flat-list-row" key={index}>
                         <p className="date-time">Today, 11:30 AM</p>
-                        <p className="history-type">History Type</p>
-                        <p className="history-description">Description</p>
+                        <p className="history-type">Student QR Scanned</p>
+                        <p className="history-description">Student Verified </p>
                     </div>
                 ))}
             </div>

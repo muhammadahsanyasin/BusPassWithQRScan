@@ -1,13 +1,39 @@
-import React from "react";
+import React ,{useState,useEffect}from "react";
 import "../Pages/Styles/ConductorDashboard.css";
 import ConductorNavbar from "../Components/ConductorNavbar";
+
 function ConductorDashboard({ progress }) {
+
+
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+    const studentdata = async () => {
+      const response = await fetch(
+        "http://localhost/WebApi/api/Student/GetFavStops?id=1",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        setdata( await response.json());
+        console.log(data);
+        return data;
+      }
+    };
+    studentdata();
+  }, []);
+
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const progressOffset = ((50 - progress) / 50) * circumference;
+
   return (
     <div className="conductor-dashboard">
       <ConductorNavbar />
+      
 
       <div className="conductorprogress-container">
         <div className="progress-label">Seates Used: {progress}</div>
@@ -42,6 +68,7 @@ function ConductorDashboard({ progress }) {
         <div className="white-container">
           <h2>Next Stop</h2>
         </div>
+        
         <div className="favorit-stops-conductor">
           <section className="dashboard-container">
             <h2>6th Road</h2>
@@ -59,19 +86,19 @@ function ConductorDashboard({ progress }) {
         </div>
 
         <div className="white-container">
-          <h2>Bus Seats Availablity</h2>
+          <h2>Journey Details</h2>
         </div>
         <div className="favorit-stops-conductor">
           <section className="dashboard-container">
             <div class="row">
               <div className="stops">
                 <div className="conductorstop-containers">
-                  <p>Student Checkin </p>
+                  <p>Total Stops </p>
                   <p className="bold">15</p>
                 </div>
                 <div className="conductorstop-containers">
-                  <p>Remaing Seats</p>
-                  <p className="bold">35</p>
+                  <p>Remaing Stops</p>
+                  <p className="bold">5</p>
                 </div>
               </div>
             </div>

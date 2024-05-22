@@ -19,7 +19,7 @@ import AdminProfile from "./Admin/Pages/AdminProfile";
 import ConductorProfile from "./Conductor/Pages/ConductorProfile";
 import ParentProfile from "./Parents/Pages/ParentProfile";
 import BarCodeGenrator from "./Student/Pages/BarCodeGenrator";
-import StudentProfile from "./Student/Pages/StudentProfile";
+
 import StudentFavStop from "./Student/Pages/StudentFavStop";
 import StudentHistory from "./Student/Pages/StudentHistory";
 import StudentNotificationDetails from "./Student/Pages/StudentNotificationDetails";
@@ -33,7 +33,12 @@ import AdminMap from "./Admin/Pages/AdminMap";
 import StudentMap from "./Student/Pages/StudentMap";
 import ConductorMap from "./Conductor/Pages/ConductorMap";
 import ConductorVerification from "./Conductor/Pages/ConductorVerification";
-import AdminSearchUpdate from "./Admin/Pages/AdminSearchUpdate";
+
+import AddMoreJourneys from "./Admin/Pages/AddMoreJourneys";
+import SearchAndUpdate from "./Admin/Pages/SearchAndUpdate";
+import AddScreens from "./Admin/Pages/AddScreens";
+import StudentProfile from "./Student/Pages/StudentProfile";
+import StudentNotification from "./Student/Pages/StudentNotification";
 
 
 
@@ -71,7 +76,7 @@ function App() {
             <Route path="/ParentProfile" element={<ParentProfile />} />
             <Route path="/BarCodeGenrator" element={<BarCodeGenrator />} />
             <Route path="/ConductorDashboard" element={<ConductorDashboard progress={35} />}/>
-            <Route path="/StudentProfile" element={<StudentProfile />} />
+           
             <Route path="/StudentFavStop" element={<StudentFavStop/>} />
             <Route path="/StudentNotificationDetails" element={<StudentNotificationDetails/>} />
            <Route path="/GoogleMap" element={<GoogleMap/>} />
@@ -85,7 +90,11 @@ function App() {
            <Route path="/StudentMap" element={<StudentMap/>} />
            <Route path="/ConductorMap" element={<ConductorMap/>} />
            <Route path="/ConductorVerification" element={<ConductorVerification/>} />
-           <Route path="/AdminSearchUpate" element={<AdminSearchUpdate/>} />
+           <Route path="/SearchAndUpdate" element={<SearchAndUpdate/>} />
+           <Route path="/AddMoreJourneys" element={<AddMoreJourneys/>} />
+           <Route path="/AddScreens" element={<AddScreens/>} />
+           <Route path="/StudentProfile" element={<StudentProfile/>} />
+           <Route path="/StudentProfile" element={<StudentNotification/>} />
            
            
           </>

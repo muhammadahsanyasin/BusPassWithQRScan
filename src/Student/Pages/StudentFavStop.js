@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../Pages/Styles/StudentFavStop.css';
 
 function StudentFavStop() {
-    const data = [
-      { Name: 'Stop', Route: 'Route #' },
-      { Name: 'Stop', Route: 'Route #' },
-      { Name: 'Stop', Route: 'Route #' },
-      { Name: 'Stop', Route: 'Route #' },
-      { Name: 'Stop', Route: 'Route #' },
-      { Name: 'Stop', Route: 'Route #' },
-      { Name: 'Stop', Route: 'Route #' },
-      { Name: 'Stop', Route: 'Route #' },
-    ];
-
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+    const studentdata = async () => {
+      const response = await fetch(
+        "http://localhost/WebApi/api/Student/GetFavStops?id=1",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        setdata(await response.json());
+        console.log(data);
+        return data;
+      }
+    };
+    studentdata();
+  }, []);
     const [checkedStates, setCheckedStates] = useState(Array(data.length).fill(false));
 
     const handleCheckboxPress = (index) => {
@@ -37,8 +46,8 @@ function StudentFavStop() {
           {data.map((item, index) => (
             <div className="flatListRow" key={index}>
               <div>
-                <p className="StopNametextStyle">Stop Name {index + 1}</p>
-                <p className="RouteNotextStyle">Route # {index + 1}</p>
+                <p className="StopNametextStyle">{item.Name} </p>
+                <p className="RouteNotextStyle">Route:{item.Route} </p>
               </div>
               <button
                 className={`checkBox ${checkedStates[index] ? 'checkedBox' : ''}`}

@@ -43,10 +43,11 @@ function ConductorProfile() {
           <div class="row">
             <div class="col">
               Contact No
-              <h4>{data.Conductors.Contact}</h4>
+              {/* <h4>{data.Conductors.Contact}</h4> */}
+              <h4>03015667</h4>
             </div>
             <div class="col">
-              UserName
+              User Name
               <h4>{data.Conductors.UserName}</h4>
             </div>
           </div>

@@ -17,7 +17,7 @@ function StudentDashboard({ progress }) {
         }
       );
       if (response.ok) {
-        setdata( await response.json());
+        setdata(await response.json());
         console.log(data);
         return data;
       }
@@ -29,12 +29,10 @@ function StudentDashboard({ progress }) {
   const circumference = 2 * Math.PI * radius;
   const progressOffset = ((100 - progress) / 100) * circumference;
 
- 
-    return (
-      <div className="student-dashboard">
-        <StudentNavbar />
-        <div>
-      {data.map((stop, index) => (
+  return (
+    <div className="student-dashboard">
+      <StudentNavbar />
+      <div>
         <form>
           <div className="progress-container">
             <div className="progress-label">Journeys Used: {progress}%</div>
@@ -71,53 +69,37 @@ function StudentDashboard({ progress }) {
             <div className="studentfavorit-stops">
               <section className="dashboard-container">
                 <div
-                  id="carouselExampleIndicators"
+                  id="carouselExampleControls"
                   class="carousel slide"
                   data-bs-ride="carousel"
                 >
-                  <div class="carousel-indicators">
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleIndicators"
-                      data-bs-slide-to="0"
-                      class="active"
-                      aria-current="true"
-                      aria-label="Slide 1"
-                    ></button>
-                    {/* <button
-                      type="button"
-                      data-bs-target="#carouselExampleIndicators"
-                      data-bs-slide-to="1"
-                      aria-label="Slide 2"
-                    ></button>
-                    <button
-                      type="button"
-                      data-bs-target="#carouselExampleIndicators"
-                      data-bs-slide-to="2"
-                      aria-label="Slide 3"
-                    ></button> */}
-                  </div>
                   <div class="carousel-inner">
-                    
-                    <div class="carousel-item active student-card">
-    
-                      <h2>{stop.Name}</h2>
+                    {data.map((stop, index) => (
+                      <>
+                        {
+                          <div className={stop.Id === 1 ? `carousel-item active student-card`  : `carousel-item  student-card`}>
+                         
+                          
+                            <h2>{stop.Name}</h2>
 
-                      <div class="row">
-                        <div className="stops">
-                          <div className="studentstop-containers">
-                            <p>  Route No </p>
-                            <p className="bold">{stop.Route}</p>
+                            <div class="row">
+                              <div className="stops">
+                                <div className="studentstop-containers">
+                                  <p> Route No </p>
+                                  <p className="bold">{stop.Route}</p>
+                                </div>
+                                <div className="studentstop-containers">
+                                  <p>Stop Timing</p>
+                                  <p className="bold">{stop.Timing}</p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <div className="studentstop-containers">
-                            <p>Stop Timing</p>
-                            <p className="bold">{stop.Timing}</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                    </div>
-{/*                   
+                        }
+                      </>
+                    ))}
+
+                    {/*                   
                     <div class="carousel-item admin-card">
                       <h2>6th Road</h2>
 
@@ -151,6 +133,30 @@ function StudentDashboard({ progress }) {
                       </div>
                     </div> */}
                   </div>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
                 </div>
               </section>
               <Link to="/StudentFavStop">
@@ -161,10 +167,9 @@ function StudentDashboard({ progress }) {
             </div>
           </div>
         </form>
-          ))}
-          </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default StudentDashboard;
