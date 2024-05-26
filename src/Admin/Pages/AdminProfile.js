@@ -2,81 +2,105 @@ import React, { useEffect, useState } from "react";
 import profile from "../../Assets/profile.png";
 import "../Pages/Styles/AdminProfile.css";
 import { Link } from "react-router-dom";
+
+import useStore from '../../store'
+
+
+
+
+
 function AdminProfile() {
-  const [api, setapi] = useState(
-    "http://localhost/WebApi/api/users/GetUserById?id=3"
-  );
-  const [data, setdata] = useState("");
+  const [loginstatus, setloginstatus] = useState(JSON.parse(localStorage.getItem("user")))
+  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
+  const [api, setApi] = useState(`http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}`);
+  const [data, setData] = useState(null); // Use null instead of an empty string
 
   useEffect(() => {
-    const adminsdata = async () => {
-      const response = await fetch(api, {
-        method: "GET", //POST, PUT,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    
+    const fetchAdminData = async () => {
+      try {
+        
 
-      if (response.ok) {
-        const d = await response.json();
-        setdata(d);
-        console.log(data);
+       
+     
+        const response = await fetch(api, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          await setData(result); // Set the fetched data
+          console.log(result);
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
     };
-    adminsdata();
-  }, []); //[] call only once
+    fetchAdminData()
+    
+  }, [api]);
 
-  if (data)
-    return (
-      <div className="admin-profile">
-        <div className="adminprofile-container">
-          <div className="person-icon">
-            <img src={profile} alt="Person Icon" />
-          </div>
+  // Ensure data and data.Admins are defined before attempting to render
+  if (!data ) {
+    return <div>Loading...</div>;
+  }
+  
+ 
 
-          <div className="person-details">
-            <h2>{data.Admins.Name}</h2>
-            <p>32456-675776-3</p>
-          </div>
-
-          <div class="table-container">
-            <div class="row">
-              <div class="col">
-                Contact No
-                <h4>{data.Admins.Contact}</h4>
-              </div>
-              <div class="col">
-                Gender
-                <h4>{data.Admins.Gender}</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                User ID
-                <h4>{data.Admins.Id}</h4>
-              </div>
-              <div class="col">
-                User Name
-                <h4>{data.Admins.UserName}</h4>
-              </div>
-            </div>
-          </div>
-        
+  return (
+    <div className="admin-profile">
+      <div className="adminprofile-container">
+        <div className="person-icon">
+          <img src={profile} alt="Person Icon" />
         </div>
-        <Link  to='/AdminHistory' >
-          <button className=" adminhistory-button edit-stops">History</button>
-          </Link>
 
-        <Link  to="/ChangePassword">
-          <button className=" adminchangepwd-button edit-stops">Change Password</button>
-          </Link>
+        <div className="person-details">
+          <h2>{data.user.username }</h2>
+          <p>32456-675776-3</p>
+        </div>
 
-        <Link  to="/">
-          <button className="adminlogout-button edit-stops">Log Out</button>
-          </Link>
-        
+        <div className="table-container">
+          <div className="row">
+            <div className="col">
+              Contact No
+              <h4>{data.user.contact}</h4>
+            </div>
+            <div className="col">
+              Gender
+              <h4>{data.user.gender}</h4>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              User ID
+              <h4>{data.user.id || 'id' }</h4>
+            </div>
+            <div className="col">
+              User Name
+              <h4>{data.user.role || "fuck me"}</h4>
+            </div>
+          </div>
+        </div>
       </div>
-    );
+
+      <Link to='/AdminHistory'>
+        <button className="adminhistory-button edit-stops">History</button>
+      </Link>
+
+      <Link to="/ChangePassword">
+        <button className="adminchangepwd-button edit-stops">Change Password</button>
+      </Link>
+
+      <Link to="/">
+        <button className="adminlogout-button edit-stops">Log Out</button>
+      </Link>
+    </div>
+  );
 }
 
 export default AdminProfile;

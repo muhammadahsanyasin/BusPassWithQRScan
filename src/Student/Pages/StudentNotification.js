@@ -1,126 +1,73 @@
-import React from "react";
+import React ,{useEffect,useState}from "react";
+import busarrived from '../../Assets/busarrived.png';
+import checkout from '../../Assets/checkout.png';
+import checkin from '../../Assets/checkin.png';
+import scanqrcode from '../../Assets/scanqrcode.png';
 
-import busarrived from'../../Assets/busarrived.png';
-import checkout from'../../Assets/checkout.png';
-import checkin from'../../Assets/checkin.png';
-import scanqrcode from'../../Assets/scanqrcode.png';
 function StudentNotification() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const response = await fetch(
+        "http://localhost/WebApi/api/Users/GetUserNotification?id=1",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);  // Log the data to see its structure
+        if (responseData && responseData.status === true && Array.isArray(responseData.data)) {
+          setData(responseData.data);
+        } else {
+          console.error("Expected an array in the data property but got:", responseData);
+        }
+      }
+    };
+    fetchNotifications();
+  }, []);
     return (
-        <div>
-          <div class="parent-notification">
-            <div class="wrapper">
-              <div class="top-bar">
-                <div class="title">
-                  <p class="title-text">Notifications</p>
-                  <p class="num" id="num">
-                    1
+      <div>
+      <div className="parent-notification">
+        <div className="wrapper">
+          <div className="top-bar">
+            <div className="title">
+              <p className="title-text">Notifications</p>
+              <p className="num" id="num">
+                {data.length}
+              </p>
+            </div>
+            <a href="#" className="read" id="read">
+              Mark all as read
+            </a>
+          </div>
+          {data.map((admin) => (
+            <div className="notifications" key={admin.Id}>
+              <div className="single-box unseen">
+                <div className="avatar">
+                  <img src={checkout} alt="checkout" />
+                </div>
+                <div className="box-text">
+                  <p className="notifi">
+                    <a href="#" className="name">
+                      {admin.Type}
+                    </a>
+                    <br />
+                    {admin.Description}
                   </p>
+                  <p className="time">{admin.Time}</p>
                 </div>
-                <a href="#" class="read" id="read">
-                  Mark all as read
-                </a>
-              </div>
-              <div class="notifications">
-                {/* <!-- single notification starts --> */}
-                <div class="single-box unseen">
-                  <div class="avatar">
-                    <img
-                      src={checkout}
-                      alt="checkout"
-                    />
-                  </div>
-                  <div class="box-text">
-                    <p class="notifi">
-                      <a href="#" class="name">
-                        {" "}
-                       Check Out!{" "}
-                      </a>
-                      <br />
-                      Ahsan is checked out at univeristy {" "}
-                      
-                      
-                    </p>
-                    <p class="time">1m ago</p>
-                  </div>
-                </div>
-                {/* <!-- single notification end -->
-    
-    
-     {/* <!-- single notification starts --> */}
-                <div class="single-box unseen">
-                  <div class="avatar">
-                    <img
-                      src={checkin}
-                      alt=""
-                    />
-                  </div>
-                  <div class="box-text">
-                    <p class="notifi">
-                      <a href="#" class="name">
-                        {" "}
-                       Check in!{" "}
-                      </a>
-                      <br />
-                      Ahsan is checked in Bus no 02 at chandni chock {" "}
-                      
-                      
-                    </p>
-                    <p class="time">2h ago</p>
-                  </div>
-                </div>
-                {/* <!-- single notification end -->
-    
-            <!-- single notification starts --> */}
-                <div class="single-box unseen">
-                  <div class="avatar">
-                    <img
-                      src={scanqrcode}
-                      alt=""
-                    />
-                  </div>
-                  <div class="box-text">
-                    <p class="notifi">
-                      <a href="#" class="name">
-                        Ahsan QrCodeScan{" "}
-                      </a>
-                      <br />
-                      Remaining Journeys are 30
-                     
-                    </p>
-                    <p class="time">5m ago</p>
-                  </div>
-                </div>
-                {/* <!-- single notification end -->
-            <!-- single notification starts --> */}
-               
-            
-                <div class="single-box">
-                  <div class="avatar">
-                    <img
-                      src={busarrived}
-                      alt="busarrived"
-                    />
-                  </div>
-                  <div class="box-text">
-                    <p class="notifi">
-                      <a href="#" class="name">
-                        Bus Arrived!{" "}
-                      </a>
-                      <br />
-                      Bus has been arrived in 20 mint at 6th road {" "}
-                     
-                    </p>
-                    <p class="time">2 weeks ago</p>
-                  </div>
-                </div>
-                {/* <!-- single notification end --> */}
               </div>
             </div>
-          </div>
-         
-         
+          ))}
         </div>
+      </div>
+    </div>
       );
 }
 
-export default StudentNotification
+export default StudentNotification;

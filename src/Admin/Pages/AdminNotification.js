@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
-import "../Pages/Styles/ParentsNotification.css";
-import busarrived from "../../Assets/busarrived.png";
-import checkout from "../../Assets/checkout.png";
-import checkin from "../../Assets/checkin.png";
-import scanqrcode from "../../Assets/scanqrcode.png";
+import React,{useEffect,useState} from 'react'
+import busarrived from '../../Assets/busarrived.png';
+import checkout from '../../Assets/checkout.png';
+import checkin from '../../Assets/checkin.png';
+import scanqrcode from '../../Assets/scanqrcode.png';
+function AdminNotification() {
 
-function ParentsNotification() {
+  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
+  const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
+ 
+  const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -32,8 +35,20 @@ function ParentsNotification() {
     fetchNotifications();
   }, []);
 
-  return (
-    <div>
+
+
+  if(admin==null)
+    {
+      window.location.assign("/login")
+    }
+
+    if(loginstatusrole!=="Admin")
+      {
+        return <h1>you are not logged in as admin</h1>
+      }
+  
+    return (
+      <div>
       <div className="parent-notification">
         <div className="wrapper">
           <div className="top-bar">
@@ -47,8 +62,8 @@ function ParentsNotification() {
               Mark all as read
             </a>
           </div>
-          {data.map((parent) => (
-            <div className="notifications" key={parent.Id}>
+          {data.map((admin) => (
+            <div className="notifications" key={admin.Id}>
               <div className="single-box unseen">
                 <div className="avatar">
                   <img src={checkout} alt="checkout" />
@@ -56,12 +71,12 @@ function ParentsNotification() {
                 <div className="box-text">
                   <p className="notifi">
                     <a href="#" className="name">
-                      {parent.Type}
+                      {admin.Type}
                     </a>
                     <br />
-                    {parent.Description}
+                    {admin.Description}
                   </p>
-                  <p className="time">{parent.Time}</p>
+                  <p className="time">{admin.Time}</p>
                 </div>
               </div>
             </div>
@@ -69,7 +84,7 @@ function ParentsNotification() {
         </div>
       </div>
     </div>
-  );
+      );
 }
 
-export default ParentsNotification;
+export default AdminNotification

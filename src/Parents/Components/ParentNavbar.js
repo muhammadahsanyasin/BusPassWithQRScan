@@ -33,6 +33,14 @@ function ParentNavbar() {
                     Dashboard
                   </Link>
                 </li> */}
+                <li className="nav-item">
+                  <Link
+                    className="nav-link color hover active"
+                    to="/ParentNotifiucationDetail"
+                  >
+                    ParentNotifiucationDetail
+                  </Link>
+                </li>
                 
                 
     

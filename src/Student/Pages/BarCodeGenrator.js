@@ -26,7 +26,7 @@ function BarCodeGenrator() {
           <QRCode
             size={500}
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-            value={8999}
+            value={"hello me"}
             viewBox={`0 0 256 256`}
           />
         </div>

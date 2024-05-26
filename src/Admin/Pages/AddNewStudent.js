@@ -2,19 +2,25 @@ import React, { useState } from "react";
 import "../Pages/Styles/AddNewStudent.css";
 
 function AddNewStudent() {
-  const [isNewParent, setIsNewParent] = useState(true);
- 
-  const [formdata, setFormData] = useState({ })
 
+  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
+  const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
  
+  const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
+
+
+
+  const [isNewParent, setIsNewParent] = useState(true);
+  const [formdata, setFormData] = useState({});
+
   const studentdata = async () => {
     console.log('Form Data:', formdata);
 
     try {
-      const response = await fetch("http://localhost/WebApi/api/users/InsertStudent", {
+      const response = await fetch("http://localhost/WebApi/api/Users/AddUser", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json', // Set headers for JSON data
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formdata),
       });
@@ -29,141 +35,157 @@ function AddNewStudent() {
       }
     } catch (error) {
       console.error('Fetch error:', error);
-      alert(`Errrr saving data: ${error.message}`);
+      alert(`Error saving data: ${error.message}`);
     }
   };
-  
-  const handleinput = (e) =>{
-    const {name, value} = e.target;
-    setFormData({
-      ...formdata,//spread opt
-      [name]: value})
 
-      console.log(formdata)
-  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formdata,
+      [name]: value,
+    });
+    console.log(formdata);
+  };
+
+
+  if(admin==null)
+    {
+      window.location.assign("/login")
+    }
+
+    if(loginstatusrole!=="Admin")
+      {
+        return <h1>you are not logged in as admin</h1>
+      }
 
   return (
-    <div className="studentinfo-container">
-      
-        <h2>Student Information</h2>
-        <div>
-          {/* <label htmlFor="name">Name:</label> */}
-          <input
-            type="text"
-            id="Name"
-            name="Name"
-            placeholder="Name"
-           onChange={handleinput}
-          />
-        </div>
-        <div>
-          {/* <label htmlFor="registrationNo">Registration No:</label> */}
-          <input
-            type="text"
-            id="RegNo"
-            name="RegNo"
-            placeholder="Registration No"
-            onChange={handleinput}
-          />
-        </div>
-        <div>
-          {/* <label htmlFor="password">Password:</label> */}
-          <input
-            type="password"
-            id="Password"
-            name="Password"
-            placeholder="Password"
-            onChange={handleinput}
-          />
-        </div>
-        <div>
-          {/* <label htmlFor="contactNo">Contact No:</label> */}
-          <input
-            type="text"
-            id="Contact"
-            name="Contact"
-            placeholder="Contact No"
-            onChange={handleinput}
-          />
-        </div>
-        <div>
+    <div className="add-new-student-container">
+      <h2>Student Information</h2>
+      <div className="input-group">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Name"
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="input-group">
+        <input
+          type="text"
+          id="regno"
+          name="regno"
+          placeholder="Registration No"
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="input-group">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="input-group">
+        <input
+          type="text"
+          id="contact"
+          name="contact"
+          placeholder="Contact No"
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="radio-group">
         <label>Gender:</label>
-          <label>
-            <input type="radio" name="gender" value="male" onChange={handleinput} />
-            Male
-            <input type="radio" name="gender" value="female"  onChange={handleinput}/>
-            Female
-          </label>
-        </div>
-        <div>
-          <label>Parent:</label>
-          <label>
+        <label className="radio-label">
+          <input
+            type="radio"
+            name="gender"
+            value="male"
+            onChange={handleInputChange}
+          />
+          Male
+        </label>
+        <label className="radio-label">
+          <input
+            type="radio"
+            name="gender"
+            value="female"
+            onChange={handleInputChange}
+          />
+          Female
+        </label>
+      </div>
+      <div className="radio-group">
+        <label>Parent:</label>
+        <label className="radio-label">
+          <input
+            type="radio"
+            name="role"
+            value="new"
+            checked={isNewParent}
+            onChange={() => setIsNewParent(true)}
+          />
+          New
+        </label>
+        <label className="radio-label">
+          <input
+            type="radio"
+            name="role"
+            value="existing"
+            checked={!isNewParent}
+            onChange={() => setIsNewParent(false)}
+          />
+          Existing
+        </label>
+      </div>
+      {isNewParent ? (
+        <div className="new-parent-info">
+          <h3>Parent Information</h3>
+          <div className="input-group">
             <input
-              type="radio"
-              name="parentType"
-              value="new"
-              checked={isNewParent}
-              onChange={() => setIsNewParent(true)}
-
+              type="text"
+              id="parentName"
+              name="parentName"
+              placeholder="Name"
+              onChange={handleInputChange}
             />
-            New
+          </div>
+          <div className="input-group">
             <input
-              type="radio"
-              name="parentType"
-              value="existing"
-              checked={!isNewParent}
-              onChange={() => setIsNewParent(false)}
+              type="password"
+              id="parentPassword"
+              name="parentPassword"
+              placeholder="Password"
+              onChange={handleInputChange}
             />
-            Existing
-          </label>
+          </div>
+          <div className="input-group">
+            <input
+              type="text"
+              id="parentContact"
+              name="parentContact"
+              placeholder="Contact No"
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
-        {isNewParent ? (
-          <div>
-            <h3>Parent Information</h3>
-            <div>
-              {/* <label htmlFor="parentName">Name:</label> */}
-              <input
-                type="text"
-                id="UserName"
-                name="UserName"
-                placeholder="Name"
-                onChange={handleinput}
-              />
-            </div>
-            <div>
-              {/* <label htmlFor="parentPassword">Password:</label> */}
-              <input
-                type="password"
-                id="Password"
-                name="Password"
-                placeholder="Password"
-                onChange={handleinput}
-              />
-            </div>
-            <div>
-              {/* <label htmlFor="parentContactNo">Contact No:</label> */}
-              <input
-                type="text"
-                id="parentContactNo"
-                name="parentContactNo"
-                placeholder="Contact No"
-                onChange={handleinput}
-              />
-            </div>
-          </div>
-        ) : (
-          <div>
-            <label htmlFor="parentId">Parent ID:</label>
-            <select id="parentId" name="parentId" onChange={handleinput}>
-              {/* Populate options with existing parent IDs */}
-              <option value="1">Parent 1</option>
-              <option value="2">Parent 2</option>
-            </select>
-          </div>
-        )}
-        <button onClick={studentdata} className=" addnewconductor-button  edit-stops">ADD</button>
-        {/* <button>Submit</button> */}
-      
+      ) : (
+        <div className="existing-parent-info">
+          <label htmlFor="parentId">Parent ID:</label>
+          <select id="parentId" name="parentId" onChange={handleInputChange}>
+            {/* Populate options with existing parent IDs */}
+            <option value="1">Parent 1</option>
+            <option value="2">Parent 2</option>
+          </select>
+        </div>
+      )}
+      <button onClick={studentdata} className="add-student-button">
+        ADD
+      </button>
     </div>
   );
 }

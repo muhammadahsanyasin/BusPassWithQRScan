@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "../Pages/Styles/ParentsNotification.css";
-import busarrived from "../../Assets/busarrived.png";
-import checkout from "../../Assets/checkout.png";
-import checkin from "../../Assets/checkin.png";
-import scanqrcode from "../../Assets/scanqrcode.png";
-
-function ParentsNotification() {
+import React ,{useEffect,useState} from 'react'
+import busarrived from '../../Assets/busarrived.png';
+import checkout from '../../Assets/checkout.png';
+import checkin from '../../Assets/checkin.png';
+import scanqrcode from '../../Assets/scanqrcode.png';
+function ConductorNotification() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -31,9 +29,8 @@ function ParentsNotification() {
     };
     fetchNotifications();
   }, []);
-
-  return (
-    <div>
+    return (
+      <div>
       <div className="parent-notification">
         <div className="wrapper">
           <div className="top-bar">
@@ -47,8 +44,8 @@ function ParentsNotification() {
               Mark all as read
             </a>
           </div>
-          {data.map((parent) => (
-            <div className="notifications" key={parent.Id}>
+          {data.map((conductor) => (
+            <div className="notifications" key={conductor.Id}>
               <div className="single-box unseen">
                 <div className="avatar">
                   <img src={checkout} alt="checkout" />
@@ -56,12 +53,12 @@ function ParentsNotification() {
                 <div className="box-text">
                   <p className="notifi">
                     <a href="#" className="name">
-                      {parent.Type}
+                      {conductor.Type}
                     </a>
                     <br />
-                    {parent.Description}
+                    {conductor.Description}
                   </p>
-                  <p className="time">{parent.Time}</p>
+                  <p className="time">{conductor.Time}</p>
                 </div>
               </div>
             </div>
@@ -72,4 +69,4 @@ function ParentsNotification() {
   );
 }
 
-export default ParentsNotification;
+export default ConductorNotification

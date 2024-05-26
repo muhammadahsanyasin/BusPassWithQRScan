@@ -35,7 +35,7 @@ function ConductorProfile() {
         </div>
 
         <div className="person-details">
-          <h2>{data.Conductors.Name}</h2>
+          <h2>{data.user.username}</h2>
           <p>32402-2852063-3</p>
         </div>
 
@@ -43,22 +43,22 @@ function ConductorProfile() {
           <div class="row">
             <div class="col">
               Contact No
-              {/* <h4>{data.Conductors.Contact}</h4> */}
+              <h4>{data.user.contact}</h4>
               <h4>03015667</h4>
             </div>
             <div class="col">
               User Name
-              <h4>{data.Conductors.UserName}</h4>
+              <h4>{data.user.username}</h4>
             </div>
           </div>
           <div class="row">
             <div class="col">
              Conductor ID
-              <h4>{data.Conductors.UserId}</h4>
+              <h4>{data.user.id}</h4>
             </div>
             <div class="col">
               Bus ID
-              <h4>{data.Conductors.Id}</h4>
+              <h4>{data.user.id}</h4>
             </div>
           </div>
         </div>

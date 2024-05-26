@@ -35,14 +35,14 @@ function StudentNavbar() {
                   </Link>
                 </li>
 
-                {/* <li className="nav-item">
+                <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
                     to="/StudentNotificationDetails"
                   >
                     Student Notification Details
                   </Link>
-                </li> */}
+                </li>
 
                 {/* <li className="nav-item">
                   <Link
@@ -66,7 +66,7 @@ function StudentNavbar() {
               </ul>
               <Link
                 className="nav-link color hover active navbar-text fw-bold "
-                to="/ParentsNotification"
+                to="/StudentNotification"
               >
                 Notification
               </Link>

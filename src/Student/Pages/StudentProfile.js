@@ -4,36 +4,30 @@ import profile from "../../Assets/profile.png";
 import { Link } from "react-router-dom";
 
 function StudentProfile() {
-  const [data, setData] = useState(null);
+  const [api, setapi] = useState(
+    "http://localhost/WebApi/api/users/GetUserById?id=2"
+  );
+  const [data, setdata] = useState("");
 
   useEffect(() => {
-    const fetchStudentData = async () => {
-      try {
-        const response = await fetch("http://localhost/WebApi/api/users/GetUserById?id=2", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+    const conductordata = async () => {
+      const response = await fetch(api, {
+        method: "GET", //POST, PUT,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (response.ok) {
-          const result = await response.json();
-          setData(result);
-        } else {
-          console.error("Failed to fetch data");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      if (response.ok) {
+        const d = await response.json();
+        setdata(d);
+        console.log(data);
       }
     };
+    conductordata();
+  }, []); //[] call only once
 
-    fetchStudentData();
-  }, []);
-
-  if (!data) {
-    return <div>Loading...</div>;
-  }
-
+  if (data)
   return (
     <div className="student-profile">
       <div className="studentprofile-container">
@@ -42,30 +36,30 @@ function StudentProfile() {
         </div>
 
         <div className="person-details">
-          <h2>{data.Students.Name}</h2>
-          <p>{data.Students.Email}</p>
+          <h2>{data.user.username}</h2>
+          <p>{data.user.Email}</p>
         </div>
 
         <div className="table-container">
           <div className="row">
             <div className="col">
               Contact No
-              <h4>{data.Students.Contact}</h4>
+              <h4>{data.user.contact}</h4>
             </div>
             <div className="col">
               Gender
-              <h4>{data.Students.Gender}</h4>
+              <h4>{data.user.gender}</h4>
             </div>
           </div>
           <div className="row">
             <div className="col">
               Pass ID
-              <h4>{data.Students.PassId}</h4>
+              <h4>{data.user.pass_id}</h4>
             </div>
             <div className="col">
               Pass Expiry Date
-              <h4>{data.Students.PassExpiryDate}</h4>
-            </div>
+              <h4>02/01/2013{data.user.PassExpiryDate}</h4>
+            </div> 
           </div>
         </div>
         <Link to='/StudentHistory'>

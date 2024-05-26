@@ -2,11 +2,12 @@ import React ,{useState,useEffect} from "react";
 import "../Pages/Styles/AdminDashboard.css";
 import AdminNavbar from "../Components/AdminNavbar";
 import { Link } from "react-router-dom";
+import Login from "../../Login";
 function AdminDashboard({progress}) {
-  const [api, setapi] = useState(
-    "http://localhost/WebApi/api/users/GetUserById?id=3"
-  );
+  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
+  const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
   const [data, setdata] = useState("");
+  const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
 
   useEffect(() => {
     const adminsdata = async () => {
@@ -33,39 +34,32 @@ function AdminDashboard({progress}) {
   const circumference = 2 * Math.PI * radius;
   const progressOffset = ((100 - progress) / 100) * circumference;
 
-  if(data)
+
+  if(admin==null)
+    {
+      window.location.assign("/login")
+    }
+
+    if(loginstatusrole!=="Admin")
+      {
+        return <h1>you are not logged in as admin</h1>
+      }
+
+     
+if(data)
   return (
     <div className="admin-dashboard">
       <AdminNavbar/>
-
-      <div className="progress-container">
-        <div className="progress-label">Booked Seats: {progress}</div>
-        <svg className="progress-ring" width="120" height="120">
-          <circle
-            className="progress-ring-circle"
-            stroke="#2FAA98"
-            strokeWidth="7"
-            fill="transparent"
-            r={radius}
-            cx="60"
-            cy="60"
-            style={{
-              strokeDasharray: circumference,
-              strokeDashoffset: progressOffset,
-            }}
-          />
-          <text
-            x="50%"
-            y="50%"
-            dominantBaseline="middle"
-            textAnchor="middle"
-            className="progress-text"
-          >
-            {progress}/100
-          </text>
-        </svg>
+<div className="admin-dashboard-screen">
+      <div className="booked-seats">
+        
+        <div className="progress-circle"  style={{background: `conic-gradient(#80cbc4 0% 29%, #004d40 29% 100%)`}}>
+          <div className="progress-circle-inner">
+            <div className="progress-circle-half" style={{ transform: `rotate(${59 * 3.6}deg)` }}></div>
+            <span>59/100</span>
+          </div>
+        </div>
       </div>
-
 
       <div className="admindashboard-container">
         <div className="white-container">
@@ -82,48 +76,48 @@ function AdminDashboard({progress}) {
               <div class="carousel-inner">
                 <div class="carousel-item active admin-card">
                   <h2>Bus#1</h2>
-                  <p>Traveling on Route #1</p>
+                  
                   <div class="row">
                     <div className="stops">
                       <div className="stop-containers">
-                        <p>Route No </p>
-                        <p className="bold">03</p>
+                        <p>Student Chickin</p>
+                        <p className="bold">15</p>
                       </div>
                       <div className="stop-containers">
-                        <p>Stop Timing</p>
-                        <p className="bold">08:50 am</p>
+                        <p>Remaining Seats</p>
+                        <p className="bold">37</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="carousel-item admin-card">
                   <h2>Bus#2</h2>
-                  <p>Traveling on Route #2</p>
+               
                   <div class="row">
                     <div className="stops">
                       <div className="stop-containers">
                         <p>Student Checkedin </p>
-                        <p className="bold">03</p>
+                        <p className="bold">15</p>
                       </div>
                       <div className="stop-containers">
                         <p>Remaing Seats</p>
-                        <p className="bold">08:50 am</p>
+                        <p className="bold">37</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="carousel-item admin-card">
                   <h2>Bus#3</h2>
-                  <p>Traveling on Route #3</p>
+             
                   <div class="row">
                     <div className="stops">
                       <div className="stop-containers">
                         <p>Route No </p>
-                        <p className="bold">03</p>
+                        <p className="bold">15</p>
                       </div>
                       <div className="stop-containers">
                         <p>Stop Timing</p>
-                        <p className="bold">08:50 am</p>
+                        <p className="bold">37</p>
                       </div>
                     </div>
                   </div>
@@ -161,6 +155,7 @@ function AdminDashboard({progress}) {
           
           </Link>
         </div>
+      </div>
       </div>
     </div>
   );

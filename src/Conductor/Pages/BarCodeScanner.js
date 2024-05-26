@@ -1,29 +1,47 @@
-import React from "react";
-import { QrScanner } from "react-qrcode-scanner";
+import React, { useRef } from 'react';
+import QrScanner from 'qr-scanner';
 import '../Pages/Styles/BarCodeScanner.css';
-import bus from "../../Assets/buslogo.png";
+import buslogo from '../../Assets/buslogo.png';
 
-function BarCodeScanner() {
-  const handleScan = (value) => {
-    console.log({ value });
-  };
+const BarCodeScanner = () => {
+  // Ref for the input element
+  const fileInputRef = useRef(null);
 
-  const handleError = (error) => {
-    console.log({ error });
+  // Function to handle file input change
+  const handleFileInputChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const result = await QrScanner.scanImage(file);
+      alert('QR Code detected! Result: ' + result);
+    } catch (error) {
+      alert('Error scanning QR code: ' + error);
+    }
   };
 
   return (
-    <div className="scanner-screen">
+    <div className="scanner-screen ">
       <div className="scanner-container">
-        <div className="scannerbus-img">
-          <img src={bus} alt="Bus" style={{ width: "200px", height: "200px", objectFit: "cover" }} />
+      <div className="icon-text">
+      <div className="scannerbus-img">
+          <img src={buslogo} alt="Person Icon" />
         </div>
-        <div className="barcode-scanner">
-          <QrScanner onScan={handleScan} onError={handleError} />
-        </div>
+        <h1>Scan QR Code</h1>
+      </div>
+      <div className="barcode-scanner">
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        className="input"
+        onChange={handleFileInputChange}
+      />
+      <div className="result" id="result"></div>
+      </div>
       </div>
     </div>
   );
-}
+};
 
 export default BarCodeScanner;

@@ -46,7 +46,8 @@ function AddMoreJourneys() {
         </div>
         {/* Daypicker for selecting date */}
         <div className="daypicker-container">
-          <label htmlFor="selectedDate">Date:
+        Date:
+          <label htmlFor="selectedDate">
           <input
             type="date"
             id="selectedDate"

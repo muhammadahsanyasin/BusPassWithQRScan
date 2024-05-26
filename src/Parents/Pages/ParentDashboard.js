@@ -49,35 +49,22 @@ function ParentDashboard({ progress }) {
                         {
                           <div className={child.Id === 1 ? `carousel-item active card`  : `carousel-item  card`}>
                          
-                      <div className="parentprogress-container">
-                        <div className="progress-label">
-                          Journeys Used: {progress}
-                        </div>
-                        <svg className="progress-ring" width="120" height="120">
-                          <circle
-                            className="progress-ring-circle"
-                            stroke="#2FAA98"
-                            strokeWidth="7"
-                            fill="transparent"
-                            r={radius}
-                            cx="60"
-                            cy="60"
-                            style={{
-                              strokeDasharray: circumference,
-                              strokeDashoffset: progressOffset,
-                            }}
-                          />
-                          <text
-                            x="50%"
-                            y="50%"
-                            dominantBaseline="middle"
-                            textAnchor="middle"
-                            className="progress-text"
-                          >
-                            {progress}/100
-                          </text>
-                        </svg>
-                      </div>
+                         <div className="booked-seats">
+          <div
+            className="progress-circle"
+            style={{
+              background: `conic-gradient(#80cbc4 0% 29%, #004d40 29% 100%)`,
+            }}
+          >
+            <div className="progress-circle-inner">
+              <div
+                className="progress-circle-half"
+                style={{ transform: `rotate(${59 * 3.6}deg)` }}
+              ></div>
+              <span>59/100</span>
+            </div>
+          </div>
+        </div>
 
                       <h2>{child.Name}</h2>
                       <div class="row">

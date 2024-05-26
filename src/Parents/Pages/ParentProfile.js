@@ -35,29 +35,29 @@ function ParentProfile() {
           </div>
 
           <div className="person-details">
-            <h2>{data.Parents.Name}</h2>
+            <h2>{data.user.username}</h2>
             <p>32402-2852063-3</p>
           </div>
           <div class="table-container">
             <div class="row">
               <div class="col">
                 Contact No
-                <h4>{data.Parents.Contact}</h4>
+                <h4>{data.user.contact}</h4>
               </div>
               <div class="col">
                 ChildrenEnroll
-                <h4>{data.Parents.ChildrenEnroll}</h4>
+                <h4>{data.user.childEnrolled}</h4>
               </div>
             </div>
             <hr className="dividerparent" />
             <div class="row">
               <div class="col">
                 Parent ID
-                <h4>{data.Parents.Id}</h4>
+                <h4>{data.user.id}</h4>
               </div>
               <div class="col">
                 User Name
-                <h4>{data.Parents.UserName}</h4>
+                <h4>{data.user.username}</h4>
               </div>
             </div>
           </div>

@@ -55,4 +55,36 @@
       width: 90%;
     }
   }
+
   
+.booked-seats {
+  margin-bottom: 20px;
+}
+
+.progress-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.progress-circle-inner {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #004d40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.progress-circle-inner span {
+  position: absolute;
+  font-size: 1.2em;
+  color: #ffffff;
+}

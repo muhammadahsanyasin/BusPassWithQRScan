@@ -6,11 +6,21 @@
   align-items: center;
   background-color: rgb(11, 95, 83);
  
+
   }
+.mappoup-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(11, 95, 83);
+  width: 400px;
+ 
+  }
+ 
   .add-stops-studentmap {
     border-radius: 10px 10px 10px 10px;
-    height: 200px;
-    width: 350px;
+    height: 230px;
+    width: 390px;
     background-color: rgb(18, 110, 97);
     display: flex;
     flex-direction: column;
@@ -33,3 +43,18 @@
     width: 9vw;
     margin-bottom: 20px;
   }
+
+
+
+
+.studentmap-button {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  background: #FFFFFF;
+  margin: 10px 10px 10px 10px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  padding: 11.1px 1.4px 9.9px 0;
+  width: 15vw;
+}

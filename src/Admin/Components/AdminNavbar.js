@@ -46,14 +46,14 @@ function AdminNavbar() {
                   </Link>
                 </li>
     
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
                     to="/ChangePassword"
                   >
                     Change Password
                   </Link>
-                </li>
+                </li> */}
                 
     
                 <li className="nav-item">
@@ -80,6 +80,14 @@ function AdminNavbar() {
                     AddMoreJourneys
                   </Link>
                 </li>
+                {/* <li className="nav-item">
+                  <Link
+                    className="nav-link color hover active"
+                    to="/AdminNotificationDetail"
+                  >
+                    AdminNotifiucationDetail
+                  </Link>
+                </li> */}
                 
                 
     
@@ -100,7 +108,7 @@ function AdminNavbar() {
               </Link> */}
               <Link
                 className="nav-link color hover active navbar-text fw-bold "
-                to="/ParentsNotification"
+                to="/AdminNotification"
               >
                 Notification
               </Link>

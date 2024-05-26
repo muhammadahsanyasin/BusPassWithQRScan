@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoIosLogIn } from "react-icons/io";
 import { useNavigate, Navigate, } from "react-router-dom";
@@ -6,7 +6,21 @@ import "./Login.css";
 import useStore from "./store";
 
 const Login = () => {
-  const { loginstatus, setloginstatus, addloginstatus } = useStore();
+
+  // const {  setuserdata, loginstatus, setloginstatus} = useStore();
+
+
+  useEffect(()=>{
+    if(new Date()- (new Date( localStorage.getItem("addtime"))) > 20000)
+      {
+        console.log("nulled")
+        localStorage.setItem("user", null)
+      }
+    
+   
+  },[])
+
+  
 
   const [showPassword, setShowPassword] = useState(false);
   const [UserName, setUserName] = useState("");
@@ -26,11 +40,14 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+
+
+
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+   console.log(`http://localhost/WebApi/api/users/login?username=${UserName}&password=${password}`)
     try {
       const response = await fetch(
-        `http://localhost/WebApi/api/users/login?username=${UserName}&password=${password} `,
+        `http://localhost/WebApi/api/users/login?username=${UserName}&password=${password}`,
         {
 
           method: "GET",
@@ -41,36 +58,41 @@ const Login = () => {
         }
       );
 
-      if (response.ok) {
+      
         const data = await response.json();
+        console.log(data)
+
+        //set logged in user to localstorage
+        localStorage.setItem('user', JSON.stringify(data));
+        
+      
+        const newdate = new Date();
+        console.log(newdate)
+      
+         localStorage.setItem('addtime',newdate);
         // Check the role of the user and navigate accordingly
-        if (data !== "Incorrect User Name" && data !== "Incorrect Password!") {
-          // Set user data or navigate based on user role
-          // For example:
-          if (data.Admins) {
-            console.log("logged in admin", data.Admins);
-            setloginstatus(true);
+       
+          if (data.user.role==='Admin') {
+            console.log("logged in admin", data);
+            
             navigate("/AdminDashboard");
-          } else if (data.Parents) {
-            console.log("logged in parent", data.Parents);
-            setloginstatus(true);
+
+          } else if (data.user.role==='Parent') {
+              
+            console.log("logged in parent", data.Parent);
+         
             navigate("/ParentDashboard");
-          } else if (data.Conductors) {
-            console.log("logged in conductor", data.Conductors);
-            setloginstatus(true);
+          } else if (data.user.role==='Conductor') {
+            console.log("logged in conductor", data.conductor);
+         
             navigate("/ConductorDashboard");
-          } else if (data.Students) {
-            console.log("logged in student", data.Students);
-            setloginstatus(true);
+          } else if (data.user.role==='Student') {
+            console.log("logged in student", data);
+          
+          
             navigate("/StudentDashboard");
           }
-        } else {
-          setError(data);
-        }
-      } else {
-        const errorMessage = await response.text();
-        setError(errorMessage);
-      }
+        
     } catch (error) {
       setError("Login failed: " + error.message);
     }
@@ -86,7 +108,7 @@ const Login = () => {
           Login <IoIosLogIn />
         </h2>
         {error && <p className="error-message">{error}</p>}
-        <form className="form" onSubmit={handleLogin}>
+     
           <div className="form-group">
             <label>User Name</label>
             <input
@@ -114,13 +136,11 @@ const Login = () => {
               </button>
             </div>
           </div>
-          <button className="login-button" type="submit">
+          <button onClick={handleLogin} className="login-button" type="submit">
             Login
           </button>
-        </form>
-        {/* <p className="signup-link">
-          Don't have an account? <a href="/signup">Sign up</a>
-        </p> */}
+      
+    
       </div>
     </div>
   );

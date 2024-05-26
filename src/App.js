@@ -1,5 +1,5 @@
-import React ,{useState}from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React ,{useEffect, useState}from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import useStore from "./store";
 import Login from "./Login";
 import ChangePassword from "./Parents/Components/ChangePassword";
@@ -39,6 +39,11 @@ import SearchAndUpdate from "./Admin/Pages/SearchAndUpdate";
 import AddScreens from "./Admin/Pages/AddScreens";
 import StudentProfile from "./Student/Pages/StudentProfile";
 import StudentNotification from "./Student/Pages/StudentNotification";
+import ConductorNotification from "./Conductor/Pages/ConductorNotification";
+import AdminNotification from "./Admin/Pages/AdminNotification";
+import AdminNotificattionDetail from "./Admin/Pages/AdminNotificattionDetail";
+import ConductorNotificationDetail from "./Conductor/Pages/ConductorNotificationDetail";
+import ParentNotificationDetail from "./Parents/Pages/ParentNotificationDetail";
 
 
 
@@ -46,32 +51,48 @@ import StudentNotification from "./Student/Pages/StudentNotification";
 
 
 function App() {
-  const { loginstatus } = useStore();
+
   const [selectPosition, setSelectPosition] = useState(null);
+  useEffect(()=>{
+    if(new Date()- (new Date( localStorage.getItem("addtime"))) > 300000)
+      {
+        console.log("nulled")
+        localStorage.setItem("user", null)
+      }
+    
+   
+  },[])
 
   return (
     <BrowserRouter>
       <Routes>
-        {/* Route to login page */}
-        <Route path="/login" element={<Login />} />
+    
+          <> 
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to='Login' />} />
+      
 
-        {/* Protected routes */}
-        {loginstatus ? (
-          <>
-        
             <Route path="/ParentDashboard"element={<ParentDashboard progress={59} />}/>
             <Route path="/ChangePassword" element={<ChangePassword />} />
-            <Route path="/ParentMap" element={<ParentMap />} />    
-            <Route path="/ParentsNotification" element={<ParentsNotification />} />
             <Route path="/EditStopInfo" element={<EditStopInfo />} />
             <Route path="/AddExistingStops" element={<AddExistingStops />} />
             <Route path="/AddNewConductor" element={<AddNewConductor />} />
             <Route path="/AddNewBus" element={<AddNewBus />} />
             <Route path="/AddNewAdmin" element={<AddNewAdmin />} />
             <Route path="/AdminDashboard"element={<AdminDashboard progress={59} />}/>
+            <Route path="/AdminProfile" element={<AdminProfile />} />
+            <Route path="/AddNewStudent" element={<AddNewStudent/>} />
+            <Route path="/AdminNotification" element={<AdminNotification/>} />
+            <Route path="/AdminNotificattionDetail" element={<AdminNotificattionDetail/>} />
+
+     
+            <Route path="/ParentMap" element={<ParentMap />} />    
+            <Route path="/ParentsNotification" element={<ParentsNotification />} />
+            
+            
             <Route path="/BarCodeScanner" element={<BarCodeScanner />} />
             <Route path="/StudentDashboard" element={<StudentDashboard progress={70} />} />
-            <Route path="/AdminProfile" element={<AdminProfile />} />
+           
             <Route path="/ConductorProfile" element={<ConductorProfile />} />
             <Route path="/ParentProfile" element={<ParentProfile />} />
             <Route path="/BarCodeGenrator" element={<BarCodeGenrator />} />
@@ -80,7 +101,7 @@ function App() {
             <Route path="/StudentFavStop" element={<StudentFavStop/>} />
             <Route path="/StudentNotificationDetails" element={<StudentNotificationDetails/>} />
            <Route path="/GoogleMap" element={<GoogleMap/>} />
-         <Route path="/AddNewStudent" element={<AddNewStudent/>} />
+           
            <Route path="/GoogleMap" element={<GoogleMap  selectPosition={selectPosition}/>} />
            <Route path="/StudentHistory" element={<StudentHistory/>} />
            <Route path="/AdminHistory" element={<AdminHistory/>} />
@@ -94,14 +115,16 @@ function App() {
            <Route path="/AddMoreJourneys" element={<AddMoreJourneys/>} />
            <Route path="/AddScreens" element={<AddScreens/>} />
            <Route path="/StudentProfile" element={<StudentProfile/>} />
-           <Route path="/StudentProfile" element={<StudentNotification/>} />
+           <Route path="/StudentNotification" element={<StudentNotification/>} />
+           <Route path="/ConductorNotification" element={<ConductorNotification/>} />
+        
+           <Route path="/ConductorNotificationDetail" element={<ConductorNotificationDetail/>} />
+           <Route path="/ParentNotificationDetail" element={<ParentNotificationDetail/>} />
+
            
-           
-          </>
-        ) : (
-          // Render login page if not logged in
-          <Route path="/" element={<Login />} />
-        )}
+      </>
+    
+     
       </Routes>
     </BrowserRouter>
   );
