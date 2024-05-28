@@ -10,19 +10,15 @@ import useStore from '../../store'
 
 
 function AdminProfile() {
-  const [loginstatus, setloginstatus] = useState(JSON.parse(localStorage.getItem("user")))
-  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
-  const [api, setApi] = useState(`http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}`);
-  const [data, setData] = useState(null); // Use null instead of an empty string
+
+  const [api, setApi] = useState(
+    "http://localhost/WebApi/api/Users/GetUserById/4"
+  );
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    
-    const fetchAdminData = async () => {
+    const fetchData = async () => {
       try {
-        
-
-       
-     
         const response = await fetch(api, {
           method: "GET",
           headers: {
@@ -32,24 +28,21 @@ function AdminProfile() {
 
         if (response.ok) {
           const result = await response.json();
-          await setData(result); // Set the fetched data
+          setData(result);
           console.log(result);
         } else {
-          console.error("Failed to fetch data");
+          throw new Error("Failed to fetch data");
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error fetching data:", error);
       }
     };
-    fetchAdminData()
-    
+    fetchData();
   }, [api]);
 
-  // Ensure data and data.Admins are defined before attempting to render
-  if (!data ) {
+  if (!data || !data.Admins) {
     return <div>Loading...</div>;
   }
-  
  
 
   return (
@@ -60,29 +53,29 @@ function AdminProfile() {
         </div>
 
         <div className="person-details">
-          <h2>{data.user.username }</h2>
-          <p>32456-675776-3</p>
+          <h2>{data.Admins.Name }</h2>
+          <p>{data.Admins.UserName }</p>
         </div>
 
         <div className="table-container">
           <div className="row">
             <div className="col">
               Contact No
-              <h4>{data.user.contact}</h4>
+              <h4>{data.Admins.Contact}</h4>
             </div>
             <div className="col">
               Gender
-              <h4>{data.user.gender}</h4>
+              <h4>{data.Admins.Gender}</h4>
             </div>
           </div>
           <div className="row">
             <div className="col">
               User ID
-              <h4>{data.user.id || 'id' }</h4>
+              <h4>{data.Admins.UserId  }</h4>
             </div>
             <div className="col">
               User Name
-              <h4>{data.user.role || "fuck me"}</h4>
+              <h4>{data.Admins.UserName }</h4>
             </div>
           </div>
         </div>

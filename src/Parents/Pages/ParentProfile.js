@@ -1,81 +1,90 @@
-import React, { useEffect, useState } from "react"; //hook
+import React, { useEffect, useState } from "react";
 import "../Pages/Styles/ParentProfile.css";
 import profile from "../../Assets/profile.png";
 import { Link } from "react-router-dom";
+
 function ParentProfile() {
-  const [api, setapi] = useState(
-    "http://localhost/WebApi/api/users/GetUserById?id=1"
+  const [api, setApi] = useState(
+    "http://localhost/WebApi/api/Users/GetUserById/1"
   );
-  const [data, setdata] = useState("");
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const parentsdata = async () => {
-      const response = await fetch(api, {
-        method: "GET", //POST, PUT,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const fetchData = async () => {
+      try {
+        const response = await fetch(api, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (response.ok) {
-        const d = await response.json();
-        setdata(d);
-        console.log(data);
+        if (response.ok) {
+          const result = await response.json();
+          setData(result);
+          console.log(result);
+        } else {
+          throw new Error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
-    parentsdata();
-  }, []); //[] call only once
+    fetchData();
+  }, [api]);
 
-  if (data)
-    return (
-      <div className="parent-profile">
-        <div className="parentprofile-container">
-          <div className="person-icon">
-            <img src={profile} alt="Person Icon" />
-          </div>
+  if (!data || !data.Parents) {
+    return <div>Loading...</div>;
+  }
 
-          <div className="person-details">
-            <h2>{data.user.username}</h2>
-            <p>32402-2852063-3</p>
-          </div>
-          <div class="table-container">
-            <div class="row">
-              <div class="col">
-                Contact No
-                <h4>{data.user.contact}</h4>
-              </div>
-              <div class="col">
-                ChildrenEnroll
-                <h4>{data.user.childEnrolled}</h4>
-              </div>
-            </div>
-            <hr className="dividerparent" />
-            <div class="row">
-              <div class="col">
-                Parent ID
-                <h4>{data.user.id}</h4>
-              </div>
-              <div class="col">
-                User Name
-                <h4>{data.user.username}</h4>
-              </div>
-            </div>
-          </div>
-         
+  return (
+    <div className="parent-profile">
+      <div className="parentprofile-container">
+        <div className="person-icon">
+          <img src={profile} alt="Person Icon" />
         </div>
-        <Link to='/ParentHistory'>
-            <button className=" parenthistory-button edit-stops">History</button>
-          </Link>
-          <Link to="/ChangePassword">
-            <button className=" parentchangepwd-button edit-stops">
-              Change Password
-            </button>
-          </Link>
-          <Link to="/">
-            <button className=" parentlogout-button edit-stops">Log Out</button>
-          </Link>
+
+        <div className="person-details">
+          <h2>{data.Parents.Name}</h2>
+          <p>Parent ID: {data.Parents.Id}</p>
+        </div>
+        <div className="table-container">
+          <div className="row">
+            <div className="col">
+              Contact No
+              <h4>{data.Parents.Contact}</h4>
+            </div>
+            <div className="col">
+              Children Enrolled
+              <h4>{data.Parents.ChildrenEnroll}</h4>
+            </div>
+          </div>
+          <hr className="dividerparent" />
+          <div className="row">
+            <div className="col">
+              Parent ID
+              <h4>{data.Parents.Id}</h4>
+            </div>
+            <div className="col">
+              User Name
+              <h4>{data.Parents.UserName}</h4>
+            </div>
+          </div>
+        </div>
       </div>
-    );
+      <Link to="/ParentHistory">
+        <button className="parenthistory-button edit-stops">History</button>
+      </Link>
+      <Link to="/ChangePassword">
+        <button className="parentchangepwd-button edit-stops">
+          Change Password
+        </button>
+      </Link>
+      <Link to="/">
+        <button className="parentlogout-button edit-stops">Log Out</button>
+      </Link>
+    </div>
+  );
 }
 
 export default ParentProfile;

@@ -4,49 +4,49 @@ import AdminNavbar from "../Components/AdminNavbar";
 import { Link } from "react-router-dom";
 import Login from "../../Login";
 function AdminDashboard({progress}) {
-  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
-  const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
-  const [data, setdata] = useState("");
-  const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
+//   const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
+//   const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
+//   const [data, setdata] = useState("");
+//   const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
 
-  useEffect(() => {
-    const adminsdata = async () => {
-      const response = await fetch(api, {
-        method: "GET", //POST, PUT,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+//   useEffect(() => {
+//     const adminsdata = async () => {
+//       const response = await fetch(api, {
+//         method: "GET", //POST, PUT,
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       });
 
-      if (response.ok) {
-        const d = await response.json();
-        setdata(d);
-        console.log(data);
-      }
-    };
-    adminsdata();
-  }, []); //[] call only once
-
-
+//       if (response.ok) {
+//         const d = await response.json();
+//         setdata(d);
+//         console.log(data);
+//       }
+//     };
+//     adminsdata();
+//   }, []); //[] call only once
 
 
-  const radius = 50;
-  const circumference = 2 * Math.PI * radius;
-  const progressOffset = ((100 - progress) / 100) * circumference;
 
 
-  if(admin==null)
-    {
-      window.location.assign("/login")
-    }
+//   const radius = 50;
+//   const circumference = 2 * Math.PI * radius;
+//   const progressOffset = ((100 - progress) / 100) * circumference;
 
-    if(loginstatusrole!=="Admin")
-      {
-        return <h1>you are not logged in as admin</h1>
-      }
+
+//   if(admin==null)
+//     {
+//       window.location.assign("/login")
+//     }
+
+//     if(loginstatusrole!=="Admin")
+//       {
+//         return <h1>you are not logged in as admin</h1>
+//       }
 
      
-if(data)
+// if(data)
   return (
     <div className="admin-dashboard">
       <AdminNavbar/>

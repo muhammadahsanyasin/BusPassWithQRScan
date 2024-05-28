@@ -1,8 +1,5 @@
-import React ,{useEffect,useState}from "react";
-import busarrived from '../../Assets/busarrived.png';
+import React, { useEffect, useState } from "react";
 import checkout from '../../Assets/checkout.png';
-import checkin from '../../Assets/checkin.png';
-import scanqrcode from '../../Assets/scanqrcode.png';
 
 function StudentNotification() {
   const [data, setData] = useState([]);
@@ -10,7 +7,7 @@ function StudentNotification() {
   useEffect(() => {
     const fetchNotifications = async () => {
       const response = await fetch(
-        "http://localhost/WebApi/api/Users/GetUserNotification?id=1",
+        "http://localhost/WebApi/api/Users/GetUserNotification?id=3",
         {
           method: "GET",
           headers: {
@@ -22,7 +19,9 @@ function StudentNotification() {
         const responseData = await response.json();
         console.log(responseData);  // Log the data to see its structure
         if (responseData && responseData.status === true && Array.isArray(responseData.data)) {
-          setData(responseData.data);
+          // Sort notifications based on Time in descending order
+          const sortedData = responseData.data.sort((a, b) => new Date(b.Time) - new Date(a.Time));
+          setData(sortedData);
         } else {
           console.error("Expected an array in the data property but got:", responseData);
         }
@@ -30,8 +29,9 @@ function StudentNotification() {
     };
     fetchNotifications();
   }, []);
-    return (
-      <div>
+
+  return (
+    <div>
       <div className="parent-notification">
         <div className="wrapper">
           <div className="top-bar">
@@ -67,7 +67,7 @@ function StudentNotification() {
         </div>
       </div>
     </div>
-      );
+  );
 }
 
 export default StudentNotification;

@@ -4,11 +4,12 @@ import StudentNavbar from "../Components/StudentNavbar";
 import { Link } from "react-router-dom";
 
 function StudentDashboard({ progress }) {
-  const [data, setdata] = useState([]);
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    const studentdata = async () => {
+    const fetchStudentData = async () => {
       const response = await fetch(
-        "http://localhost/WebApi/api/Student/GetFavStops?id=1",
+        "http://localhost/WebApi/api/Student/GetFavStops?id=2",
         {
           method: "GET",
           headers: {
@@ -17,12 +18,17 @@ function StudentDashboard({ progress }) {
         }
       );
       if (response.ok) {
-        setdata(await response.json());
-        console.log(data);
-        return data;
+        const fetchedData = await response.json();
+        if (Array.isArray(fetchedData)) {
+          setData(fetchedData);
+        } else {
+          console.error("Fetched data is not an array:", fetchedData);
+        }
+      } else {
+        console.error("Failed to fetch data:", response.statusText);
       }
     };
-    studentdata();
+    fetchStudentData();
   }, []);
 
   const radius = 50;
@@ -70,97 +76,61 @@ function StudentDashboard({ progress }) {
               <section className="dashboard-container">
                 <div
                   id="carouselExampleControls"
-                  class="carousel slide"
+                  className="carousel slide"
                   data-bs-ride="carousel"
                 >
-                  <div class="carousel-inner">
+                  <div className="carousel-inner">
                     {data.map((stop, index) => (
-                      <>
-                        {
-                          <div className={stop.Id === 1 ? `carousel-item active student-card`  : `carousel-item  student-card`}>
-                         
-                          
-                            <h2>{stop.Name}</h2>
-
-                            <div class="row">
-                              <div className="stops">
-                                <div className="studentstop-containers">
-                                  <p> Route No </p>
-                                  <p className="bold">{stop.Route}</p>
-                                </div>
-                                <div className="studentstop-containers">
-                                  <p>Stop Timing</p>
-                                  <p className="bold">{stop.Timing}</p>
-                                </div>
-                              </div>
+                      <div
+                        key={index}
+                        className={`carousel-item ${
+                          index === 0 ? "active" : ""
+                        } student-card`}
+                      >
+                        <h2>{stop.Name}</h2>
+                        <div className="row">
+                          <div className="stops">
+                            <div className="studentstop-containers">
+                              <p>Route No</p>
+                              <p className="bold">{stop.Route}</p>
+                            </div>
+                            <div className="studentstop-containers">
+                              <p>Stop Timing</p>
+                              <p className="bold">{stop.Timing}</p>
                             </div>
                           </div>
-                        }
-                      </>
+                        </div>
+                      </div>
                     ))}
-
-                    {/*                   
-                    <div class="carousel-item admin-card">
-                      <h2>6th Road</h2>
-
-                      <div class="row">
-                        <div className="stops">
-                          <div className="studentstop-containers">
-                            <p>Route No </p>
-                            <p className="bold">03</p>
-                          </div>
-                          <div className="studentstop-containers">
-                            <p>Stop Timing</p>
-                            <p className="bold">08:40 am</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="carousel-item admin-card">
-                      <h2>Faizabad</h2>
-
-                      <div class="row">
-                        <div className="stops">
-                          <div className="studentstop-containers">
-                            <p>Route No </p>
-                            <p className="bold">03</p>
-                          </div>
-                          <div className="studentstop-containers">
-                            <p>Stop Timing</p>
-                            <p className="bold">08:30 am</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
                   </div>
                   <button
-                    class="carousel-control-prev"
+                    className="carousel-control-prev"
                     type="button"
                     data-bs-target="#carouselExampleControls"
                     data-bs-slide="prev"
                   >
                     <span
-                      class="carousel-control-prev-icon"
+                      className="carousel-control-prev-icon"
                       aria-hidden="true"
                     ></span>
-                    <span class="visually-hidden">Previous</span>
+                    <span className="visually-hidden">Previous</span>
                   </button>
                   <button
-                    class="carousel-control-next"
+                    className="carousel-control-next"
                     type="button"
                     data-bs-target="#carouselExampleControls"
                     data-bs-slide="next"
                   >
                     <span
-                      class="carousel-control-next-icon"
+                      className="carousel-control-next-icon"
                       aria-hidden="true"
                     ></span>
-                    <span class="visually-hidden">Next</span>
+                    <span className="visually-hidden">Next</span>
                   </button>
                 </div>
               </section>
               <Link to="/StudentFavStop">
-                <button className=" student-button edit-stops">
+                <button className="student-button edit-stops">
                   Edit Favorite Stops
                 </button>
               </Link>

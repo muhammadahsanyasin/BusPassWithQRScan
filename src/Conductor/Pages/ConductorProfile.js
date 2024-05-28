@@ -1,83 +1,81 @@
-import React ,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import profile from "../../Assets/profile.png";
 import { Link } from "react-router-dom";
 import '../Pages/Styles/ConductorProfile.css';
+
 function ConductorProfile() {
-  const [api, setapi] = useState(
-    "http://localhost/WebApi/api/users/GetUserById?id=4"
-  );
-  const [data, setdata] = useState("");
+  const [api] = useState("http://localhost/WebApi/api/users/GetUserById?id=6");
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const conductordata = async () => {
-      const response = await fetch(api, {
-        method: "GET", //POST, PUT,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const d = await response.json();
-        setdata(d);
-        console.log(data);
+    const fetchConductorData = async () => {
+      try {
+        const response = await fetch(api, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          const conductorData = await response.json();
+          setData(conductorData);
+        } else {
+          throw new Error('Failed to fetch data');
+        }
+      } catch (error) {
+        console.error('Error fetching conductor data:', error);
       }
     };
-    conductordata();
-  }, []); //[] call only once
+    fetchConductorData();
+  }, [api]); // Dependency array to re-run effect when 'api' changes
 
-  if (data)
+  console.log(data); // Moved console.log outside useEffect
+
   return (
     <div className="conductor-profile">
-      <div className="conductorprofile-container ">
-        <div className="person-icon">
-          <img src={profile} alt="Person Icon" />
-        </div>
+      {data && (
+        <div className="conductorprofile-container">
+          <div className="person-icon">
+            <img src={profile} alt="Person Icon" />
+          </div>
 
-        <div className="person-details">
-          <h2>{data.user.username}</h2>
-          <p>32402-2852063-3</p>
-        </div>
+          <div className="person-details">
+            <h2>{data.user?.UserName}</h2>
+            <p>32402-2852063-3</p>
+          </div>
 
-        <div class="table-container">
-          <div class="row">
-            <div class="col">
-              Contact No
-              <h4>{data.user.contact}</h4>
-              <h4>03015667</h4>
+          <div className="table-container">
+            <div className="row">
+              <div className="col">
+                Contact No
+                <h4>{data.user?.Contact}</h4>
+              </div>
+              <div className="col">
+                User Name
+                <h4>{data.user?.UserName}</h4>
+              </div>
             </div>
-            <div class="col">
-              User Name
-              <h4>{data.user.username}</h4>
+            <div className="row">
+              <div className="col">
+                Conductor ID
+                <h4>{data.user?.Id}</h4>
+              </div>
+              <div className="col">
+                Bus ID
+                <h4>{data.user?.BusId}</h4>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-             Conductor ID
-              <h4>{data.user.id}</h4>
-            </div>
-            <div class="col">
-              Bus ID
-              <h4>{data.user.id}</h4>
-            </div>
-          </div>
         </div>
-      </div>
-      <Link to='/ConductorHistory' >
-        
-          <button className=" conductorhistory-button edit-stops">History</button>
-       
+      )}
+      <Link to='/ConductorHistory'>
+        <button className="conductorhistory-button edit-stops">History</button>
       </Link>
       <Link to="/ChangePassword">
-        
-          <button className=" conductorchangepwd-button edit-stops">Change Password</button>
-        
+        <button className="conductorchangepwd-button edit-stops">Change Password</button>
       </Link>
-
       <Link to='/'>
-        
-          <button className= " conductorlogout-button edit-stops">Log Out</button>
-        
+        <button className="conductorlogout-button edit-stops">Log Out</button>
       </Link>
     </div>
   );

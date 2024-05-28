@@ -72,22 +72,22 @@ const Login = () => {
          localStorage.setItem('addtime',newdate);
         // Check the role of the user and navigate accordingly
        
-          if (data.user.role==='Admin') {
-            console.log("logged in admin", data);
+          if (data) {
+            console.log("logged in admin", data.Admins);
             
             navigate("/AdminDashboard");
 
-          } else if (data.user.role==='Parent') {
+       
               
-            console.log("logged in parent", data.Parent);
+            console.log("logged in parent", data.Parents);
          
             navigate("/ParentDashboard");
-          } else if (data.user.role==='Conductor') {
-            console.log("logged in conductor", data.conductor);
+          
+            console.log("logged in conductor", data.Conductors);
          
             navigate("/ConductorDashboard");
-          } else if (data.user.role==='Student') {
-            console.log("logged in student", data);
+       
+            console.log("logged in student", data.Students);
           
           
             navigate("/StudentDashboard");

@@ -7,19 +7,29 @@ function StudentFavStop() {
 
   useEffect(() => {
     const fetchStudentData = async () => {
-      const response = await fetch(
-        "http://localhost/WebApi/api/Student/GetFavStops?id=1",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      try {
+        const response = await fetch(
+          "http://localhost/WebApi/api/Student/GetFavStops?id=2",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          const responseData = await response.json();
+          if (Array.isArray(responseData)) {
+            setData(responseData);
+            setCheckedStates(Array(responseData.length).fill(false));
+          } else {
+            console.error("Fetched data is not an array:", responseData);
+          }
+        } else {
+          console.error("Failed to fetch data:", response.statusText);
         }
-      );
-      if (response.ok) {
-        const responseData = await response.json();
-        setData(responseData);
-        setCheckedStates(Array(responseData.length).fill(false));
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
     fetchStudentData();
@@ -32,34 +42,39 @@ function StudentFavStop() {
   };
 
   const handleRemove = async () => {
-    const newData = [];
-    const newCheckedStates = [];
+    const updatedData = [];
+    const updatedCheckedStates = [];
 
     for (let i = 0; i < data.length; i++) {
       if (checkedStates[i]) {
-        // Make the API call to remove the favorite stop
-        const response = await fetch(
-          `http://localhost/WebApi/api/Student/RemoveFavStop?studentId=1&stopId=${data[i].Id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
+        try {
+          const response = await fetch(
+            `http://localhost/WebApi/api/Student/RemoveFavStop?studentId=1&stopId=${data[i].Id}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            console.error(`Failed to remove stop with ID: ${data[i].Id}`);
+            updatedData.push(data[i]);
+            updatedCheckedStates.push(false);
           }
-        );
-        if (!response.ok) {
-          console.error(`Failed to remove stop with ID: ${data[i].Id}`);
-          newData.push(data[i]); // If the delete fails, keep the item in the list
-          newCheckedStates.push(false);
+        } catch (error) {
+          console.error(`Error removing stop with ID: ${data[i].Id}`, error);
+          updatedData.push(data[i]);
+          updatedCheckedStates.push(false);
         }
       } else {
-        newData.push(data[i]);
-        newCheckedStates.push(false);
+        updatedData.push(data[i]);
+        updatedCheckedStates.push(false);
       }
     }
-    
-    setData(newData);
-    setCheckedStates(newCheckedStates);
+
+    setData(updatedData);
+    setCheckedStates(updatedCheckedStates);
   };
 
   return (
@@ -70,8 +85,8 @@ function StudentFavStop() {
         </button>
       </div>
       <div className="stop-list">
-        {data.map((item, index) => (
-          <div className="flatListRow" key={index}>
+        {Array.isArray(data) && data.map((item, index) => (
+          <div className="flatListRow" key={item.Id}>
             <div>
               <p className="StopNametextStyle">{item.Name} </p>
               <p className="RouteNotextStyle">Route: {item.Route} </p>

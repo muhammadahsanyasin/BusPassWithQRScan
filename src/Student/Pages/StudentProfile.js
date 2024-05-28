@@ -4,30 +4,33 @@ import profile from "../../Assets/profile.png";
 import { Link } from "react-router-dom";
 
 function StudentProfile() {
-  const [api, setapi] = useState(
-    "http://localhost/WebApi/api/users/GetUserById?id=2"
+  const [api, setApi] = useState(
+    "http://localhost/WebApi/api/Users/GetUserById/3"
   );
-  const [data, setdata] = useState("");
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const conductordata = async () => {
+    const fetchData = async () => {
       const response = await fetch(api, {
-        method: "GET", //POST, PUT,
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
       if (response.ok) {
-        const d = await response.json();
-        setdata(d);
-        console.log(data);
+        const result = await response.json();
+        setData(result);
+        console.log(result);
       }
     };
-    conductordata();
-  }, []); //[] call only once
+    fetchData();
+  }, [api]);
 
-  if (data)
+  if (!data || !data.Students) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="student-profile">
       <div className="studentprofile-container">
@@ -36,46 +39,47 @@ function StudentProfile() {
         </div>
 
         <div className="person-details">
-          <h2>{data.user.username}</h2>
-          <p>{data.user.Email}</p>
+          <h2>{data.Students.Name}</h2>
+          {/* Assuming email field is not present in the provided data, replacing it with another field */}
+          <p>{data.Students.UserName}</p>
         </div>
 
         <div className="table-container">
           <div className="row">
             <div className="col">
               Contact No
-              <h4>{data.user.contact}</h4>
+              <h4>{data.Students.Contact}</h4>
             </div>
             <div className="col">
               Gender
-              <h4>{data.user.gender}</h4>
+              <h4>{data.Students.Gender}</h4>
             </div>
           </div>
           <div className="row">
             <div className="col">
               Pass ID
-              <h4>{data.user.pass_id}</h4>
+              <h4>{data.Students.PassId}</h4>
             </div>
             <div className="col">
               Pass Expiry Date
-              <h4>02/01/2013{data.user.PassExpiryDate}</h4>
+              <h4>{data.Students.PassExpiry}</h4>
             </div> 
           </div>
         </div>
         <Link to='/StudentHistory'>
-        <div className="studenthistory-button">
-          <span className="edit-stops">History</span>
-        </div>
+          <div className="studenthistory-button">
+            <span className="edit-stops">History</span>
+          </div>
         </Link>
         <Link to='/ChangePassword'>
-        <div className="studentchangepwd-button">
-          <span className="edit-stops">Change Password</span>
-        </div>
+          <div className="studentchangepwd-button">
+            <span className="edit-stops">Change Password</span>
+          </div>
         </Link>
-<Link to='/'>
-        <div className="studentlogout-button">
-          <span className="edit-stops">Log Out</span>
-        </div>
+        <Link to='/'>
+          <div className="studentlogout-button">
+            <span className="edit-stops">Log Out</span>
+          </div>
         </Link>
       </div>
     </div>

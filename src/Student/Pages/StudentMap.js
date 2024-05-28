@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  useMapEvent,
-  Polyline,
-} from "react-leaflet";
+import {  MapContainer,  Marker,  Popup,  TileLayer,  useMapEvent,  Polyline,} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { marker } from "leaflet";
 import markerIcon from "../../Assets/marker.png";
