@@ -5,11 +5,7 @@ function AddNewAdmin() {
 
 
 
-  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
-  const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
  
-  const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
-
   const [formdata, setFormData] = useState({});
 
   const admindata = async () => {
@@ -17,7 +13,7 @@ function AddNewAdmin() {
 
     try {
       const response = await fetch(
-        "http://localhost/WebApi/api/Users/AddUser",
+        "http://localhost/WebApi/api/Users/InsertAdmin",
         {
           method: "POST",
           headers: {
@@ -51,16 +47,7 @@ function AddNewAdmin() {
     console.log(formdata);
   };
 
-  if(admin==null)
-    {
-      window.location.assign("/login")
-    }
-
-    if(loginstatusrole!=="Admin")
-      {
-        return <h1>you are not logged in as admin</h1>
-      }
-
+  
   return (
     <div className="addnewadmin-container">
       <div className="icon-container-newAdmin">
@@ -74,19 +61,19 @@ function AddNewAdmin() {
         <input
           type="text"
           placeholder="UserName"
-          name="username"
+          name="Name"
           onChange={handleinput}
         />
         <input
           type="text"
           placeholder="Password"
-          name="password"
+          name="Password"
           onChange={handleinput}
         />
         <input
           type="text"
           placeholder="Contact Number"
-          name="contact"
+          name="Contact"
           onChange={handleinput}
         />
 
@@ -96,7 +83,7 @@ function AddNewAdmin() {
             <label className="radio-label">
               <input
                 type="radio"
-                name="gender"
+                name="Gender"
                 value="male"
                 onChange={handleinput}
               />
@@ -105,7 +92,7 @@ function AddNewAdmin() {
             <label className="radio-label">
               <input
                 type="radio"
-                name="gender"
+                name="Gender"
                 value="female"
                 onChange={handleinput}
               />
