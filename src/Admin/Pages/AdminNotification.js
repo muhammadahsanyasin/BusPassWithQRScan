@@ -5,48 +5,46 @@ import checkin from '../../Assets/checkin.png';
 import scanqrcode from '../../Assets/scanqrcode.png';
 function AdminNotification() {
 
-  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
-  const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
- 
-  const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
+
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const response = await fetch(
-        "http://localhost/WebApi/api/Users/GetUserNotification?id=1",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      try {
+        const response = await fetch(
+          "http://localhost/WebApi/api/Users/GetUserNotification?id=3",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${response.statusText}`);
         }
-      );
-      if (response.ok) {
+
         const responseData = await response.json();
-        console.log(responseData);  // Log the data to see its structure
-        if (responseData && responseData.status === true && Array.isArray(responseData.data)) {
-          setData(responseData.data);
+        console.log('API Response:', responseData);  // Log the full response to see its structure
+
+        if (Array.isArray(responseData)) {
+          setData(responseData);
         } else {
-          console.error("Expected an array in the data property but got:", responseData);
+          throw new Error(`Expected an array but got: ${JSON.stringify(responseData)}`);
         }
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+        setError(error.message);
       }
     };
+
     fetchNotifications();
   }, []);
 
 
 
-  if(admin==null)
-    {
-      window.location.assign("/login")
-    }
-
-    if(loginstatusrole!=="Admin")
-      {
-        return <h1>you are not logged in as admin</h1>
-      }
-  
     return (
       <div>
       <div className="parent-notification">

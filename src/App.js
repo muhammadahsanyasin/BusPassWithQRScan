@@ -36,7 +36,7 @@ import ConductorVerification from "./Conductor/Pages/ConductorVerification";
 
 import AddMoreJourneys from "./Admin/Pages/AddMoreJourneys";
 import SearchAndUpdate from "./Admin/Pages/SearchAndUpdate";
-import AddScreens from "./Admin/Pages/AddScreens";
+
 import StudentProfile from "./Student/Pages/StudentProfile";
 import StudentNotification from "./Student/Pages/StudentNotification";
 import ConductorNotification from "./Conductor/Pages/ConductorNotification";
@@ -44,6 +44,7 @@ import AdminNotification from "./Admin/Pages/AdminNotification";
 import AdminNotificattionDetail from "./Admin/Pages/AdminNotificattionDetail";
 import ConductorNotificationDetail from "./Conductor/Pages/ConductorNotificationDetail";
 import ParentNotificationDetail from "./Parents/Pages/ParentNotificationDetail";
+import AddScreens from "./Admin/Pages/AddScreens";
 
 
 
@@ -113,13 +114,14 @@ function App() {
            <Route path="/ConductorVerification" element={<ConductorVerification/>} />
            <Route path="/SearchAndUpdate" element={<SearchAndUpdate/>} />
            <Route path="/AddMoreJourneys" element={<AddMoreJourneys/>} />
-           <Route path="/AddScreens" element={<AddScreens/>} />
+          
            <Route path="/StudentProfile" element={<StudentProfile/>} />
            <Route path="/StudentNotification" element={<StudentNotification/>} />
            <Route path="/ConductorNotification" element={<ConductorNotification/>} />
-        
+           <Route path="/AddScreens" element={<AddScreens/>} />
            <Route path="/ConductorNotificationDetail" element={<ConductorNotificationDetail/>} />
            <Route path="/ParentNotificationDetail" element={<ParentNotificationDetail/>} />
+           
 
            
       </>

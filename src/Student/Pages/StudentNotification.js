@@ -1,32 +1,44 @@
 import React, { useEffect, useState } from "react";
+import busarrived from '../../Assets/busarrived.png';
 import checkout from '../../Assets/checkout.png';
+import checkin from '../../Assets/checkin.png';
+import scanqrcode from '../../Assets/scanqrcode.png';
 
 function StudentNotification() {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const response = await fetch(
-        "http://localhost/WebApi/api/Users/GetUserNotification?id=3",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      try {
+        const response = await fetch(
+          "http://localhost/WebApi/api/Users/GetUserNotification?id=3",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${response.statusText}`);
         }
-      );
-      if (response.ok) {
+
         const responseData = await response.json();
-        console.log(responseData);  // Log the data to see its structure
-        if (responseData && responseData.status === true && Array.isArray(responseData.data)) {
-          // Sort notifications based on Time in descending order
-          const sortedData = responseData.data.sort((a, b) => new Date(b.Time) - new Date(a.Time));
-          setData(sortedData);
+        console.log('API Response:', responseData);  // Log the full response to see its structure
+
+        if (Array.isArray(responseData)) {
+          setData(responseData);
         } else {
-          console.error("Expected an array in the data property but got:", responseData);
+          throw new Error(`Expected an array but got: ${JSON.stringify(responseData)}`);
         }
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+        setError(error.message);
       }
     };
+
     fetchNotifications();
   }, []);
 
@@ -45,8 +57,9 @@ function StudentNotification() {
               Mark all as read
             </a>
           </div>
-          {data.map((admin) => (
-            <div className="notifications" key={admin.Id}>
+          {error && <p className="error">{error}</p>}
+          {data.map((student) => (
+            <div className="notifications" key={student.Id}>
               <div className="single-box unseen">
                 <div className="avatar">
                   <img src={checkout} alt="checkout" />
@@ -54,12 +67,12 @@ function StudentNotification() {
                 <div className="box-text">
                   <p className="notifi">
                     <a href="#" className="name">
-                      {admin.Type}
+                      {student.Type}
                     </a>
                     <br />
-                    {admin.Description}
+                    {student.Description}
                   </p>
-                  <p className="time">{admin.Time}</p>
+                  <p className="time">{student.Time}</p>
                 </div>
               </div>
             </div>

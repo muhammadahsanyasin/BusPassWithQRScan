@@ -42,39 +42,35 @@ function StudentFavStop() {
   };
 
   const handleRemove = async () => {
-    const updatedData = [];
-    const updatedCheckedStates = [];
+    const itemsToRemove = data.filter((item, index) => checkedStates[index]);
+    const studentId = 2; // Assuming studentId is 2 as per the fetch URL
 
-    for (let i = 0; i < data.length; i++) {
-      if (checkedStates[i]) {
-        try {
-          const response = await fetch(
-            `http://localhost/WebApi/api/Student/RemoveFavStop?studentId=1&stopId=${data[i].Id}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          if (!response.ok) {
-            console.error(`Failed to remove stop with ID: ${data[i].Id}`);
-            updatedData.push(data[i]);
-            updatedCheckedStates.push(false);
+    try {
+      for (const item of itemsToRemove) {
+        const stopId = item.Id;
+        const response = await fetch(
+          `http://localhost/WebApi/api/Student/RemoveFavStop?studentId=${studentId}&stopId=${stopId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-        } catch (error) {
-          console.error(`Error removing stop with ID: ${data[i].Id}`, error);
-          updatedData.push(data[i]);
-          updatedCheckedStates.push(false);
-        }
-      } else {
-        updatedData.push(data[i]);
-        updatedCheckedStates.push(false);
-      }
-    }
+        );
 
-    setData(updatedData);
-    setCheckedStates(updatedCheckedStates);
+        if (!response.ok) {
+          throw new Error(`Failed to remove stop with id ${stopId}: ${response.statusText}`);
+        }
+      }
+
+      // After successful removal, update the data and checked states
+      const updatedData = data.filter((item, index) => !checkedStates[index]);
+      setData(updatedData);
+      setCheckedStates(Array(updatedData.length).fill(false));
+
+    } catch (error) {
+      console.error("Error removing stops:", error);
+    }
   };
 
   return (

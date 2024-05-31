@@ -46,14 +46,14 @@ function AdminNavbar() {
                   </Link>
                 </li>
     
-                {/* <li className="nav-item">
+                <li className="nav-item">
                   <Link
                     className="nav-link color hover active"
-                    to="/ChangePassword"
+                    to="/AddScreens"
                   >
-                    Change Password
+                    ADD SCREENS
                   </Link>
-                </li> */}
+                </li>
                 
     
                 <li className="nav-item">

@@ -1,36 +1,47 @@
-import React ,{useEffect,useState} from 'react'
-import busarrived from '../../Assets/busarrived.png';
-import checkout from '../../Assets/checkout.png';
-import checkin from '../../Assets/checkin.png';
-import scanqrcode from '../../Assets/scanqrcode.png';
+import React, { useEffect, useState } from "react";
+import busarrived from "../../Assets/busarrived.png";
+import checkout from "../../Assets/checkout.png";
+import checkin from "../../Assets/checkin.png";
+import scanqrcode from "../../Assets/scanqrcode.png";
 function ConductorNotification() {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const response = await fetch(
-        "http://localhost/WebApi/api/Users/GetUserNotification?id=1",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      try {
+        const response = await fetch(
+          "http://localhost/WebApi/api/Users/GetUserNotification?id=3",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${response.statusText}`);
         }
-      );
-      if (response.ok) {
+
         const responseData = await response.json();
-        console.log(responseData);  // Log the data to see its structure
-        if (responseData && responseData.status === true && Array.isArray(responseData.data)) {
-          setData(responseData.data);
+        console.log('API Response:', responseData);  // Log the full response to see its structure
+
+        if (Array.isArray(responseData)) {
+          setData(responseData);
         } else {
-          console.error("Expected an array in the data property but got:", responseData);
+          throw new Error(`Expected an array but got: ${JSON.stringify(responseData)}`);
         }
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+        setError(error.message);
       }
     };
+
     fetchNotifications();
   }, []);
-    return (
-      <div>
+  return (
+    <div>
       <div className="parent-notification">
         <div className="wrapper">
           <div className="top-bar">
@@ -69,4 +80,4 @@ function ConductorNotification() {
   );
 }
 
-export default ConductorNotification
+export default ConductorNotification;

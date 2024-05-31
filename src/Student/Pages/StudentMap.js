@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  MapContainer,  Marker,  Popup,  TileLayer,  useMapEvent,  Polyline,} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvent, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
@@ -88,6 +88,24 @@ function StudentMap() {
     setShowMarkerModal(false);
   };
 
+  // Function to handle adding a favorite stop
+  const addFavoriteStop = async (stopId) => {
+    const studentId = 2; // Replace this with the actual studentId if needed
+    const response = await fetch(`http://localhost/WebApi/api/Student/AddFavStop?studentId=${studentId}&stopId=${stopId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      alert("Favorite stop added successfully");
+    } else {
+      console.error("Error adding favorite stop:", response.statusText);
+      alert("Failed to add favorite stop");
+    }
+  };
+
   useEffect(() => {
     const fetchStops = async () => {
       const response = await fetch("http://localhost/WebApi/api/Stops/GetAllStops", {
@@ -139,7 +157,10 @@ function StudentMap() {
                           </div>
                         </div>
                       </div>
-                      <button className="studentmap-button edit-stops">
+                      <button
+                        className="studentmap-button edit-stops"
+                        onClick={() => addFavoriteStop(stop.Id)}
+                      >
                         ADD Favorite Stop
                       </button>
                     </div>
