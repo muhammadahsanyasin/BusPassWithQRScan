@@ -1,52 +1,87 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import 'leaflet-routing-machine';
 import taxiIconUrl from '../../Assets/childloc.png'; // Ensure the image is in the src directory
 
-
-
 function GoogleMap() {
-  useEffect(() => {
-    const map = L.map('map').setView([33.64340057674401, 73.0790521153456], 11);
-    const mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
+  const [mapInitialized, setMapInitialized] = useState(false);
+  const [stopPoints, setStopPoints] = useState([]);
+  const [routingControl, setRoutingControl] = useState(null);
+  const [map, setMap] = useState(null);
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: 'Leaflet &copy; ' + mapLink + ', contribution',
-      maxZoom: 15,
+  useEffect(() => {
+    if (!mapInitialized) {
+      const mapInstance = L.map('map').setView([33.64340057674401, 73.0790521153456], 11);
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: 'Leaflet &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, contribution',
+        maxZoom: 15,
+      }).addTo(mapInstance);
+      setMap(mapInstance);
+      setMapInitialized(true);
+    }
+  }, [mapInitialized]);
+
+  const startJourney = () => {
+    if (map && stopPoints.length > 0) {
+      if (routingControl) {
+        routingControl.remove();
+      }
+
+      const newRoutingControl = L.Routing.control({
+        waypoints: stopPoints.map(point => L.latLng(point[0], point[1])),
+        createMarker: (i, waypoint, n) => {
+          return L.marker(waypoint.latLng, {
+            icon: L.icon({
+              iconUrl: taxiIconUrl,
+              iconSize: [30, 30],
+            })
+          });
+        },
+        routeWhileDragging: false,
+      }).addTo(map);
+
+      setRoutingControl(newRoutingControl);
+
+      newRoutingControl.on('routesfound', (e) => {
+        const route = e.routes[0].coordinates;
+        animateMarker(route);
+      });
+    }
+  };
+
+  const animateMarker = (route) => {
+    const marker = L.marker(route[0], {
+      icon: L.icon({
+        iconUrl: taxiIconUrl,
+        iconSize: [30, 30],
+      })
     }).addTo(map);
 
-    const taxiIcon = L.icon({
-      iconUrl: taxiIconUrl,
-      iconSize: [70, 70],
-    });
+    let currentIndex = 0;
 
-    const marker = L.marker([33.64331651749647, 73.07780627129169], { icon: taxiIcon }).addTo(map);
+    const moveMarker = () => {
+      if (currentIndex < route.length - 1) {
+        const nextIndex = currentIndex + 1;
+        const nextLatLng = route[nextIndex];
+        marker.setLatLng(nextLatLng);
+        currentIndex = nextIndex;
+        setTimeout(moveMarker, 200); // Adjust this value to control the speed (higher value = slower)
+      }
+    };
 
-    map.on('click', function (e) {
-      const newMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-      L.Routing.control({
-        waypoints: [
-          L.latLng(33.64331651749647, 73.07780627129169),
-          L.latLng(e.latlng.lat, e.latlng.lng),
-        ],
-      })
-        .on('routesfound', function (e) {
-          const routes = e.routes;
+    moveMarker();
+  };
 
-          e.routes[0].coordinates.forEach((coord, index) => {
-            setTimeout(() => {
-              marker.setLatLng([coord.lat, coord.lng]);
-            }, 100 * index);
-          });
-        })
-        .addTo(map);
-    });
-  }, []);
-
-  return <div id="map" style={{ width: '100%', height: '100vh' }}></div>;
-  
+  return (
+    <div>
+      <div id="map" style={{ width: '100%', height: '100vh' }}></div>
+      <button onClick={startJourney} style={{ position: 'absolute', top: '10px', left: '10px', zIndex: 1000 }}>
+        Start Journey
+      </button>
+    </div>
+  );
 }
 
 export default GoogleMap;

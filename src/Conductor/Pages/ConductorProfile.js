@@ -40,29 +40,29 @@ function ConductorProfile() {
           </div>
 
           <div className="person-details">
-            <h2>{data.user?.UserName}</h2>
-            <p>32402-2852063-3</p>
+            <h2>{data.Conductors.Name}</h2>
+            <p>{data.Conductors.BusRegNo}</p>
           </div>
 
           <div className="table-container">
             <div className="row">
               <div className="col">
                 Contact No
-                <h4>{data.user?.Contact}</h4>
+                <h4>{data.Conductors.Contact}</h4>
               </div>
               <div className="col">
                 User Name
-                <h4>{data.user?.UserName}</h4>
+                <h4>{data.Conductors.UserName}</h4>
               </div>
             </div>
             <div className="row">
               <div className="col">
                 Conductor ID
-                <h4>{data.user?.Id}</h4>
+                <h4>{data.Conductors.Id}</h4>
               </div>
               <div className="col">
                 Bus ID
-                <h4>{data.user?.BusId}</h4>
+                <h4>{data.Conductors.BusId}</h4>
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@ function ConductorProfile() {
       <Link to='/ConductorHistory'>
         <button className="conductorhistory-button edit-stops">History</button>
       </Link>
-      <Link to="/ChangePassword">
+      <Link to="/AdminChangePassword">
         <button className="conductorchangepwd-button edit-stops">Change Password</button>
       </Link>
       <Link to='/'>

@@ -2,53 +2,56 @@ import React, { useState, useEffect } from "react";
 import "../Pages/Styles/ConductorDashboard.css";
 import ConductorNavbar from "../Components/ConductorNavbar";
 
-function ConductorDashboard({ progress }) {
-  const [data, setdata] = useState([]);
-  useEffect(() => {
-    const studentdata = async () => {
-      const response = await fetch(
-        "http://localhost/WebApi/api/Student/GetFavStops?id=1",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        setdata(await response.json());
-        console.log(data);
-        return data;
-      }
-    };
-    studentdata();
-  }, []);
+function ConductorDashboard() {
+  const [busDetails, setBusDetails] = useState({});
+  const [nextStop, setNextStop] = useState({});
 
-  const radius = 50;
-  const circumference = 2 * Math.PI * radius;
-  const progressOffset = ((50 - progress) / 50) * circumference;
+  useEffect(() => {
+    fetch("http://localhost/WebApi/api/Admin/GetBusDetails")
+      .then((response) => response.json())
+      .then((data) => setBusDetails(data))
+      .catch((error) => console.error("Error fetching bus details:", error));
+
+    fetch("http://localhost/WebApi/api/Conductor/GetNextStop/?conductorId=2")
+      .then((response) => response.json())
+      .then((data) => setNextStop(data))
+      .catch((error) => console.error("Error fetching next stop:", error));
+  }, []);
 
   return (
     <div className="conductor-dashboard">
       <ConductorNavbar />
       <div className="conductor-dashboard-container">
         <div className="booked-seats">
-          <div
-            className="progress-circle"
-            style={{
-              background: `conic-gradient(#80cbc4 0% 29%, #004d40 29% 100%)`,
-            }}
-          >
-            <div className="progress-circle-inner">
-              <div
-                className="progress-circle-half"
-                style={{ transform: `rotate(${59 * 3.6}deg)` }}
-              ></div>
-              <span>59/100</span>
+          {busDetails.length > 1 && (
+            <div
+              className="progress-circle"
+              style={{
+                background: `conic-gradient(#80cbc4 0% ${
+                  (busDetails[1].BookedSeats / busDetails[1].TotalSeats) * 100
+                }%, #004d40 ${
+                  (busDetails[1].BookedSeats / busDetails[1].TotalSeats) * 100
+                }% 100%)`,
+              }}
+            >
+              <div className="progress-circle-inner">
+                <div
+                  className="progress-circle-half"
+                  style={{
+                    transform: `rotate(${
+                      (busDetails[1].BookedSeats / busDetails[1].TotalSeats) *
+                      360
+                    }deg)`,
+                  }}
+                ></div>
+                <span className="progress-text">
+                  {`${busDetails[1].BookedSeats}/${busDetails[1].TotalSeats}`}
+                  <div className="progress-label">Seats Booked</div>
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
-
         <div className="conductordashboard-container">
           <div className="white-container">
             <h2>Next Stop</h2>
@@ -56,15 +59,15 @@ function ConductorDashboard({ progress }) {
 
           <div className="favorit-stops-conductor">
             <section className="dashboard-container">
-              <h2>6th Road</h2>
-              <div class="row">
+              <h2>{nextStop.stopName}</h2>
+              <div className="row">
                 <div className="conductorstop-containers">
                   <p>Route No </p>
-                  <p className="bold">1111</p>
+                  <p className="bold">{nextStop.routeNumber}</p>
                 </div>
                 <div className="conductorstop-containers">
                   <p>Stop Timing</p>
-                  <p className="bold">08:00 am</p>
+                  <p className="bold">{nextStop.stopTiming}</p>
                 </div>
               </div>
             </section>
@@ -75,15 +78,19 @@ function ConductorDashboard({ progress }) {
           </div>
           <div className="favorit-stops-conductor">
             <section className="dashboard-container">
-              <div class="row">
+              <div className="row">
                 <div className="stops">
                   <div className="conductorstop-containers">
                     <p>Total Stops </p>
-                    <p className="bold">15</p>
+                    {busDetails.length > 0 && (
+                      <p className="bold">{busDetails[0].TotalStops}</p>
+                    )}
                   </div>
                   <div className="conductorstop-containers">
-                    <p>Remaing Stops</p>
-                    <p className="bold">5</p>
+                    <p>Remaining Stops</p>
+                    {busDetails.length > 0 && (
+                      <p className="bold">{busDetails[0].RemainingStops}</p>
+                    )}
                   </div>
                 </div>
               </div>

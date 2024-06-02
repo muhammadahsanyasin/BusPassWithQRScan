@@ -114,71 +114,35 @@ function ParentMap() {
         <div style={{ backgroundColor: "#2FAA98" }}>
           <Modal.Header closeButton></Modal.Header>
           <Modal.Body>
-            <section className="mappoup-container">
-              <div
-                id="carouselExampleControls"
-                className="carousel slide"
-                data-bs-ride="carousel"
-              >
-                <div className="carousel-inner">
-                  {data.map((stop, index) => (
-                    <div
-                      key={index}
-                      className={index === 0 ? "carousel-item active student-card" : "carousel-item student-card"}
-                    >
-                      <h2>{stop.Name}</h2>
-                      <div className="row">
-                        <div className="stops">
-                          <div className="studentmapstop-containers">
-                            <p>Pickup Time </p>
-                            <p className="bold">{stop.Timing}</p>
-                          </div>
-                          <div className="studentmapstop-containers">
-                            <p>Route No</p>
-                            <p className="bold">{stop.Route}</p>
-                          </div>
-                        </div>
+            {selectedLocation && (
+              <section className="mappoup-container">
+                <div>
+                  <h2>{selectedLocation.Name}</h2>
+                  <div className="row">
+                    <div className="stops">
+                      <div className="studentmapstop-containers">
+                        <p>Pickup Time </p>
+                        <p className="bold">{selectedLocation.Timing}</p>
                       </div>
-                      <button className="studentmap-button edit-stops">
-                        ADD Favorite Stop
-                      </button>
+                      <div className="studentmapstop-containers">
+                        <p>Route No</p>
+                        <p className="bold">{selectedLocation.Route}</p>
+                      </div>
                     </div>
-                  ))}
+                  </div>
+                 
                 </div>
-                <button
-                  className="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#carouselExampleControls"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    className="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="visually-hidden">Previous</span>
-                </button>
-                <button
-                  className="carousel-control-next"
-                  type="button"
-                  data-bs-target="#carouselExampleControls"
-                  data-bs-slide="next"
-                >
-                  <span
-                    className="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="visually-hidden">Next</span>
-                </button>
-              </div>
-            </section>
+              </section>
+            )}
           </Modal.Body>
           <Modal.Footer></Modal.Footer>
         </div>
       </Modal>
 
+
       <MapContainer
         center={markerPosition || initialPosition}
-        zoom={15}
+        zoom={13}
         style={{ width: "100%", height: "100%" }}
         onClick={handleMapClick}
       >

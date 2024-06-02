@@ -62,8 +62,12 @@ function ParentDashboard({ }) {
                         }}
                       >
                         <div className="progress-circle-inner">
-                          <span>{`${child.childDetails.RemainingJourneys}/${child.childDetails.TotalJourneys}`}</span>
+                          <span>{`${child.childDetails.RemainingJourneys}/${child.childDetails.TotalJourneys}`}
+                          <div className="progress-label">Journeys</div>
+                          </span>
+
                         </div>
+                      
                       </div>
                     </div>
 

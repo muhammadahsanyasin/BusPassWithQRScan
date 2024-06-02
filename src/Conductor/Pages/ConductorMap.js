@@ -1,38 +1,62 @@
 import React, { useState, useEffect } from "react";
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  Polyline,
-} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, Polyline, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
+import busIcon from "../../Assets/BusMapMarker.png";
 import { Modal, Button } from "react-bootstrap";
 import "../Pages/Styles/ConductorMap.css";
+import "leaflet-routing-machine";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
-// Define the custom icon
+// Define the custom icons
 const customIcon = L.icon({
   iconUrl: markerIcon,
   iconSize: [38, 38],
 });
 
-// Initial position and predefined points
+const busMarkerIcon = L.icon({
+  iconUrl: busIcon,
+  iconSize: [38, 38],
+});
+
+// Initial position
 const initialPosition = [33.64340057674401, 73.0790521153456];
-const points = [
-  [33.65221479100481, 73.06464916506403],
-  [33.64325572431809, 73.06407053297772],
-  [33.64266730832196, 73.07319440734358],
-  [33.64179296464606, 73.07699834732112],
-  [33.64331651749647, 73.07780627129169],
-  [33.64314132414114, 73.07901841479297],
-];
+
+const RoutingMachine = ({ waypoints }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map) return;
+
+    const routingControl = L.Routing.control({
+      waypoints: waypoints,
+      createMarker: (i, waypoint) => {
+        return L.marker(waypoint.latLng, {
+          icon: i === 0 ? busMarkerIcon : customIcon // Use bus icon for the first marker
+        });
+      },
+      routeWhileDragging: false,
+      addWaypoints: false,
+      autoRoute: true,
+      lineOptions: {
+        styles: [{ color: 'blue', opacity: 1, weight: 5 }]
+      }
+    }).addTo(map);
+
+    return () => map.removeControl(routingControl);
+  }, [map, waypoints]);
+
+  return null;
+};
 
 function ConductorMap() {
   const [markerPosition, setMarkerPosition] = useState(null);
   const [showMarkerModal, setShowMarkerModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [points, setPoints] = useState([]);
+  const [routeStops, setRouteStops] = useState([]);
+  const [journeyStarted, setJourneyStarted] = useState(false);
 
   useEffect(() => {
     // Function to get current location
@@ -50,6 +74,31 @@ function ConductorMap() {
 
     // Get the current location when the component mounts
     getCurrentLocation();
+
+    // Fetch assigned routes from API
+    const fetchAssignedRoutes = async () => {
+      try {
+        const response = await fetch("http://localhost/WebApi/api/Conductor/GetAssignedRoutes/?conductorId=2");
+        const data = await response.json();
+
+        if (data.length > 0 && data[0].Stops) {
+          const routePoints = data[0].Stops
+            .filter(stop => stop.Latitude && stop.Longitude)
+            .map(stop => ({
+              position: [parseFloat(stop.Latitude), parseFloat(stop.Longitude)],
+              name: stop.Name,
+              timing: stop.Timing
+            }));
+
+          setPoints(routePoints.map(stop => stop.position));
+          setRouteStops(routePoints);
+        }
+      } catch (error) {
+        console.error("Error fetching assigned routes:", error);
+      }
+    };
+
+    fetchAssignedRoutes();
 
     // Clear the marker position when component unmounts
     return () => {
@@ -72,8 +121,39 @@ function ConductorMap() {
     setShowMarkerModal(false);
   };
 
+  // Function to start the journey
+  const startJourney = async () => {
+    try {
+      const response = await fetch("http://localhost/WebApi/api/Conductor/StartJourney/?busId=2&routeId=2", {
+        method: 'POST'
+      });
+
+      if (response.ok) {
+        alert('Journey started successfully!');
+        setJourneyStarted(true);
+      } else {
+        alert('Failed to start journey.');
+      }
+    } catch (error) {
+      console.error('Error starting journey:', error);
+    }
+  };
+
   return (
-    <div className="googlemap-container" style={{ width: "100%", height: "100vh" }}>
+    <div className="googlemap-container" style={{ width: "100%", height: "100vh", position: "relative" }}>
+      <Button 
+        onClick={startJourney} 
+        disabled={journeyStarted} 
+        style={{ 
+          position: "absolute", 
+          top: "10px", 
+          right: "10px", 
+          color:"black",
+          zIndex: 1000 
+        }}>
+        {journeyStarted ? 'Journey Started' : 'Start Journey'}
+      </Button>
+
       {/* Modal for displaying marker information */}
       <Modal show={showMarkerModal} onHide={handleCloseMarkerModal}>
         <div style={{ backgroundColor: "#2FAA98" }}>
@@ -81,22 +161,24 @@ function ConductorMap() {
             <Modal.Title>Stop Information</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="show-stops-conductormap">
-              <section className="dashboard-container">
-                <div className="row">
-                  <div className="stops">
-                    <div className="conductormapstop-containers">
-                      <p>Pickup</p>
-                      <p className="bold">8:00am</p>
-                    </div>
-                    <div className="conductormapstop-containers">
-                      <p>Dropoff</p>
-                      <p className="bold">8:10am</p>
+            {selectedLocation && (
+              <div className="show-stops-conductormap">
+                <section className="dashboard-container">
+                  <div className="row">
+                    <div className="stops">
+                      <div className="conductormapstop-containers">
+                        <p>Name</p>
+                        <p className="bold">{selectedLocation.name}</p>
+                      </div>
+                      <div className="conductormapstop-containers">
+                        <p>Timing</p>
+                        <p className="bold">{selectedLocation.timing}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </section>
-            </div>
+                </section>
+              </div>
+            )}
           </Modal.Body>
           <Modal.Footer></Modal.Footer>
         </div>
@@ -104,7 +186,7 @@ function ConductorMap() {
 
       <MapContainer
         center={markerPosition || initialPosition}
-        zoom={20}
+        zoom={14}
         style={{ width: "100%", height: "100%" }}
         onClick={handleMapClick}
       >
@@ -112,29 +194,28 @@ function ConductorMap() {
 
         {/* Render marker if position is available */}
         {markerPosition && (
-          <Marker
-            position={markerPosition}
-            icon={customIcon}
-          >
+          <Marker position={markerPosition} icon={customIcon}>
             <Popup>
-              Your current location. <br /> Latitude: {markerPosition[0]},
-              Longitude: {markerPosition[1]}.
+              Your current location. <br /> Latitude: {markerPosition[0]}, Longitude: {markerPosition[1]}.
             </Popup>
           </Marker>
         )}
 
         {/* Adding child markers */}
-        {points.map((point, index) => (
+        {routeStops.map((stop, index) => (
           <Marker
             key={index}
-            position={point}
+            position={stop.position}
             icon={customIcon}
-            eventHandlers={{ click: () => handleMarkerClick(point) }}
+            eventHandlers={{ click: () => handleMarkerClick(stop) }}
           />
         ))}
 
         {/* Draw polyline between points */}
         <Polyline positions={points} color="blue" />
+
+        {/* Routing Machine to show the route */}
+        {journeyStarted && <RoutingMachine waypoints={points.map(point => L.latLng(point[0], point[1]))} />}
       </MapContainer>
     </div>
   );

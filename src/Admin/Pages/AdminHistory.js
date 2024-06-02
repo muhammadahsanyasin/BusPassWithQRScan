@@ -1,71 +1,58 @@
 import React, { useState, useEffect } from "react";
 import "../Pages/Styles/AdminHistory.css";
 
-const fetchCategories = async (setCategories) => {
-  try {
-    const response = await fetch("http://localhost/WebApi/api/Category/GetAll", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      setCategories(data);
-    } else {
-      console.error('Failed to fetch categories');
-    }
-  } catch (error) {
-    console.error('Fetch error:', error);
-  }
-};
-
-const fetchUserHistory = async (categoryId, dateFrom, dateTo, setHistory) => {
-  try {
-    const response = await fetch(`http://localhost/WebApi/api/Users/GetUserHistory?id=6&fDate=2024-05-15&tDate=2024-05-23`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      setHistory(data);
-    } else {
-      console.error('Failed to fetch user history');
-    }
-  } catch (error) {
-    console.error('Fetch error:', error);
-  }
-};
 
 function AdminHistory() {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedDateFrom, setSelectedDateFrom] = useState('');
-  const [selectedDateTo, setSelectedDateTo] = useState('');
-  const [history, setHistory] = useState(null);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedStartDate, setSelectedStartDate] = useState('');
+  const [selectedEndDate, setSelectedEndDate] = useState('');
 
   useEffect(() => {
-    fetchCategories(setCategories);
+    const fetchAdminData = async () => {
+      const response = await fetch(
+        "http://localhost/WebApi/api/Users/GetUserHistory?id=3&fDate=2024-05-15&tDate=2024-05-23",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const jsonData = await response.json();
+        setData(jsonData);
+        setFilteredData(jsonData); // Initialize filteredData with the fetched data
+        console.log(jsonData);
+      }
+    };
+    fetchAdminData();
   }, []);
 
-  useEffect(() => {
-    if (selectedCategory && selectedDateFrom && selectedDateTo) {
-      fetchUserHistory(selectedCategory, selectedDateFrom, selectedDateTo, setHistory);
+  const handleStartDateChange = (date) => {
+    setSelectedStartDate(date);
+    filterData(date, selectedEndDate);
+  };
+
+  const handleEndDateChange = (date) => {
+    setSelectedEndDate(date);
+    filterData(selectedStartDate, date);
+  };
+
+  const filterData = (startDate, endDate) => {
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+
+      const filtered = data.filter((item) => {
+        const itemDate = new Date(item.Date.split(' ')[0]);
+        return itemDate >= start && itemDate <= end;
+      });
+
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
     }
-  }, [selectedCategory, selectedDateFrom, selectedDateTo]);
-
-  const handleDateFromChange = (e) => {
-    setSelectedDateFrom(e.target.value);
-  };
-
-  const handleDateToChange = (e) => {
-    setSelectedDateTo(e.target.value);
-  };
-
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
   };
 
   return (
@@ -74,47 +61,41 @@ function AdminHistory() {
         <div className="picker-wrapper">
           <label className="picker-text">From :</label>
           <div className="daypicker-container">
-            <input
-              type="date"
-              id="selectedDateFrom"
-              value={selectedDateFrom}
-              onChange={handleDateFromChange}
-            />
+            <label htmlFor="startDate">
+              <input
+                type="date"
+                id="startDate"
+                value={selectedStartDate}
+                onChange={(e) => handleStartDateChange(e.target.value)}
+              />
+            </label>
           </div>
         </div>
         <div className="picker-wrapper">
           <label className="picker-text">To :</label>
           <div className="daypicker-container">
-            <input
-              type="date"
-              id="selectedDateTo"
-              value={selectedDateTo}
-              onChange={handleDateToChange}
-            />
+            <label htmlFor="endDate">
+              <input
+                type="date"
+                id="endDate"
+                value={selectedEndDate}
+                onChange={(e) => handleEndDateChange(e.target.value)}
+              />
+            </label>
           </div>
         </div>
       </div>
-
-      <div className="childhistory-dropdown">
-        <select value={selectedCategory} onChange={handleCategoryChange}>
-          <option value="">Select Category</option>
-          {categories.map((category) => (
-            <option key={category.Id} value={category.Id}>
-              {category.Name}
-            </option>
-          ))}
-        </select>
-      </div>
-
       <div className="flat-list">
-        {history && history[selectedCategory] && history[selectedCategory].map((item, index) => (
+        {filteredData.map((item, index) => (
           <div className="flat-list-row" key={index}>
             <p className="date-time">{item.Date}, {item.Time}</p>
             <p className="history-type">{item.Type}</p>
+            <p className="pass-history"> Name: {item.StudentName}</p>
+            <p className="pass-history">PassID: {item.PassId}</p>
             <p className="pass-history">Stop Name: {item.StopId}</p>
             <p className="pass-history">Route #: {item.RouteId}</p>
             <p className="pass-history">Bus #: {item.BusId}</p>
-            <p className="pass-history">Student: {item.StudentName}</p>
+          
           </div>
         ))}
       </div>

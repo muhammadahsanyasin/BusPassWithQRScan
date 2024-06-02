@@ -45,6 +45,7 @@ import AdminNotificattionDetail from "./Admin/Pages/AdminNotificattionDetail";
 import ConductorNotificationDetail from "./Conductor/Pages/ConductorNotificationDetail";
 import ParentNotificationDetail from "./Parents/Pages/ParentNotificationDetail";
 import AddScreens from "./Admin/Pages/AddScreens";
+import AdminChangePassword from "./Admin/Components/AdminChangePassword";
 
 
 
@@ -86,7 +87,7 @@ function App() {
             <Route path="/AdminNotification" element={<AdminNotification/>} />
             <Route path="/AdminNotificattionDetail" element={<AdminNotificattionDetail/>} />
 
-     
+     <Route path="/AdminChangePassword" element={<AdminChangePassword/>} />
             <Route path="/ParentMap" element={<ParentMap />} />    
             <Route path="/ParentsNotification" element={<ParentsNotification />} />
             

@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Components/Styles/ChangePassword.css";
 import lock from '../../Assets/lock.png';
-function ChangePassword() {
 
-  const [formdata, setFormData] = useState({ })
+function AdminChangePassword() {
+  const [formdata, setFormData] = useState({ });
 
- 
   const changepasword = async () => {
     console.log('Form Data:', formdata);
 
@@ -28,18 +27,18 @@ function ChangePassword() {
       }
     } catch (error) {
       console.error('Fetch error:', error);
-      alert(`Errrr saving data: ${error.message}`);
+      alert(`Error saving data: ${error.message}`);
     }
   };
   
-  const handleinput = (e) =>{
-    const {name, value} = e.target;
-    setFormData({
-      ...formdata,//spread opt
-      [name]: value})
+  const handleinput = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value
+    }));
+  };
 
-      console.log(formdata)
-  }
   return (
     <div className="changepasword-screen">
       <div className="changepasword-container">
@@ -47,14 +46,14 @@ function ChangePassword() {
           <img src={lock} alt="Lock Icon" />
         </div>
         <div className="password-fields">
-          <input type="oldPassword" placeholder="Old Password"  onChange={handleinput}/>
-          <input type="newPassword" placeholder="New Password"  onChange={handleinput}/>
-          <input type="newPassword" placeholder="Confirm Password" onChange={handleinput} />
+          <input type="text" name="id" placeholder="ID" onChange={handleinput} />
+          <input type="Password" name="oldPassword" placeholder="Old Password" onChange={handleinput} />
+          <input type="Password" name="newPassword" placeholder="New Password" onChange={handleinput} />
         </div>
       </div>
-      <button onClick={changepasword} className=" addnewconductor-button  edit-stops">Confirm</button>
+      <button onClick={changepasword} className="addnewconductor-button edit-stops">Confirm</button>
     </div>
   );
 }
 
-export default ChangePassword;
+export default AdminChangePassword;

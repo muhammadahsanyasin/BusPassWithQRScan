@@ -31,43 +31,30 @@ function StudentDashboard({ progress }) {
     fetchStudentData();
   }, []);
 
-  const radius = 50;
-  const circumference = 2 * Math.PI * radius;
-  const progressOffset = ((100 - progress) / 100) * circumference;
-
   return (
-    <div className="student-dashboard">
+    <div className="student-dashboard" style={{ userSelect: "none" }}>
       <StudentNavbar />
-      <div>
+      <div className="student-dashboard-container">
         <form>
-          <div className="progress-container">
-            <div className="progress-label">Journeys Used: {progress}%</div>
-            <svg className="progress-ring" width="120" height="120">
-              <circle
-                className="progress-ring-circle"
-                stroke="#2FAA98"
-                strokeWidth="7"
-                fill="transparent"
-                r={radius}
-                cx="60"
-                cy="60"
-                style={{
-                  strokeDasharray: circumference,
-                  strokeDashoffset: progressOffset,
-                }}
-              />
-              <text
-                x="50%"
-                y="50%"
-                dominantBaseline="middle"
-                textAnchor="middle"
-                className="progress-text"
-              >
-                {progress}/100
-              </text>
-            </svg>
+          <div className="booked-seats">
+            <div
+              className="progress-circle"
+              style={{
+                background: `conic-gradient(#80cbc4 0% 29%, #004d40 29% 100%)`,
+              }}
+            >
+              <div className="progress-circle-inner">
+                <div
+                  className="progress-circle-half"
+                  style={{ transform: `rotate(${59 * 3.6}deg)` }}
+                ></div>
+                <span className="progress-text">
+                  29/100
+                  <div className="progress-label">Journeys</div>
+                </span>
+              </div>
+            </div>
           </div>
-
           <div className="studentdashboard-container">
             <div className="white-container">
               <h2>Favorite stops</h2>
