@@ -17,7 +17,6 @@ const Login = () => {
         localStorage.setItem("user", null)
       }
     
-   
   },[])
 
   
@@ -42,62 +41,51 @@ const Login = () => {
 
 
 
-
   const handleLogin = async (e) => {
-   console.log(`http://localhost/WebApi/api/users/login?username=${UserName}&password=${password}`)
+    e.preventDefault();
+    console.log(`http://localhost/WebApi/api/users/login?username=${UserName}&password=${password}`);
     try {
       const response = await fetch(
         `http://localhost/WebApi/api/users/login?username=${UserName}&password=${password}`,
         {
-
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          
         }
       );
-
-      
-        const data = await response.json();
-        console.log(data)
-
-        //set logged in user to localstorage
-        localStorage.setItem('user', JSON.stringify(data));
-        
-      
-        const newdate = new Date();
-        console.log(newdate)
-      
-         localStorage.setItem('addtime',newdate);
-        // Check the role of the user and navigate accordingly
-       
-          if (data) {
-            console.log("logged in admin", data.Admins);
-            
-            navigate("/AdminDashboard");
-
-       
-              
-            console.log("logged in parent", data.Parents);
-         
-            navigate("/ParentDashboard");
-          
-            console.log("logged in conductor", data.Conductors);
-         
-            navigate("/ConductorDashboard");
-       
-            console.log("logged in student", data.Students);
-          
-          
-            navigate("/StudentDashboard");
-          }
-        
+  
+      const data = await response.json();
+      console.log(data);
+  
+      // Set logged in user to localstorage
+      localStorage.setItem('user', JSON.stringify(data));
+  
+      const newdate = new Date();
+      console.log(newdate);
+      localStorage.setItem('addtime', newdate);
+  
+      // Check the role of the user and navigate accordingly
+      if (data.Admins) {
+        console.log("logged in admin", data.Admins);
+        navigate("/AdminDashboard");
+      } else if (data.Parents) {
+        console.log("logged in parent", data.Parents);
+        navigate("/ParentDashboard");
+      } else if (data.Conductors) {
+        console.log("logged in conductor", data.Conductors);
+        navigate("/ConductorDashboard");
+      } else if (data.Students) {
+        console.log("logged in student", data.Students);
+        navigate("/StudentDashboard");
+      } else {
+        setError("Login failed: User role not recognized");
+      }
     } catch (error) {
       setError("Login failed: " + error.message);
     }
   };
-
+  
   return (
     <div className="login-container">
       

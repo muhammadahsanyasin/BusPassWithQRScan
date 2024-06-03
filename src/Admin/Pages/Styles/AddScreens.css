@@ -1,6 +1,17 @@
+.addscreens{
+  width: 100vw; 
+  height: 100vh;
+ background-color:  #168070;
+display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+
+
 .addscreen-container {
+  margin-top: 30px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #837e7e;
   text-align: center;
   width: 350px;
 }
@@ -32,7 +43,6 @@
   background-color: #c0c0c0;
 }
 
-  
   @media (max-width: 600px) {
     .grid-item {
       padding: 15px;

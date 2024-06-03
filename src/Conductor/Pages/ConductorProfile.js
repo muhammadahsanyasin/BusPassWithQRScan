@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import profile from "../../Assets/profile.png";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import '../Pages/Styles/ConductorProfile.css';
 
 function ConductorProfile() {
   const [api] = useState("http://localhost/WebApi/api/users/GetUserById?id=6");
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    alert("You have been logged out.");
+    navigate('/');
+  };
 
   useEffect(() => {
     const fetchConductorData = async () => {
@@ -74,9 +80,7 @@ function ConductorProfile() {
       <Link to="/AdminChangePassword">
         <button className="conductorchangepwd-button edit-stops">Change Password</button>
       </Link>
-      <Link to='/'>
-        <button className="conductorlogout-button edit-stops">Log Out</button>
-      </Link>
+      <button onClick={handleLogout} className="conductorlogout-button edit-stops">Log Out</button>
     </div>
   );
 }

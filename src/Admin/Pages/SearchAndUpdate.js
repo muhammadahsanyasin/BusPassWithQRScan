@@ -2,21 +2,22 @@ import React,{useState} from 'react'
 import '../Pages/Styles/SearchAndUpdate.css';
 
 function SearchAndUpdate() {
-  const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
-  const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
+  // const [admin, setadmin] = useState(JSON.parse(localStorage.getItem('user')))
+  // const [api, setApi] = useState(admin?  `http://localhost/WebApi/api/users/GetUserById?id=${admin.user.id}` :  null);
+  // const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
   const [data, setdata] = useState("");
-  const [loginstatusrole, setloginstatusrole] = useState(admin? admin.user.role : null)
+  
 
   
-  if(admin==null)
-    {
-      window.location.assign("/login")
-    }
+  // if(admin==null)
+  //   {
+  //     window.location.assign("/login")
+  //   }
 
-    if(loginstatusrole!=="Admin")
-      {
-        return <h1>you are not logged in as admin</h1>
-      }
+  //   if(loginstatusrole!=="Admin")
+  //     {
+  //       return <h1>you are not logged in as admin</h1>
+  //     }
   return (
     <div className="search-update-screen">
     <div className="search-update-container">

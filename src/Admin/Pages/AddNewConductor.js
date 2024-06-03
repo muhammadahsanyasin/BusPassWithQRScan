@@ -57,9 +57,9 @@ function AddNewConductor() {
         </div>
 
         <input type="text" placeholder="Name" name="Name" onChange={handleinput} />
-        <input type="text" placeholder="UserName" name="UserName"  onChange={handleinput} />
-        <input type="text" placeholder="Password" name="Password"  onChange={handleinput}/>
         <input type="text" placeholder="Contact No" name="Contact" onChange={handleinput} />
+        <input type="text" placeholder="Password" name="Password"  onChange={handleinput}/>
+       
         
         </div>
 
