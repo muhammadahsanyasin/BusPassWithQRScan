@@ -123,7 +123,7 @@ function ParentHistory() {
             <p className="pass-history">Stop Name: {item.StopId}</p>
             <p className="pass-history">Route #: {item.RouteId}</p>
             <p className="pass-history">Bus #: {item.BusId}</p>
-            <p className="pass-history">Student Name: {item.StudentName}</p>
+            {/* <p className="pass-history">Student Name: {item.StudentName}</p> */}
           </div>
         ))}
       </div>

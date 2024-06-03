@@ -33,7 +33,7 @@ const RoutingMachine = ({ waypoints }) => {
       waypoints: waypoints,
       createMarker: (i, waypoint) => {
         return L.marker(waypoint.latLng, {
-          icon: i === 0 ? busMarkerIcon : customIcon // Use bus icon for the first marker
+          icon: i === 0 ? busMarkerIcon : customIcon, // Use bus icon for the first marker
         });
       },
       routeWhileDragging: false,
@@ -51,12 +51,13 @@ const RoutingMachine = ({ waypoints }) => {
 };
 
 function ConductorMap() {
-  const [markerPosition, setMarkerPosition] = useState(null);
+  const [busPosition, setBusPosition] = useState(initialPosition);
   const [showMarkerModal, setShowMarkerModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [points, setPoints] = useState([]);
   const [routeStops, setRouteStops] = useState([]);
   const [journeyStarted, setJourneyStarted] = useState(false);
+  const [updateInterval, setUpdateInterval] = useState(null);
 
   useEffect(() => {
     // Function to get current location
@@ -64,7 +65,7 @@ function ConductorMap() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setMarkerPosition([latitude, longitude]);
+          setBusPosition([latitude, longitude]);
         },
         (error) => {
           console.error("Error getting current location:", error);
@@ -100,14 +101,52 @@ function ConductorMap() {
 
     fetchAssignedRoutes();
 
-    // Clear the marker position when component unmounts
+    // Clear the bus position when component unmounts
     return () => {
-      setMarkerPosition(null);
+      setBusPosition(null);
+      if (updateInterval) {
+        clearInterval(updateInterval);
+      }
     };
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  }, [updateInterval]); // Dependency array includes updateInterval
+
+  useEffect(() => {
+    if (journeyStarted) {
+      const intervalId = setInterval(() => {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            setBusPosition([latitude, longitude]);
+            try {
+              const response = await fetch("http://localhost/WebApi/api/Conductor/UpdateBusLocation", {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ latitude, longitude }),
+              });
+
+              if (!response.ok) {
+                console.error('Failed to update bus location');
+              }
+            } catch (error) {
+              console.error('Error updating bus location:', error);
+            }
+          },
+          (error) => {
+            console.error("Error getting current location:", error);
+          }
+        );
+      }, 2000);
+
+      setUpdateInterval(intervalId);
+
+      return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }
+  }, [journeyStarted]);
 
   const handleMapClick = (event) => {
-    setMarkerPosition(event.latlng);
+    setBusPosition(event.latlng);
   };
 
   // Handler for marker click to show modal
@@ -185,18 +224,18 @@ function ConductorMap() {
       </Modal>
 
       <MapContainer
-        center={markerPosition || initialPosition}
+        center={busPosition || initialPosition}
         zoom={14}
         style={{ width: "100%", height: "100%" }}
         onClick={handleMapClick}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-        {/* Render marker if position is available */}
-        {markerPosition && (
-          <Marker position={markerPosition} icon={customIcon}>
+        {/* Render bus marker if position is available */}
+        {busPosition && (
+          <Marker position={busPosition} icon={busMarkerIcon}>
             <Popup>
-              Your current location. <br /> Latitude: {markerPosition[0]}, Longitude: {markerPosition[1]}.
+              Bus current location. <br /> Latitude: {busPosition[0]}, Longitude: {busPosition[1]}.
             </Popup>
           </Marker>
         )}
@@ -215,7 +254,7 @@ function ConductorMap() {
         <Polyline positions={points} color="blue" />
 
         {/* Routing Machine to show the route */}
-        {journeyStarted && <RoutingMachine waypoints={points.map(point => L.latLng(point[0], point[1]))} />}
+        {journeyStarted && <RoutingMachine waypoints={[busPosition, ...points.map(point => L.latLng(point[0], point[1]))]} />}
       </MapContainer>
     </div>
   );

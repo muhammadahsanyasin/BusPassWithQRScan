@@ -9,7 +9,7 @@ function StudentFavStop() {
     const fetchStudentData = async () => {
       try {
         const response = await fetch(
-          "http://localhost/WebApi/api/Student/GetFavStops?id=2",
+          "http://192.168.10.19/WebApi/api/Student/GetFavStops?id=2",
           {
             method: "GET",
             headers: {
@@ -49,7 +49,7 @@ function StudentFavStop() {
       for (const item of itemsToRemove) {
         const stopId = item.Id;
         const response = await fetch(
-          `http://localhost/WebApi/api/Student/RemoveFavStop?studentId=${studentId}&stopId=${stopId}`,
+          `http://192.168.10.19/WebApi/api/Student/RemoveFavStop?studentId=${studentId}&stopId=${stopId}`,
           {
             method: "DELETE",
             headers: {

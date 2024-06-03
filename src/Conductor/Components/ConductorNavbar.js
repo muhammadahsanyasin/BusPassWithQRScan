@@ -38,29 +38,6 @@ function ConductorNavbar() {
                   </Link>
                 </li>
                 
-               
-                <li className="nav-item">
-                  <Link
-                    className="nav-link color hover active"
-                    to="/ConductorVerification"
-                  >
-                    Verification
-                  </Link>
-                </li>
-                
-                <li className="nav-item">
-                  <Link
-                    className="nav-link color hover active"
-                    to="/ConductorNotificationDetail"
-                  >
-                   Conductor Notification
-                  </Link>
-                </li>
-               
-               
-                
-                
-    
                 <li className="nav-item">
                   <Link
                     className="nav-link color hover active"

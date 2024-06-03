@@ -46,6 +46,7 @@ import ConductorNotificationDetail from "./Conductor/Pages/ConductorNotification
 import ParentNotificationDetail from "./Parents/Pages/ParentNotificationDetail";
 import AddScreens from "./Admin/Pages/AddScreens";
 import AdminChangePassword from "./Admin/Components/AdminChangePassword";
+import QrScannercomp from "./Student/Pages/QrScannercomp";
 
 
 
@@ -72,7 +73,7 @@ function App() {
           <> 
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to='Login' />} />
-      
+         {/* <Route path="/" element={<QrScannercomp />} /> */}
 
             <Route path="/ParentDashboard"element={<ParentDashboard progress={59} />}/>
             <Route path="/ChangePassword" element={<ChangePassword />} />

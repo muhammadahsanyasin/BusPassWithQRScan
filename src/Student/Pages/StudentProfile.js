@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import '../Pages/Styles/StudentProfile.css';
 import profile from "../../Assets/profile.png";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 
 function StudentProfile() {
   const [api, setApi] = useState(
     "http://localhost/WebApi/api/Users/GetUserById/3"
   );
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    alert("You have been logged out.");
+    navigate('/');
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,16 +76,16 @@ function StudentProfile() {
             <span className="edit-stops">History</span>
           </div>
         </Link>
-        <Link to='/ChangePassword'>
+        <Link to='/AdminChangePassword'>
           <div className="studentchangepwd-button">
             <span className="edit-stops">Change Password</span>
           </div>
         </Link>
-        <Link to='/'>
-          <div className="studentlogout-button">
-            <span className="edit-stops">Log Out</span>
-          </div>
-        </Link>
+       
+         
+            <span onClick={handleLogout} className=" studentlogout-button edit-stops">Log Out</span>
+          
+        
       </div>
     </div>
   );

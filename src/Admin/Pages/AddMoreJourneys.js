@@ -1,67 +1,130 @@
-import React, { useState } from "react";
-import { QrScanner } from "react-qrcode-scanner";
+import React, { useState, useRef, useEffect } from "react";
+import QrScanner from "qr-scanner";
 import "../Pages/Styles/AddMoreJourneys.css";
 import verification from "../../Assets/verified.png";
+
 function AddMoreJourneys() {
+  const scanner = useRef();
+  const videoEl = useRef(null);
+  const qrBoxEl = useRef(null);
+  const [qrOn, setQrOn] = useState(true);
+  const [scannedResult, setScannedResult] = useState("");
+  const [qrinfo, setqrinfo] = useState({});
   const [valid, setValid] = useState(false);
   const [numberOfJourneys, setNumberOfJourneys] = useState(0);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const handleScan = (value) => {
-    console.log({ value });
-  };
-
-  const handleError = (error) => {
-    console.log({ error });
-  };
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
+  const [apiResponse, setApiResponse] = useState("");
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+  };
+
+  const onScanSuccess = (result) => {
+    setScannedResult(result?.data);
+    const data = result.data.split(",");
+    setqrinfo({ passid: data[0], busid: data[1] });
+    setValid(true);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("qrinfo", JSON.stringify(qrinfo));
+  }, [qrinfo]);
+
+  const onScanFail = (err) => {
+    console.log(err);
+  };
+
+  useEffect(() => {
+    if (videoEl.current && !scanner.current) {
+      scanner.current = new QrScanner(videoEl.current, onScanSuccess, {
+        onDecodeError: onScanFail,
+        preferredCamera: "environment",
+        highlightScanRegion: true,
+        highlightCodeOutline: true,
+        overlay: qrBoxEl.current || undefined,
+      });
+
+      scanner.current.start().then(() => setQrOn(true)).catch((err) => {
+        if (err) setQrOn(false);
+      });
+    }
+
+    return () => {
+      if (scanner.current) {
+        scanner.current.stop();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!qrOn) {
+      alert("Camera is blocked or not accessible. Please allow camera in your browser permissions and reload.");
+    }
+  }, [qrOn]);
+
+  const handleAddJourneys = async () => {
+    const apiUrl = `http://localhost/WebApi/api/Admin/RechargeJourneys?passId=${qrinfo.passid}&noOfJourneys=${numberOfJourneys}&passExpiry=${selectedDate}`;
+    
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      setApiResponse(data.message || "Journeys added successfully!");
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+      setApiResponse("Failed to add journeys. Please try again.");
+    }
   };
 
   return (
     <div className="add-more-journeys-screen">
       <div className="add-more-journeys-container">
         <div className="verification-section">
-          {/* Image of verification */}
           <img src={verification} alt="Verification" />
-          {/* Status: Valid or Not */}
-          <br />
           <p>Status: {valid ? "Valid" : "Not Valid"}</p>
         </div>
-        {/* QR code scanner container */}
-        <div className="qr-code-container">
-          <div className="barcode-scanner">
-            <QrScanner onScan={handleScan} onError={handleError} />
+        <div className="qr-scanner-section">
+          <div className="qr-reader">
+            <video ref={videoEl}></video>
+            <div ref={qrBoxEl} className="qr-box"></div>
+            {scannedResult && (
+              <p className="scanned-result">Scanned Result: {scannedResult}</p>
+            )}
+          </div>
+          <div className="form-section">
+            <div className="input-container">
+              <label htmlFor="numberOfJourneys">No Of Journeys:</label>
+              <input
+                type="number"
+                id="numberOfJourneys"
+                value={numberOfJourneys}
+                onChange={(e) => setNumberOfJourneys(e.target.value)}
+              />
+            </div>
+            <div className="date-container">
+              <label htmlFor="selectedDate">Date:</label>
+              <input
+                type="date"
+                id="selectedDate"
+                value={selectedDate}
+                onChange={(e) => handleDateChange(e.target.value)}
+              />
+            </div>
           </div>
         </div>
-        {/* Input field for number of journeys */}
-        <div className="input-container">
-          <label htmlFor="numberOfJourneys">No Of Journeys:</label>
-          <input
-            type="number"
-            id="numberOfJourneys"
-            value={numberOfJourneys}
-            onChange={(e) => setNumberOfJourneys(e.target.value)}
-          />
-        </div>
-        {/* Daypicker for selecting date */}
-        <div className="daypicker-container">
-        Date:
-          <label htmlFor="selectedDate">
-          <input
-            type="date"
-            id="selectedDate"
-            value={selectedDate}
-            onChange={(e) => handleDateChange(e.target.value)}
-          />
-          </label>
-        </div>
-      
-      </div>
-      <div>
-          
-          <button  className=" addnewadmin-button edit-stops">ADD</button>
-        
+        <button onClick={handleAddJourneys} className="addjourney-button edit-stops">
+          ADD
+        </button>
+        {apiResponse && <p className="api-response">{apiResponse}</p>}
       </div>
     </div>
   );

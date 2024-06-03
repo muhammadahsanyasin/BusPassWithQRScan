@@ -5,17 +5,26 @@ import ConductorNavbar from "../Components/ConductorNavbar";
 function ConductorDashboard() {
   const [busDetails, setBusDetails] = useState({});
   const [nextStop, setNextStop] = useState({});
+  const [journeyDetails, setJourneyDetails] = useState({});
 
   useEffect(() => {
+    // Fetch bus details
     fetch("http://localhost/WebApi/api/Admin/GetBusDetails")
       .then((response) => response.json())
       .then((data) => setBusDetails(data))
       .catch((error) => console.error("Error fetching bus details:", error));
 
+    // Fetch next stop
     fetch("http://localhost/WebApi/api/Conductor/GetNextStop/?conductorId=2")
       .then((response) => response.json())
       .then((data) => setNextStop(data))
       .catch((error) => console.error("Error fetching next stop:", error));
+
+    // Fetch journey details
+    fetch("http://localhost/WebApi/api/Conductor/GetRemainingStops?conductorId=2")
+      .then((response) => response.json())
+      .then((data) => setJourneyDetails(data))
+      .catch((error) => console.error("Error fetching journey details:", error));
   }, []);
 
   return (
@@ -81,15 +90,15 @@ function ConductorDashboard() {
               <div className="row">
                 <div className="stops">
                   <div className="conductorstop-containers">
-                    <p>Total Stops </p>
-                    {busDetails.length > 0 && (
-                      <p className="bold">{busDetails[0].TotalStops}</p>
+                    <p>Total Stops</p>
+                    {journeyDetails.TotalStops !== undefined && (
+                      <p className="bold">{journeyDetails.TotalStops}</p>
                     )}
                   </div>
                   <div className="conductorstop-containers">
                     <p>Remaining Stops</p>
-                    {busDetails.length > 0 && (
-                      <p className="bold">{busDetails[0].RemainingStops}</p>
+                    {journeyDetails.RemainingStops !== undefined && (
+                      <p className="bold">{journeyDetails.RemainingStops}</p>
                     )}
                   </div>
                 </div>

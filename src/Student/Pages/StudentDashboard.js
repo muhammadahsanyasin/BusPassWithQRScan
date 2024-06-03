@@ -3,33 +3,70 @@ import "../Pages/Styles/StudentDashboard.css";
 import StudentNavbar from "../Components/StudentNavbar";
 import { Link } from "react-router-dom";
 
-function StudentDashboard({ progress }) {
+function StudentDashboard({  }) {
   const [data, setData] = useState([]);
+  const [journeyDetails, setJourneyDetails] = useState({ completed: 4, total: 100 });
 
   useEffect(() => {
     const fetchStudentData = async () => {
-      const response = await fetch(
-        "http://localhost/WebApi/api/Student/GetFavStops?id=2",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        const fetchedData = await response.json();
-        if (Array.isArray(fetchedData)) {
-          setData(fetchedData);
+      try {
+        const response = await fetch(
+          "http://localhost/WebApi/api/Student/GetFavStops?id=2",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          const fetchedData = await response.json();
+          if (Array.isArray(fetchedData)) {
+            setData(fetchedData);
+          } else {
+            console.error("Fetched data is not an array:", fetchedData);
+          }
         } else {
-          console.error("Fetched data is not an array:", fetchedData);
+          console.error("Failed to fetch data:", response.statusText);
         }
-      } else {
-        console.error("Failed to fetch data:", response.statusText);
+      } catch (error) {
+        console.error("Error fetching student data:", error);
       }
     };
+
+    const fetchJourneyDetails = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost/WebApi/api/Parent/GetChildren?id=1",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          const fetchedData = await response.json();
+          if (fetchedData.childDetails) {
+            const { TotalJourneys, RemainingJourneys } = fetchedData.childDetails;
+            const completedJourneys = TotalJourneys - RemainingJourneys;
+            setJourneyDetails({ completed: completedJourneys, total: TotalJourneys });
+          } else {
+            console.error("Fetched journey data is not valid:", fetchedData);
+          }
+        } else {
+          console.error("Failed to fetch journey data:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching journey details:", error);
+      }
+    };
+
     fetchStudentData();
+    fetchJourneyDetails();
   }, []);
+
+  const progressPercentage = journeyDetails.total > 0 ? (journeyDetails.completed / journeyDetails.total) * 100 : 0;
 
   return (
     <div className="student-dashboard" style={{ userSelect: "none" }}>
@@ -40,16 +77,16 @@ function StudentDashboard({ progress }) {
             <div
               className="progress-circle"
               style={{
-                background: `conic-gradient(#80cbc4 0% 29%, #004d40 29% 100%)`,
+                background: `conic-gradient(#80cbc4 0% ${progressPercentage}%, #004d40 ${progressPercentage}% 100%)`,
               }}
             >
               <div className="progress-circle-inner">
                 <div
                   className="progress-circle-half"
-                  style={{ transform: `rotate(${59 * 3.6}deg)` }}
+                  style={{ transform: `rotate(${progressPercentage * 3.6}deg)` }}
                 ></div>
                 <span className="progress-text">
-                  29/100
+                  {`${journeyDetails.completed}/${journeyDetails.total}`}
                   <div className="progress-label">Journeys</div>
                 </span>
               </div>

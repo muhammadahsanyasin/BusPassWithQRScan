@@ -11,7 +11,7 @@ function AdminHistory() {
   useEffect(() => {
     const fetchAdminData = async () => {
       const response = await fetch(
-        "http://localhost/WebApi/api/Users/GetUserHistory?id=3&fDate=2024-05-15&tDate=2024-05-23",
+        "http://localhost/WebApi/api/Users/GetUserHistory?id=4&fDate=2024-05-15&tDate=2024-05-23",
         {
           method: "GET",
           headers: {
@@ -90,11 +90,8 @@ function AdminHistory() {
           <div className="flat-list-row" key={index}>
             <p className="date-time">{item.Date}, {item.Time}</p>
             <p className="history-type">{item.Type}</p>
-            <p className="pass-history"> Name: {item.StudentName}</p>
-            <p className="pass-history">PassID: {item.PassId}</p>
-            <p className="pass-history">Stop Name: {item.StopId}</p>
-            <p className="pass-history">Route #: {item.RouteId}</p>
-            <p className="pass-history">Bus #: {item.BusId}</p>
+            <p className="pass-history"> Description: {item.Description}</p>
+
           
           </div>
         ))}

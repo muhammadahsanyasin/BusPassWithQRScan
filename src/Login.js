@@ -48,7 +48,7 @@ const Login = () => {
       const response = await fetch(
         `http://localhost/WebApi/api/users/login?username=${UserName}&password=${password}`,
         {
-          method: "GET",
+          method: "GET",  
           headers: {
             "Content-Type": "application/json",
           },

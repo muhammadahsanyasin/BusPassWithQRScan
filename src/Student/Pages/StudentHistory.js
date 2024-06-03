@@ -10,7 +10,7 @@ function StudentHistory() {
   useEffect(() => {
     const fetchStudentData = async () => {
       const response = await fetch(
-        "http://localhost/WebApi/api/Users/GetUserHistory?id=3&fDate=2024-05-15&tDate=2024-05-23",
+        "http://localhost/WebApi/api/Users/GetUserHistory?id=3&fDate=2024-01-01&tDate=2024-06-16",
         {
           method: "GET",
           headers: {

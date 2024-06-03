@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import profile from "../../Assets/profile.png";
 import "../Pages/Styles/AdminProfile.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 import useStore from '../../store'
 
@@ -15,7 +15,11 @@ function AdminProfile() {
     "http://localhost/WebApi/api/Users/GetUserById/4"
   );
   const [data, setData] = useState(null);
-
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    alert("You have been logged out.");
+    navigate('/');
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -85,13 +89,13 @@ function AdminProfile() {
         <button className="adminhistory-button edit-stops">History</button>
       </Link>
 
-      <Link to="/ChangePassword">
+      <Link to="/AdminChangePassword">
         <button className="adminchangepwd-button edit-stops">Change Password</button>
       </Link>
 
-      <Link to="/">
-        <button className="adminlogout-button edit-stops">Log Out</button>
-      </Link>
+  
+        <button onClick={handleLogout} className="adminlogout-button edit-stops">Log Out</button>
+    
     </div>
   );
 }

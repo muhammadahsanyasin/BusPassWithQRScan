@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "../Pages/Styles/ParentProfile.css";
 import profile from "../../Assets/profile.png";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 
 function ParentProfile() {
   const [api, setApi] = useState(
     "http://localhost/WebApi/api/Users/GetUserById/1"
   );
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    alert("You have been logged out.");
+    navigate('/');
+  };
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,14 +82,14 @@ function ParentProfile() {
       <Link to="/ParentHistory">
         <button className="parenthistory-button edit-stops">History</button>
       </Link>
-      <Link to="/ChangePassword">
+      <Link to="/AdminChangePassword">
         <button className="parentchangepwd-button edit-stops">
           Change Password
         </button>
       </Link>
-      <Link to="/">
-        <button className="parentlogout-button edit-stops">Log Out</button>
-      </Link>
+     
+        <button onClick={handleLogout} className="parentlogout-button edit-stops">Log Out</button>
+      
     </div>
   );
 }

@@ -3,16 +3,20 @@ import "../Components/Styles/ChangePassword.css";
 import lock from '../../Assets/lock.png';
 
 function AdminChangePassword() {
-  const [formdata, setFormData] = useState({ });
+  const [formdata, setFormData] = useState({
+    id: '',
+    oldPassword: '',
+    newPassword: ''
+  });
 
-  const changepasword = async () => {
+  const changepassword = async () => {
     console.log('Form Data:', formdata);
 
     try {
       const response = await fetch("http://localhost/WebApi/api/users/InsertAdmin", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json', // Set headers for JSON data
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formdata),
       });
@@ -23,7 +27,7 @@ function AdminChangePassword() {
       } else {
         const errorData = await response.json();
         console.error('Error saving data:', errorData);
-        alert(`Error saving data: ${errorData}`);
+        alert(`Error saving data: ${errorData.message || JSON.stringify(errorData)}`);
       }
     } catch (error) {
       console.error('Fetch error:', error);
@@ -46,12 +50,12 @@ function AdminChangePassword() {
           <img src={lock} alt="Lock Icon" />
         </div>
         <div className="password-fields">
-          <input type="text" name="id" placeholder="ID" onChange={handleinput} />
-          <input type="Password" name="oldPassword" placeholder="Old Password" onChange={handleinput} />
-          <input type="Password" name="newPassword" placeholder="New Password" onChange={handleinput} />
+          <input type="text" name="id" placeholder="ID" onChange={handleinput} value={formdata.id} />
+          <input type="password" name="oldPassword" placeholder="Old Password" onChange={handleinput} value={formdata.oldPassword} />
+          <input type="password" name="newPassword" placeholder="New Password" onChange={handleinput} value={formdata.newPassword} />
         </div>
       </div>
-      <button onClick={changepasword} className="addnewconductor-button edit-stops">Confirm</button>
+      <button onClick={changepassword} className="addnewconductor-button edit-stops">Confirm</button>
     </div>
   );
 }
