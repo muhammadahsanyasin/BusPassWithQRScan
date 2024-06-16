@@ -7,17 +7,17 @@ import useStore from "./store";
 
 const Login = () => {
 
-  // const {  setuserdata, loginstatus, setloginstatus} = useStore();
+   const { setuserdata} = useStore();
 
 
-  useEffect(()=>{
-    if(new Date()- (new Date( localStorage.getItem("addtime"))) > 20000)
-      {
-        console.log("nulled")
-        localStorage.setItem("user", null)
-      }
+  // useEffect(()=>{
+  //   if(new Date()- (new Date( localStorage.getItem("addtime"))) > 20000)
+  //     {
+  //       console.log("nulled")
+  //       localStorage.setItem("user", null)
+  //     }
     
-  },[])
+  // },[])
 
   
 
@@ -57,6 +57,12 @@ const Login = () => {
   
       const data = await response.json();
       console.log(data);
+
+
+      //Set logged in user to store
+
+      // setuserdata(data)
+
   
       // Set logged in user to localstorage
       localStorage.setItem('user', JSON.stringify(data));

@@ -108,7 +108,7 @@ function StudentMap() {
 
   useEffect(() => {
     const fetchStops = async () => {
-      const response = await fetch("http://localhost/WebApi/api/Stops/GetAllStops", {
+      const response = await fetch("http://localhost/WebApi/api/Stops/GetAllRoutes", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

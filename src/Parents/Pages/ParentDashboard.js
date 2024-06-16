@@ -35,7 +35,7 @@ function ParentDashboard({ }) {
   }, []);
 
   return (
-    <div className="parent-dashboard">
+    <div style={{userSelect:'none'}} className="parent-dashboard">
       <ParentNavbar />
       <div className="parentdashboard-container">
         <div className="white-container">

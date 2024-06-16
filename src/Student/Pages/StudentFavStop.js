@@ -9,7 +9,7 @@ function StudentFavStop() {
     const fetchStudentData = async () => {
       try {
         const response = await fetch(
-          "http://192.168.10.19/WebApi/api/Student/GetFavStops?id=2",
+          "http://localhost/WebApi/api/Student/GetFavStops?id=2",
           {
             method: "GET",
             headers: {
@@ -18,22 +18,26 @@ function StudentFavStop() {
           }
         );
         if (response.ok) {
-          const responseData = await response.json();
-          if (Array.isArray(responseData)) {
-            setData(responseData);
-            setCheckedStates(Array(responseData.length).fill(false));
+          const fetchedData = await response.json();
+          if (Array.isArray(fetchedData)) {
+            setData(fetchedData);
           } else {
-            console.error("Fetched data is not an array:", responseData);
+            console.error("Fetched data is not an array:", fetchedData);
           }
+          console.log(fetchedData)
         } else {
           console.error("Failed to fetch data:", response.statusText);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching student data:", error);
       }
+      
     };
-    fetchStudentData();
-  }, []);
+
+  
+     fetchStudentData();
+   
+   }, []);
 
   const handleCheckboxPress = (index) => {
     const newCheckedStates = [...checkedStates];
@@ -48,8 +52,9 @@ function StudentFavStop() {
     try {
       for (const item of itemsToRemove) {
         const stopId = item.Id;
+        console.log(`Attempting to remove stop with id ${stopId}`);
         const response = await fetch(
-          `http://192.168.10.19/WebApi/api/Student/RemoveFavStop?studentId=${studentId}&stopId=${stopId}`,
+          `http://localhost/WebApi/api/Student/RemoveFavStop?studentId=${studentId}&stopId=${stopId}`,
           {
             method: "DELETE",
             headers: {

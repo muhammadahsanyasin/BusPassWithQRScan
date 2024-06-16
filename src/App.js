@@ -57,7 +57,7 @@ function App() {
 
   const [selectPosition, setSelectPosition] = useState(null);
   useEffect(()=>{
-    if(new Date()- (new Date( localStorage.getItem("addtime"))) > 300000)
+    if(new Date()- (new Date( localStorage.getItem("addtime"))) > 30000000)
       {
         console.log("nulled")
         localStorage.setItem("user", null)

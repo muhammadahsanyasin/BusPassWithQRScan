@@ -5,7 +5,7 @@ import { Link ,useNavigate} from "react-router-dom";
 
 function StudentProfile() {
   const [api, setApi] = useState(
-    "http://localhost/WebApi/api/Users/GetUserById/3"
+    "http://localhost/WebApi/api/Users/GetUserById/?id=1&OrganizationId=1"
   );
   const [data, setData] = useState(null);
   const navigate = useNavigate();
@@ -76,11 +76,11 @@ function StudentProfile() {
             <span className="edit-stops">History</span>
           </div>
         </Link>
-        <Link to='/AdminChangePassword'>
+        {/* <Link to='/AdminChangePassword'>
           <div className="studentchangepwd-button">
             <span className="edit-stops">Change Password</span>
           </div>
-        </Link>
+        </Link> */}
        
          
             <span onClick={handleLogout} className=" studentlogout-button edit-stops">Log Out</span>

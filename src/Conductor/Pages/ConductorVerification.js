@@ -12,22 +12,38 @@ function ConductorVerification() {
             const parsedQrInfo = JSON.parse(storedQrInfo);
             setQrInfo(parsedQrInfo);
 
-            const passId = parsedQrInfo.passId;
-            const busId = parsedQrInfo.busId;
+            const passId = parsedQrInfo.PassId;
+            const conductorDetails = localStorage.getItem("user");
 
-            fetch(`http://localhost/WebApi/api/Conductor/ScanQrCode?passId=${passId}&busId=${busId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.isValid) {
-                        setStatus('Valid');
-                    } else {
-                        setStatus('Invalid');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching the API:', error);
-                    setStatus('Error');
-                });
+            if (conductorDetails) {
+                const busId = JSON.parse(conductorDetails).Conductors.BusId;
+
+                console.log(`Fetching API with passId=${passId} and busId=${busId}`);
+                fetch(`http://localhost/WebApi/api/Conductor/ScanQrCode?passId=${passId}&busId=${busId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Server error: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.isValid) {
+                            setStatus('Valid');
+                        } else {
+                            setStatus('Invalid');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching the API:', error);
+                        setStatus('Error');
+                    });
+            } else {
+                console.error('Error: No conductor details found');
+                setStatus('Error: No conductor details found');
+            }
+        } else {
+            console.error('Error: No QR info found');
+            setStatus('Error: No QR info found');
         }
     }, []);
 
@@ -52,7 +68,7 @@ function ConductorVerification() {
                         </tbody>
                         <thead>
                             <tr>
-                                <th>Remaining Journey</th>
+                                <th>Remaining Journeys</th>
                                 <th>Gender</th>
                             </tr>
                         </thead>

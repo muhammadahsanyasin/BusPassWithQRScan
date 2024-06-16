@@ -65,20 +65,25 @@ function AddMoreJourneys() {
   const handleAddJourneys = async () => {
     const apiUrl = `http://localhost/WebApi/api/Admin/RechargeJourneys?passId=${qrinfo.passid}&noOfJourneys=${numberOfJourneys}&passExpiry=${selectedDate}`;
     
+    console.log("Request URL:", apiUrl);
+    
     try {
       const response = await fetch(apiUrl, {
-        method: "POST",
+        method: "PUT", // Change this to the correct method if needed
         headers: {
           "Content-Type": "application/json"
         }
       });
 
       if (!response.ok) {
+        console.error("Response status:", response.status);
+        console.error("Response text:", await response.text());
         throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
       setApiResponse(data.message || "Journeys added successfully!");
+      console.log(data);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
       setApiResponse("Failed to add journeys. Please try again.");
@@ -96,16 +101,13 @@ function AddMoreJourneys() {
           <div className="qr-reader">
             <video ref={videoEl}></video>
             <div ref={qrBoxEl} className="qr-box"></div>
-            {scannedResult && (
-              <p className="scanned-result">Scanned Result: {scannedResult}</p>
-            )}
           </div>
           <div className="form-section">
             <div className="input-container">
               <label htmlFor="numberOfJourneys">No Of Journeys:</label>
               <input
                 type="number"
-                id="numberOfJourneys"
+                id="noOfJourneys"
                 value={numberOfJourneys}
                 onChange={(e) => setNumberOfJourneys(e.target.value)}
               />
@@ -114,18 +116,18 @@ function AddMoreJourneys() {
               <label htmlFor="selectedDate">Date:</label>
               <input
                 type="date"
-                id="selectedDate"
+                id="passExpiry"
                 value={selectedDate}
                 onChange={(e) => handleDateChange(e.target.value)}
               />
             </div>
           </div>
         </div>
-        <button onClick={handleAddJourneys} className="addjourney-button edit-stops">
-          ADD
-        </button>
         {apiResponse && <p className="api-response">{apiResponse}</p>}
       </div>
+      <button onClick={handleAddJourneys} className="addjourney-button edit-stops">
+        ADD
+      </button>
     </div>
   );
 }

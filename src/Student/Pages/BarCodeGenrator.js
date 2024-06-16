@@ -10,17 +10,23 @@ function BarCodeGenrator() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(api, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      try {
+        const response = await fetch(api, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (response.ok) {
-        const result = await response.json();
-        setData(result);
-        console.log(result);
+        if (response.ok) {
+          const result = await response.json();
+          setData(result);
+          console.log("Fetched data:", result);
+        } else {
+          console.error("Error fetching data:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
     fetchData();
@@ -30,11 +36,7 @@ function BarCodeGenrator() {
     return <div>Loading...</div>;
   }
 
-
-  const qrValue = JSON.stringify({
-    passid: data.Students.PassId, 
-    busid:data.Students.UserId 
-  });
+  const qrValue = data.Students.PassId ? `${data.Students.PassId}` : "undefined";
 
   return (
     <div className="barcode-gen">

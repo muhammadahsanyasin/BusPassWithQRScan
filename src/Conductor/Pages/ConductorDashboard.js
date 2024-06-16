@@ -9,7 +9,7 @@ function ConductorDashboard() {
 
   useEffect(() => {
     // Fetch bus details
-    fetch("http://localhost/WebApi/api/Admin/GetBusDetails")
+    fetch("http://localhost/WebApi/api/Admin/GetBusDetails?OrganizationId=1")
       .then((response) => response.json())
       .then((data) => setBusDetails(data))
       .catch((error) => console.error("Error fetching bus details:", error));

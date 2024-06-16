@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+
 import create from 'zustand';
 
 // Define your store
@@ -13,6 +13,7 @@ const useStore = create((set) => ({
   loginstatus: false,
   setloginstatus: (newData) => set({loginstatus: newData}),
 
+  
  
 }));
 

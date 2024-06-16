@@ -4,7 +4,7 @@ import { Link , useNavigate} from "react-router-dom";
 import '../Pages/Styles/ConductorProfile.css';
 
 function ConductorProfile() {
-  const [api] = useState("http://localhost/WebApi/api/users/GetUserById?id=6");
+  const [api] = useState("http://localhost/WebApi/api/Users/GetUserById/?id=1&OrganizationId=1");
   const [data, setData] = useState(null);
   const navigate = useNavigate();
 
@@ -63,8 +63,8 @@ function ConductorProfile() {
             </div>
             <div className="row">
               <div className="col">
-                Conductor ID
-                <h4>{data.Conductors.Id}</h4>
+              Organization Id 
+                <h4>{data.Conductors.OrganizationId}</h4>
               </div>
               <div className="col">
                 Bus ID
@@ -77,9 +77,9 @@ function ConductorProfile() {
       <Link to='/ConductorHistory'>
         <button className="conductorhistory-button edit-stops">History</button>
       </Link>
-      <Link to="/AdminChangePassword">
+      {/* <Link to="/AdminChangePassword">
         <button className="conductorchangepwd-button edit-stops">Change Password</button>
-      </Link>
+      </Link> */}
       <button onClick={handleLogout} className="conductorlogout-button edit-stops">Log Out</button>
     </div>
   );

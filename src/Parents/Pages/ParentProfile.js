@@ -82,11 +82,11 @@ function ParentProfile() {
       <Link to="/ParentHistory">
         <button className="parenthistory-button edit-stops">History</button>
       </Link>
-      <Link to="/AdminChangePassword">
+      {/* <Link to="/AdminChangePassword">
         <button className="parentchangepwd-button edit-stops">
           Change Password
         </button>
-      </Link>
+      </Link> */}
      
         <button onClick={handleLogout} className="parentlogout-button edit-stops">Log Out</button>
       

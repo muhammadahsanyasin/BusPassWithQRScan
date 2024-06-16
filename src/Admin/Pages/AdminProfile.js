@@ -89,9 +89,9 @@ function AdminProfile() {
         <button className="adminhistory-button edit-stops">History</button>
       </Link>
 
-      <Link to="/AdminChangePassword">
+      {/* <Link to="/AdminChangePassword">
         <button className="adminchangepwd-button edit-stops">Change Password</button>
-      </Link>
+      </Link> */}
 
   
         <button onClick={handleLogout} className="adminlogout-button edit-stops">Log Out</button>

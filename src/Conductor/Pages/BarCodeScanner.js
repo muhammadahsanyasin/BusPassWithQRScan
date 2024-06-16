@@ -2,40 +2,36 @@ import { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
 import "../Pages/Styles/BarCodeScanner.css";
 import buslogo from "../../Assets/buslogo.png";
-import { Navigate } from "react-router-dom";
-import { BrowserRouter, Routes, Route, Naviagte } from "react-router-dom";
-const BarCodeScanner = () => {
-  
+import { useNavigate } from "react-router-dom";
 
+const BarCodeScanner = () => {
   const scanner = useRef();
   const videoEl = useRef(null);
   const qrBoxEl = useRef(null);
   const [qrOn, setQrOn] = useState(true);
   const [scannedResult, setScannedResult] = useState("");
-  const [qrinfo, setqrinfo] = useState({})
-
+  const navigate = useNavigate();
 
   const onScanSuccess = (result) => {
-    console.log(result);
-    setScannedResult(result?.data);
- 
+    try {
+      console.log(result);
+      setScannedResult(result?.data);
 
-    const data  = result.data.split(",") 
- 
-     setqrinfo({
-      passid: data[0],
-      busid: data[1]
-    })
-     window.location.replace("/ConductorVerification");
+      const data = result.data.split(",");
+      const qrinfo = {
+        PassId: parseInt(data[0]),  // Only pass the PassId
+      };
+
+      const qrinfoString = JSON.stringify(qrinfo);
+      console.log(`data: ${qrinfoString}`);
+
+      localStorage.setItem("qrinfo", qrinfoString);
+      navigate("/ConductorVerification");
+    } catch (error) {
+      console.error("Error processing scan result:", error);
+    }
   };
 
-
-  useEffect(()=>{
-    console.log(qrinfo)
-    // console.log(JSON.stringify(qrinfo))
-    localStorage.setItem("qrinfo" , JSON.stringify(qrinfo))
-  }, [qrinfo]);
-  
   const onScanFail = (err) => {
     console.log(err);
   };
@@ -67,21 +63,11 @@ const BarCodeScanner = () => {
 
   useEffect(() => {
     if (!qrOn) {
-      alert("Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload.");
+      alert("Camera is blocked or not accessible. Please allow camera in your browser permissions and reload.");
     }
   }, [qrOn]);
 
   return (
-  <>
-    {/* <Routes>
-    
-
-    {scannedResult &&
-    ( 
-      
-      <Route path="*" element={<Navigate to="/ConductorVerification" props={{ gender: "male" }} />} />)}
-
-    </Routes> */}
     <div className="scanner-screen">
       <div className="scanner-container">
         <div className="icon-text">
@@ -105,21 +91,12 @@ const BarCodeScanner = () => {
                 }}
               >
                 Scanned Result: {scannedResult}
-                
               </p>
-              
-            )
-             
-            }
-
-           
-           
+            )}
           </div>
         </div>
       </div>
     </div>
-
-    </>
   );
 };
 
