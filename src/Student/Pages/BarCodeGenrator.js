@@ -5,7 +5,7 @@ import "../Pages/Styles/BarCodeGenrator.css";
 import profile from "../../Assets/profile.png";
 
 function BarCodeGenrator() {
-  const [api, setApi] = useState("http://localhost/WebApi/api/Users/GetUserById/3");
+  const [api, setApi] = useState("http://localhost/WebApi/api/Users/GetUserById/?id=3&OrganizationId=1");
   const [data, setData] = useState(null);
 
   useEffect(() => {

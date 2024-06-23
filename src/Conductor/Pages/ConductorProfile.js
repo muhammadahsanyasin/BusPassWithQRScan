@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import profile from "../../Assets/profile.png";
-import { Link , useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../Pages/Styles/ConductorProfile.css';
 
 function ConductorProfile() {
-  const [api] = useState("http://localhost/WebApi/api/Users/GetUserById/?id=1&OrganizationId=1");
+  const [api] = useState("http://localhost/WebApi/api/Users/GetUserById/?id=6&OrganizationId=1");
   const [data, setData] = useState(null);
   const navigate = useNavigate();
 
@@ -33,13 +33,13 @@ function ConductorProfile() {
       }
     };
     fetchConductorData();
-  }, [api]); // Dependency array to re-run effect when 'api' changes
+  }, [api]);
 
-  console.log(data); // Moved console.log outside useEffect
+  console.log(data);
 
   return (
     <div className="conductor-profile">
-      {data && (
+      {data && data.Conductors && (
         <div className="conductorprofile-container">
           <div className="person-icon">
             <img src={profile} alt="Person Icon" />
@@ -77,9 +77,6 @@ function ConductorProfile() {
       <Link to='/ConductorHistory'>
         <button className="conductorhistory-button edit-stops">History</button>
       </Link>
-      {/* <Link to="/AdminChangePassword">
-        <button className="conductorchangepwd-button edit-stops">Change Password</button>
-      </Link> */}
       <button onClick={handleLogout} className="conductorlogout-button edit-stops">Log Out</button>
     </div>
   );

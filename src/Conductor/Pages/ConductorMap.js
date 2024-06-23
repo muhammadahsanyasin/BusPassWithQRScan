@@ -4,7 +4,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
 import busIcon from "../../Assets/BusMapMarker.png";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Dropdown } from "react-bootstrap";
+import axios from 'axios';
 import "../Pages/Styles/ConductorMap.css";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
@@ -57,119 +58,58 @@ function ConductorMap() {
   const [points, setPoints] = useState([]);
   const [routeStops, setRouteStops] = useState([]);
   const [journeyStarted, setJourneyStarted] = useState(false);
-  const [updateInterval, setUpdateInterval] = useState(null);
+  const [routes, setRoutes] = useState([]);
+  const [selectedRoute, setSelectedRoute] = useState(null);
 
-  useEffect(() => {
-    // Function to get current location
-    const getCurrentLocation = () => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setBusPosition([latitude, longitude]);
-        },
-        (error) => {
-          console.error("Error getting current location:", error);
-        }
-      );
-    };
-
-    // Get the current location when the component mounts
-    getCurrentLocation();
-
-    // Fetch assigned routes from API
-    const fetchAssignedRoutes = async () => {
-      try {
-        const response = await fetch("http://localhost/WebApi/api/Conductor/GetAssignedRoutes/?conductorId=2");
-        const data = await response.json();
-
-        if (data.length > 0 && data[0].Stops) {
-          const routePoints = data[0].Stops
-            .filter(stop => stop.Latitude && stop.Longitude)
-            .map(stop => ({
-              position: [parseFloat(stop.Latitude), parseFloat(stop.Longitude)],
-              name: stop.Name,
-              timing: stop.Timing
-            }));
-
-          setPoints(routePoints.map(stop => stop.position));
-          setRouteStops(routePoints);
-        }
-      } catch (error) {
-        console.error("Error fetching assigned routes:", error);
-      }
-    };
-
-    fetchAssignedRoutes();
-
-    // Clear the bus position when component unmounts
-    return () => {
-      setBusPosition(null);
-      if (updateInterval) {
-        clearInterval(updateInterval);
-      }
-    };
-  }, [updateInterval]); // Dependency array includes updateInterval
-
-  useEffect(() => {
-    if (journeyStarted) {
-      const intervalId = setInterval(() => {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            setBusPosition([latitude, longitude]);
-            try {
-              const response = await fetch("http://localhost/WebApi/api/Conductor/UpdateBusLocation", {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ latitude, longitude }),
-              });
-
-              if (!response.ok) {
-                console.error('Failed to update bus location');
-              }
-            } catch (error) {
-              console.error('Error updating bus location:', error);
-            }
-          },
-          (error) => {
-            console.error("Error getting current location:", error);
-          }
-        );
-      }, 2000);
-
-      setUpdateInterval(intervalId);
-
-      return () => clearInterval(intervalId); // Cleanup interval on component unmount
-    }
-  }, [journeyStarted]);
-
-  const handleMapClick = (event) => {
-    setBusPosition(event.latlng);
-  };
-
-  // Handler for marker click to show modal
-  const handleMarkerClick = (location) => {
-    setSelectedLocation(location);
-    setShowMarkerModal(true);
-  };
-
-  // Handler to close the marker modal
-  const handleCloseMarkerModal = () => {
-    setShowMarkerModal(false);
-  };
-
-  // Function to start the journey
-  const startJourney = async () => {
+  // Function to update bus location
+  const updateBusLocation = async (busId, routeId, latitude, longitude) => {
     try {
-      const response = await fetch("http://localhost/WebApi/api/Conductor/StartJourney/?busId=2&routeId=2", {
-        method: 'POST'
+      const response = await axios.post(`http://localhost/WebApi/api/Conductor/UpdateBusLocation`, {
+        BusId: busId,
+        RouteId: routeId,
+        Cords: {
+          latitude: latitude,
+          longitude: longitude
+        }
       });
+      if (response.status === 200) {
+        console.log('Bus location updated successfully.');
+        // Optionally handle any logic after updating bus location
+      } else {
+        console.error('Failed to update bus location.');
+      }
+    } catch (error) {
+      console.error('Error updating bus location:', error);
+    }
+  };
 
-      if (response.ok) {
+  // Function to fetch assigned routes
+  const fetchAssignedRoutes = async (conductorId) => {
+    try {
+      const response = await axios.get(`http://localhost/WebApi/api/Conductor/GetAssignedRoutes/?conductorId=${conductorId}`);
+      if (response.status === 200) {
+        setRoutes(response.data);
+      } else {
+        console.error('Failed to fetch assigned routes.');
+      }
+    } catch (error) {
+      console.error('Error fetching assigned routes:', error);
+    }
+  };
+
+  // Function to start journey with selected route
+  const startJourney = async () => {
+    if (!selectedRoute) {
+      alert('Please select a route.');
+      return;
+    }
+
+    try {
+      const response = await axios.post(`http://localhost/WebApi/api/Conductor/StartJourney/?busId=2&routeId=${selectedRoute}`);
+      if (response.status === 200) {
         alert('Journey started successfully!');
         setJourneyStarted(true);
+        fetchRouteStops(selectedRoute); // Fetch stops for the selected route
       } else {
         alert('Failed to start journey.');
       }
@@ -178,49 +118,78 @@ function ConductorMap() {
     }
   };
 
+  // Function to fetch route stops
+  const fetchRouteStops = async (routeId) => {
+    try {
+      const response = await axios.get(`http://localhost/WebApi/api/Conductor/GetRouteStops/?routeId=${routeId}`);
+      if (response.status === 200) {
+        setRouteStops(response.data);
+      } else {
+        console.error('Failed to fetch route stops.');
+      }
+    } catch (error) {
+      console.error('Error fetching route stops:', error);
+    }
+  };
+
+  // Fetch assigned routes on component mount
+  useEffect(() => {
+    fetchAssignedRoutes(1); // Example with hardcoded conductorId, adjust as needed
+  }, []);
+
+  const handleMapClick = (event) => {
+    setBusPosition([event.latlng.lat, event.latlng.lng]);
+    updateBusLocation(2, 2, event.latlng.lat, event.latlng.lng); // Example with hardcoded busId and routeId, adjust as needed
+  };
+
+  const handleMarkerClick = (location) => {
+    setSelectedLocation(location);
+    setShowMarkerModal(true);
+  };
+
+  const handleCloseMarkerModal = () => {
+    setShowMarkerModal(false);
+  };
+
   return (
     <div className="googlemap-container" style={{ width: "100%", height: "100vh", position: "relative" }}>
       <Button 
-        onClick={startJourney} 
+        onClick={() => setShowMarkerModal(true)} 
         disabled={journeyStarted} 
         style={{ 
           position: "absolute", 
           top: "10px", 
           right: "10px", 
-          color:"black",
+          color: "black",
           zIndex: 1000 
         }}>
         {journeyStarted ? 'Journey Started' : 'Start Journey'}
       </Button>
 
-      {/* Modal for displaying marker information */}
+      {/* Modal for selecting journey */}
       <Modal show={showMarkerModal} onHide={handleCloseMarkerModal}>
-        <div style={{ backgroundColor: "#2FAA98" }}>
-          <Modal.Header closeButton>
-            <Modal.Title>Stop Information</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {selectedLocation && (
-              <div className="show-stops-conductormap">
-                <section className="dashboard-container">
-                  <div className="row">
-                    <div className="stops">
-                      <div className="conductormapstop-containers">
-                        <p>Name</p>
-                        <p className="bold">{selectedLocation.name}</p>
-                      </div>
-                      <div className="conductormapstop-containers">
-                        <p>Timing</p>
-                        <p className="bold">{selectedLocation.timing}</p>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            )}
-          </Modal.Body>
-          <Modal.Footer></Modal.Footer>
-        </div>
+        <Modal.Header closeButton>
+          <Modal.Title>Select Journey</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              {selectedRoute ? `Route ${selectedRoute}` : 'Select Route'}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {routes.map((route) => (
+                <Dropdown.Item key={route.RouteId} onClick={() => setSelectedRoute(route.RouteId)}>
+                  {route.RouteTitle}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={startJourney} disabled={!selectedRoute}>
+            Start Journey
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       <MapContainer
@@ -244,7 +213,7 @@ function ConductorMap() {
         {routeStops.map((stop, index) => (
           <Marker
             key={index}
-            position={stop.position}
+            position={[stop.Latitude, stop.Longitude]}
             icon={customIcon}
             eventHandlers={{ click: () => handleMarkerClick(stop) }}
           />
@@ -254,7 +223,7 @@ function ConductorMap() {
         <Polyline positions={points} color="blue" />
 
         {/* Routing Machine to show the route */}
-        {journeyStarted && <RoutingMachine waypoints={[busPosition, ...points.map(point => L.latLng(point[0], point[1]))]} />}
+        {journeyStarted && <RoutingMachine waypoints={[busPosition, ...points.map(point => [point.Latitude, point.Longitude])]} />}
       </MapContainer>
     </div>
   );

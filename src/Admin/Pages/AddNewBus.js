@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Pages/Styles/AddNewBus.css";
 import buslogo from "../../Assets/buslogo.png";
 
@@ -10,20 +10,37 @@ function AddNewBus() {
     Routes: [],
   });
 
+  const [routes, setRoutes] = useState([]);
+
+  useEffect(() => {
+    const fetchRoutes = async () => {
+      try {
+        const response = await fetch("http://localhost/WebApi/api/Stops/GetAllRoutesTitle?OrganizationId=1");
+        if (response.ok) {
+          const data = await response.json();
+          setRoutes(data);
+        } else {
+          console.error("Error fetching routes:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchRoutes();
+  }, []);
+
   const busdata = async () => {
     console.log("Form Data:", formdata);
 
     try {
-      const response = await fetch(
-        "http://localhost/WebApi/api/Admin/InsertBus",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // Set headers for JSON data
-          },
-          body: JSON.stringify(formdata),
-        }
-      );
+      const response = await fetch("http://localhost/WebApi/api/Admin/InsertBus", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formdata),
+      });
 
       if (response.ok) {
         console.log("Data saved to server");
@@ -44,17 +61,15 @@ function AddNewBus() {
 
     if (name === "RouteId") {
       const routeId = parseInt(value);
-      const updatedRoutes = [...formdata.Routes];
-      updatedRoutes.push({ RouteId: routeId });
-      setFormData({
-        ...formdata,
-        Routes: updatedRoutes,
-      });
+      setFormData((prevData) => ({
+        ...prevData,
+        Routes: [{ RouteId: routeId }],
+      }));
     } else {
-      setFormData({
-        ...formdata,
+      setFormData((prevData) => ({
+        ...prevData,
         [name]: value,
-      });
+      }));
     }
   };
 
@@ -80,11 +95,14 @@ function AddNewBus() {
           name="TotalSeats"
           onChange={handleinput}
         />
-        
+
         <select name="RouteId" onChange={handleinput}>
-          <option value="">Route ID</option>
-          <option value="1">Route 1</option>
-          <option value="2">Route 2</option>
+          <option value="">Select Route</option>
+          {routes.map((route) => (
+            <option key={route.RouteId} value={route.RouteId}>
+              {route.RouteTitle}
+            </option>
+          ))}
         </select>
       </div>
 

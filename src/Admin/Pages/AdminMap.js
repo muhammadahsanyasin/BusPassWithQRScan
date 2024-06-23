@@ -129,8 +129,9 @@ function AdminMap() {
   const handleSaveRoute = async () => {
     if (routeName && selectedOptions.length > 0) {
       const routeData = {
+        OrganizationId: 1,  // Add the OrganizationId field
         RouteTitle: routeName,
-        Stops: selectedOptions.map(option => option.value)
+        Stops: selectedOptions.map(option => ({ Id: option.value }))  // Format stops correctly
       };
 
       try {
@@ -269,4 +270,3 @@ function AdminMap() {
 }
 
 export default AdminMap;
-
