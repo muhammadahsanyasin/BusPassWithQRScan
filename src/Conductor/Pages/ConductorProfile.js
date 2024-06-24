@@ -77,6 +77,9 @@ function ConductorProfile() {
       <Link to='/ConductorHistory'>
         <button className="conductorhistory-button edit-stops">History</button>
       </Link>
+      <Link to="/AdminChangePassword">
+        <button className="conductorchangepwd-button edit-stops">Change Password</button>
+      </Link>
       <button onClick={handleLogout} className="conductorlogout-button edit-stops">Log Out</button>
     </div>
   );

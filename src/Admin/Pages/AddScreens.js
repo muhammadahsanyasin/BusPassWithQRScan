@@ -23,9 +23,9 @@ function AddScreens() {
           <Link to="/AddNewAdmin">
           <button className="grid-item">Add New Admin</button>
           </Link>
-          {/* <Link to="/SearchAndUpdate">
+          <Link to="/SearchAndUpdate">
           <button className="grid-item">Search & Update</button>
-          </Link> */}
+          </Link>
         </div>
       </div>
     </div>

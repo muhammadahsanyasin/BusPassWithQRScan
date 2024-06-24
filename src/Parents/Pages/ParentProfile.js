@@ -5,7 +5,7 @@ import { Link ,useNavigate} from "react-router-dom";
 
 function ParentProfile() {
   const [api, setApi] = useState(
-    "http://localhost/WebApi/api/Users/GetUserById/1"
+    "http://localhost/WebApi/api/Users/GetUserById?OrganizationId=1&id=1"
   );
   const [data, setData] = useState(null);
   const navigate = useNavigate();
@@ -82,11 +82,11 @@ function ParentProfile() {
       <Link to="/ParentHistory">
         <button className="parenthistory-button edit-stops">History</button>
       </Link>
-      {/* <Link to="/AdminChangePassword">
+      <Link to="/AdminChangePassword">
         <button className="parentchangepwd-button edit-stops">
           Change Password
         </button>
-      </Link> */}
+      </Link>
      
         <button onClick={handleLogout} className="parentlogout-button edit-stops">Log Out</button>
       

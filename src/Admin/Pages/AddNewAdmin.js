@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "../Pages/Styles/AddNewAdmin.css";
 import buslogo from "../../Assets/buslogo.png";
+
 function AddNewAdmin() {
-
-
-
- 
-  const [formdata, setFormData] = useState({});
+  const [formdata, setFormData] = useState({
+    Name: "",
+    Gender: "",
+    Contact: "",
+    Password: "",
+    OrganizationId: 1, // Adding default OrganizationId
+  });
 
   const admindata = async () => {
     console.log("Form Data:", formdata);
@@ -29,25 +32,22 @@ function AddNewAdmin() {
       } else {
         const errorData = await response.json();
         console.error("Error saving data:", errorData);
-        alert(`Error saving data: ${errorData}`);
+        alert(`Error saving data: ${errorData.message || errorData}`);
       }
     } catch (error) {
       console.error("Fetch error:", error);
-      alert(`Errrr saving data: ${error.message}`);
+      alert(`Error saving data: ${error.message}`);
     }
   };
 
   const handleinput = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formdata, //spread opt
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
-
-    console.log(formdata);
+    }));
   };
 
-  
   return (
     <div className="addnewadmin-container">
       <div className="icon-container-newAdmin">
@@ -63,18 +63,21 @@ function AddNewAdmin() {
           placeholder="UserName"
           name="Name"
           onChange={handleinput}
+          value={formdata.Name}
         />
         <input
           type="text"
           placeholder="Password"
           name="Password"
           onChange={handleinput}
+          value={formdata.Password}
         />
         <input
           type="text"
           placeholder="Contact Number"
           name="Contact"
           onChange={handleinput}
+          value={formdata.Contact}
         />
 
         <div className="gender-option">
@@ -86,6 +89,7 @@ function AddNewAdmin() {
                 name="Gender"
                 value="male"
                 onChange={handleinput}
+                checked={formdata.Gender === "male"}
               />
               Male
             </label>
@@ -95,13 +99,14 @@ function AddNewAdmin() {
                 name="Gender"
                 value="female"
                 onChange={handleinput}
+                checked={formdata.Gender === "female"}
               />
               Female
             </label>
           </div>
         </div>
 
-        <button onClick={admindata} className=" addnewadmin-button edit-stops">
+        <button onClick={admindata} className="addnewadmin-button edit-stops">
           ADD
         </button>
       </div>

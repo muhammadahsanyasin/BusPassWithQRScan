@@ -1,14 +1,17 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import "../Pages/Styles/AddNewConductor.css";
 import buslogo from "../../Assets/buslogo.png";
+
 function AddNewConductor() {
+  const [formData, setFormData] = useState({
+    Name: "",
+    Contact: "",
+    Password: "",
+    OrganizationId: 1, // Adding default OrganizationId
+  });
 
-
-  const [formdata, setFormData] = useState({ })
-
- 
   const conductordata = async () => {
-    console.log('Form Data:', formdata);
+    console.log('Form Data:', formData);
 
     try {
       const response = await fetch("http://localhost/WebApi/api/Users/InsertConductor", {
@@ -16,7 +19,7 @@ function AddNewConductor() {
         headers: {
           'Content-Type': 'application/json', // Set headers for JSON data
         },
-        body: JSON.stringify(formdata),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -25,48 +28,59 @@ function AddNewConductor() {
       } else {
         const errorData = await response.json();
         console.error('Error saving data:', errorData);
-        alert(`Error saving data: ${errorData}`);
+        alert(`Error saving data: ${errorData.message || errorData}`);
       }
     } catch (error) {
       console.error('Fetch error:', error);
-      alert(`Errrr saving data: ${error.message}`);
+      alert(`Error saving data: ${error.message}`);
     }
   };
-  
-  const handleinput = (e) =>{
-    const {name, value} = e.target;
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
     setFormData({
-      ...formdata,//spread opt
-      [name]: value})
-
-      console.log(formdata)
-  }
-
-
+      ...formData, // Spread the existing form data
+      [name]: value, // Update the specific field
+    });
+  };
 
   return (
-
     <div className="addnewconductor-container">
       <div className="icon-container-addnewconductor">
         <img src={buslogo} alt="Bus Icon" />
       </div>
 
-   <div className="conductorinput-container">
+      <div className="conductorinput-container">
         <div className="stop-info">
-          <h2 style={{userSelect: 'none'}}>Conductor Information</h2>
+          <h2 style={{ userSelect: 'none' }}>Conductor Information</h2>
         </div>
 
-        <input type="text" placeholder="Name" name="Name" onChange={handleinput} />
-        <input type="text" placeholder="Contact No" name="Contact" onChange={handleinput} />
-        <input type="text" placeholder="Password" name="Password"  onChange={handleinput}/>
-       
-        
-        </div>
+        <input
+          type="text"
+          placeholder="Name"
+          name="Name"
+          value={formData.Name}
+          onChange={handleInput}
+        />
+        <input
+          type="text"
+          placeholder="Contact No"
+          name="Contact"
+          value={formData.Contact}
+          onChange={handleInput}
+        />
+        <input
+          type="password" // Change to password input for better security
+          placeholder="Password"
+          name="Password"
+          value={formData.Password}
+          onChange={handleInput}
+        />
+      </div>
 
-        <button onClick={conductordata} className=" addnewconductor-button  edit-stops">ADD</button>
-    
-          
-          
+      <button onClick={conductordata} className="addnewconductor-button edit-stops">
+        ADD
+      </button>
     </div>
   );
 }

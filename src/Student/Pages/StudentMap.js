@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
 import childloc from "../../Assets/childloc.png";
+import busloc from "../../Assets/BusMapMarker.png";
 import { Modal } from "react-bootstrap";
 import "../Pages/Styles/StudentMap.css";
 
@@ -15,6 +16,11 @@ const customIcon = L.icon({
 
 const childlocation = L.icon({
   iconUrl: childloc,
+  iconSize: [38, 38],
+});
+
+const buslocation = L.icon({
+  iconUrl: busloc,
   iconSize: [38, 38],
 });
 
@@ -37,6 +43,7 @@ function StudentMap() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [data, setData] = useState([]);
   const [stopPoints, setStopPoints] = useState([]);
+  const [busLocations, setBusLocations] = useState([]);
 
   useEffect(() => {
     // Function to get current location
@@ -53,7 +60,7 @@ function StudentMap() {
     };
 
     // Get the current location when the component mounts
-    getCurrentLocation();
+    // getCurrentLocation();
 
     // Clear the marker position when component unmounts
     return () => {
@@ -125,6 +132,40 @@ function StudentMap() {
     fetchStops();
   }, []);
 
+  useEffect(() => {
+    const fetchBusLocations = async () => {
+      try {
+        const response = await fetch("http://localhost/WebApi/api/Bus/GetBusesLocations?OrganizationId=1", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          const busData = await response.json();
+          // Filter out invalid bus locations
+          const validBusLocations = busData.filter(bus => {
+            const lat = parseFloat(bus.Cords.latitude);
+            const lng = parseFloat(bus.Cords.longitude);
+            return !isNaN(lat) && !isNaN(lng);
+          });
+          setBusLocations(validBusLocations);
+        } else {
+          console.error("Failed to fetch bus locations");
+        }
+      } catch (error) {
+        console.error("Error fetching bus locations:", error);
+      }
+    };
+
+    // Fetch bus locations initially and set interval for updates
+    fetchBusLocations();
+    const interval = setInterval(fetchBusLocations, 1000);
+
+    // Clear interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="googlemap-container" style={{ width: "100%", height: "100vh" }}>
       {/* Modal for displaying marker information */}
@@ -194,6 +235,21 @@ function StudentMap() {
             icon={customIcon}
             eventHandlers={{ click: () => handleMarkerClick(stop) }}
           />
+        ))}
+
+        {/* Adding markers for buses */}
+        {busLocations.map((bus, index) => (
+          <Marker
+            key={index}
+            position={[parseFloat(bus.Cords.latitude), parseFloat(bus.Cords.longitude)]}
+            icon={buslocation}
+          >
+            <Popup>
+              Bus ID: {bus.BusId} <br />
+              Latitude: {bus.Cords.latitude} <br />
+              Longitude: {bus.Cords.longitude}
+            </Popup>
+          </Marker>
         ))}
 
         {/* Draw polyline between stops */}

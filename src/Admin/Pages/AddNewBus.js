@@ -4,9 +4,10 @@ import buslogo from "../../Assets/buslogo.png";
 
 function AddNewBus() {
   const [formdata, setFormData] = useState({
+    OrganizationId: 1,
     RegNo: "",
     TotalSeats: "",
-    ConductorId: { Id: 1 },
+    Conductor: { Id: 1 },
     Routes: [],
   });
 
@@ -48,7 +49,7 @@ function AddNewBus() {
       } else {
         const errorData = await response.json();
         console.error("Error saving data:", errorData);
-        alert(`Error saving data: ${errorData}`);
+        alert(`Error saving data: ${errorData.message || errorData}`);
       }
     } catch (error) {
       console.error("Fetch error:", error);
@@ -63,7 +64,7 @@ function AddNewBus() {
       const routeId = parseInt(value);
       setFormData((prevData) => ({
         ...prevData,
-        Routes: [{ RouteId: routeId }],
+        Routes: [...prevData.Routes, { RouteId: routeId }],
       }));
     } else {
       setFormData((prevData) => ({
@@ -88,12 +89,14 @@ function AddNewBus() {
           placeholder="Bus Registration Number"
           name="RegNo"
           onChange={handleinput}
+          value={formdata.RegNo}
         />
         <input
           type="text"
           placeholder="Bus Seats"
           name="TotalSeats"
           onChange={handleinput}
+          value={formdata.TotalSeats}
         />
 
         <select name="RouteId" onChange={handleinput}>

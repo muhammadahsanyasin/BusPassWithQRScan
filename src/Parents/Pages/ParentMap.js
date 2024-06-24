@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  MapContainer,  Marker,  Popup,  TileLayer,  useMapEvent,  Polyline,} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMapEvent, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import markerIcon from "../../Assets/marker.png";
@@ -33,6 +33,7 @@ function ClickHandler() {
 
 function ParentMap() {
   const [markerPosition, setMarkerPosition] = useState(null);
+  const [childPosition, setChildPosition] = useState(null);
   const [showMarkerModal, setShowMarkerModal] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [data, setData] = useState([]);
@@ -59,7 +60,7 @@ function ParentMap() {
     return () => {
       setMarkerPosition(null);
     };
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  }, []);
 
   const handleMapClick = (event) => {
     setMarkerPosition([event.latlng.lat, event.latlng.lng]);
@@ -90,21 +91,61 @@ function ParentMap() {
 
   useEffect(() => {
     const fetchStops = async () => {
-      const response = await fetch("http://localhost/WebApi/api/Stops/GetAllStops", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        const stops = await response.json();
-        // Flattening the array and filtering out invalid stops
-        const flattenedStops = stops.flat().filter(stop => stop.Latitude && stop.Longitude);
-        setData(flattenedStops);
-        setStopPoints(flattenedStops.map(stop => [parseFloat(stop.Latitude), parseFloat(stop.Longitude)]));
+      try {
+        const response = await fetch("http://localhost/WebApi/api/Stops/GetAllRoutes?OrganizationId=1", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          const stops = await response.json();
+          // Flattening the array and filtering out invalid stops
+          const flattenedStops = stops.flat().filter(stop => stop.Latitude && stop.Longitude);
+          setData(flattenedStops);
+          setStopPoints(flattenedStops.map(stop => [parseFloat(stop.Latitude), parseFloat(stop.Longitude)]));
+        } else {
+          console.error("Failed to fetch stops");
+        }
+      } catch (error) {
+        console.error("Error fetching stops:", error);
       }
     };
     fetchStops();
+  }, []);
+
+  useEffect(() => {
+    const fetchChildLocation = async () => {
+      try {
+        const response = await fetch("http://localhost/WebApi/api/Parent/GetChildLocation?id=1", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          const childData = await response.json();
+          const lat = parseFloat(childData.latitude);
+          const lng = parseFloat(childData.longitude);
+          if (!isNaN(lat) && !isNaN(lng)) {
+            setChildPosition([lat, lng]);
+          } else {
+            console.error("Invalid child location data");
+          }
+        } else {
+          console.error("Failed to fetch child location");
+        }
+      } catch (error) {
+        console.error("Error fetching child location:", error);
+      }
+    };
+
+    // Fetch child location initially and set interval for updates
+    fetchChildLocation();
+    const interval = setInterval(fetchChildLocation, 1000);
+
+    // Clear interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -130,7 +171,6 @@ function ParentMap() {
                       </div>
                     </div>
                   </div>
-                 
                 </div>
               </section>
             )}
@@ -138,7 +178,6 @@ function ParentMap() {
           <Modal.Footer></Modal.Footer>
         </div>
       </Modal>
-
 
       <MapContainer
         center={markerPosition || initialPosition}
@@ -154,7 +193,7 @@ function ParentMap() {
         {markerPosition && (
           <Marker
             position={markerPosition}
-            icon={childlocation}
+            icon={customIcon}
             eventHandlers={{ click: getCurrentLocation }}
           >
             <Popup>
@@ -173,6 +212,19 @@ function ParentMap() {
             eventHandlers={{ click: () => handleMarkerClick(stop) }}
           />
         ))}
+
+        {/* Adding marker for child location */}
+        {childPosition && (
+          <Marker
+            position={childPosition}
+            icon={childlocation}
+          >
+            <Popup>
+              Child's current location. <br /> Latitude: {childPosition[0]},
+              Longitude: {childPosition[1]}.
+            </Popup>
+          </Marker>
+        )}
 
         {/* Draw polyline between stops */}
         {stopPoints.length > 0 && (

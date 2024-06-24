@@ -12,7 +12,7 @@ import useStore from '../../store'
 function AdminProfile() {
 
   const [api, setApi] = useState(
-    "http://localhost/WebApi/api/Users/GetUserById/4"
+    "http://localhost/WebApi/api/Users/GetUserById?OrganizationId=1&id=4"
   );
   const [data, setData] = useState(null);
   const navigate = useNavigate();
@@ -89,9 +89,9 @@ function AdminProfile() {
         <button className="adminhistory-button edit-stops">History</button>
       </Link>
 
-      {/* <Link to="/AdminChangePassword">
+      <Link to="/AdminChangePassword">
         <button className="adminchangepwd-button edit-stops">Change Password</button>
-      </Link> */}
+      </Link>
 
   
         <button onClick={handleLogout} className="adminlogout-button edit-stops">Log Out</button>
