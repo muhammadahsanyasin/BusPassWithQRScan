@@ -47,6 +47,10 @@ import ParentNotificationDetail from "./Parents/Pages/ParentNotificationDetail";
 import AddScreens from "./Admin/Pages/AddScreens";
 import AdminChangePassword from "./Admin/Components/AdminChangePassword";
 import QrScannercomp from "./Student/Pages/QrScannercomp";
+import SuperAdminDashboard from "./SuperAdmin/Pages/SuperAdminDashboard";
+import SuperAdminNavbar from "./SuperAdmin/Components/SuperAdminNavbar";
+import SuperAdminMap from "./SuperAdmin/Pages/SuperAdminMap";
+
 
 
 
@@ -73,8 +77,9 @@ function App() {
           <> 
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to='Login' />} />
-         {/* <Route path="/" element={<QrScannercomp />} /> */}
-
+         <Route path="/SuperAdminDashboard" element={<SuperAdminDashboard />} />
+          <Route path="/SuperAdminNavbar" element={<SuperAdminNavbar />} />
+          <Route path="/SuperAdminMap" element={<SuperAdminMap/>}/>
             <Route path="/ParentDashboard"element={<ParentDashboard progress={59} />}/>
             <Route path="/ChangePassword" element={<ChangePassword />} />
             <Route path="/EditStopInfo" element={<EditStopInfo />} />

@@ -84,7 +84,11 @@ const Login = () => {
       } else if (data.Students) {
         console.log("logged in student", data.Students);
         navigate("/StudentDashboard");
-      } else {
+      } else if (data.SuperAdmin) {
+        console.log("logged in SuperAdmin", data.SuperAdmin);
+        navigate("/SuperAdminDashboard");
+      }
+       else {
         setError("Login failed: User role not recognized");
       }
     } catch (error) {

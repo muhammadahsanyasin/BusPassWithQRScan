@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .superadmindashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(11, 95, 83);
+  }
+  .favorit-stops-superadmin {
+    width: 350px;
+    background-color: rgb(18, 110, 97);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   
+  }
+  .white-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    background-color: rgba(240, 248, 255, 0.836);
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .card {
+  
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 535px;
+    width: 300px;
+    padding: 30px;
+    border-radius: 10px;
+    background: rgb(34, 149, 132);
+    box-shadow: 0 15px 25px rgba(46, 45, 45, 0.979);
+  }
+  .stops {
+    display: flex;
+    justify-content: space-between;
+  }
+  .superadminstop-containers{
+    
+    margin-right: 10px;
+    margin-bottom: 12px;
+    background-color: rgb(28, 139, 122);
+    color: white;
+    height: 16vh;
+    width: 10vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 5px 5px rgb(26, 113, 100);
+    border-radius: 10px;
+   
+  }
+ 
+  .superadminprogress-container {
+    text-align: center;
+    background-color:  rgb(34, 149, 132);
+    
+  }
+  
+  /* Media Queries for Mobile Responsiveness */
+  @media screen and (max-width: 600px) {
+    .superadminstop-containers{
+      width: 50%;
+      height: 100%; /* Adjust as needed for smaller screens */
+    }
+    .superadmintrackbuses-button {
+      width: 80%; /* Adjust as needed for smaller screens */
+    }
+  }
+  .booked-seats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+
+  .progress-container {
+    text-align: center;
+    background-color:  rgb(11, 95, 83);
+    
+  }
+  
+  .progress-label {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .progress-ring-circle {
+    transition: stroke-dashoffset 0.35s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+   
+  }
+  
+  .progress-text {
+    fill: white;
+    font-size: 18px;
+  }
