@@ -19,7 +19,7 @@ function AdminChangePassword() {
     if (!formdata.newPassword) {
       newErrors.newPassword = "New Password is required";
     } else if (formdata.newPassword.length < 2) {
-      newErrors.newPassword = "New Password must be at least 6 characters long";
+      newErrors.newPassword = "New Password must be at least 2 characters long";
     }
 
     setErrors(newErrors);

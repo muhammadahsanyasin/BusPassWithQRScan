@@ -74,7 +74,7 @@ function StudentProfile() {
           </div>
         </div>
       )}
-      <Link to='/studentHistory'>
+      <Link to='/AdminHistory'>
         <button className="studenthistory-button edit-stops">History</button>
       </Link>
       <Link to="/AdminChangePassword">

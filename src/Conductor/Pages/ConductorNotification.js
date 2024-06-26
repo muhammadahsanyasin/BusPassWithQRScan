@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import busarrived from "../../Assets/busarrived.png";
-import checkout from "../../Assets/checkout.png";
-import checkin from "../../Assets/checkin.png";
-import scanqrcode from "../../Assets/scanqrcode.png";
+import checkout from "../../Assets/buslogo.png";
+
 function ConductorNotification() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);

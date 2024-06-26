@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "../Pages/Styles/AdminHistory.css";
 
-
 function AdminHistory() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedStartDate, setSelectedStartDate] = useState('');
   const [selectedEndDate, setSelectedEndDate] = useState('');
 
-  useEffect(() => {
-    const fetchAdminData = async () => {
+  const fetchAdminData = async (startDate, endDate) => {
+    try {
       const response = await fetch(
-        "http://localhost/WebApi/api/Users/GetUserHistory?id=4&fDate=2024-05-15&tDate=2024-05-23",
+        `http://localhost/WebApi/api/Users/GetUserHistory?id=4&fDate=${startDate}&tDate=${endDate}`,
         {
           method: "GET",
           headers: {
@@ -22,21 +21,30 @@ function AdminHistory() {
       if (response.ok) {
         const jsonData = await response.json();
         setData(jsonData);
-        setFilteredData(jsonData); // Initialize filteredData with the fetched data
+        setFilteredData(jsonData);
         console.log(jsonData);
+      } else {
+        console.error("Error fetching data:", response.statusText);
       }
-    };
-    fetchAdminData();
-  }, []);
-
-  const handleStartDateChange = (date) => {
-    setSelectedStartDate(date);
-    filterData(date, selectedEndDate);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
   };
 
-  const handleEndDateChange = (date) => {
+  useEffect(() => {
+    if (selectedStartDate && selectedEndDate) {
+      fetchAdminData(selectedStartDate, selectedEndDate);
+    }
+  }, [selectedStartDate, selectedEndDate]);
+
+  const handleStartDateChange = (e) => {
+    const date = e.target.value;
+    setSelectedStartDate(date);
+  };
+
+  const handleEndDateChange = (e) => {
+    const date = e.target.value;
     setSelectedEndDate(date);
-    filterData(selectedStartDate, date);
   };
 
   const filterData = (startDate, endDate) => {
@@ -66,7 +74,7 @@ function AdminHistory() {
                 type="date"
                 id="startDate"
                 value={selectedStartDate}
-                onChange={(e) => handleStartDateChange(e.target.value)}
+                onChange={handleStartDateChange}
               />
             </label>
           </div>
@@ -79,7 +87,7 @@ function AdminHistory() {
                 type="date"
                 id="endDate"
                 value={selectedEndDate}
-                onChange={(e) => handleEndDateChange(e.target.value)}
+                onChange={handleEndDateChange}
               />
             </label>
           </div>
@@ -90,9 +98,7 @@ function AdminHistory() {
           <div className="flat-list-row" key={index}>
             <p className="date-time">{item.Date}, {item.Time}</p>
             <p className="history-type">{item.Type}</p>
-            <p className="pass-history"> Description: {item.Description}</p>
-
-          
+            <p className="pass-history">Description: {item.Description}</p>
           </div>
         ))}
       </div>
@@ -101,4 +107,3 @@ function AdminHistory() {
 }
 
 export default AdminHistory;
-

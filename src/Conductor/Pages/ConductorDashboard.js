@@ -15,7 +15,7 @@ function ConductorDashboard() {
       .catch((error) => console.error("Error fetching bus details:", error));
 
     // Fetch next stop
-    fetch("http://localhost/WebApi/api/Conductor/GetNextStop/?conductorId=2")
+    fetch("http://localhost/WebApi/api/Conductor/GetNextStop/?conductorId=1")
       .then((response) => response.json())
       .then((data) => setNextStop(data))
       .catch((error) => console.error("Error fetching next stop:", error));

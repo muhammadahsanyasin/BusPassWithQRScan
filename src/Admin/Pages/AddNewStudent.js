@@ -14,20 +14,28 @@ function AddNewStudent() {
     parentContact: "",
     parentId: "",
     OrganizationId: 1, // Default OrganizationId
+    passExpiry: "", // Add passExpiry to the form data state
+    totalJourneys: 50, // Default total journeys, can be modified if needed
   });
+  const [studentImage, setStudentImage] = useState(null); // State to store selected image
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formdata,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    setStudentImage(e.target.files[0]);
   };
 
   const submitData = async () => {
     console.log("Form Data:", formdata);
 
     try {
+      let parentId;
       if (isNewParent) {
         // Post parent data first if new parent
         const parentData = {
@@ -51,55 +59,51 @@ function AddNewStudent() {
         if (parentResponse.ok) {
           const parentResult = await parentResponse.json();
           console.log("Parent data saved:", parentResult);
-
-          // Post student data with the new parent ID
-          await postStudentData(parentResult.ParentId);
+          parentId = parentResult.ParentId; // Assuming the API response contains the new parent ID
         } else {
           const errorData = await parentResponse.json();
           console.error("Error saving parent data:", errorData);
           alert(`Error saving parent data: ${errorData}`);
+          return;
         }
       } else {
-        // Post student data with existing parent ID
-        await postStudentData(formdata.parentId);
+        parentId = formdata.parentId;
+      }
+
+      // Create FormData object to include image file
+      const studentData = new FormData();
+      studentData.append("Name", formdata.studentName);
+      studentData.append("Gender", formdata.studentGender);
+      studentData.append("RegNo", formdata.studentRegNo);
+      studentData.append("Contact", formdata.studentContact);
+      studentData.append("Password", formdata.studentPassword);
+      studentData.append("PassExpiry", formdata.passExpiry);
+      studentData.append("TotalJourneys", formdata.totalJourneys);
+      studentData.append("ParentId", parentId);
+      studentData.append("OrganizationId", formdata.OrganizationId);
+      if (studentImage) {
+        studentData.append("Image", studentImage);
+      }
+
+      const studentResponse = await fetch(
+        "http://localhost/WebApi/api/Users/InsertStudent",
+        {
+          method: "POST",
+          body: studentData,
+        }
+      );
+
+      if (studentResponse.ok) {
+        console.log("Student data saved to server");
+        alert("Student data saved successfully!");
+      } else {
+        const errorData = await studentResponse.json();
+        console.error("Error saving student data:", errorData);
+        alert(`Error saving student data: ${errorData}`);
       }
     } catch (error) {
       console.error("Fetch error:", error);
       alert(`Error saving data: ${error.message}`);
-    }
-  };
-
-  const postStudentData = async (parentId) => {
-    const studentData = {
-      Name: formdata.studentName,
-      Gender: formdata.studentGender,
-      RegNo: formdata.studentRegNo,
-      Contact: formdata.studentContact,
-      Password: formdata.studentPassword,
-      PassExpiry: "2024-01-15", // Static for now, can be dynamic
-      TotalJourneys: 50, // Static for now, can be dynamic
-      ParentId: parentId,
-      OrganizationId: formdata.OrganizationId,
-    };
-
-    const studentResponse = await fetch(
-      "http://localhost/WebApi/api/Users/InsertStudent",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(studentData),
-      }
-    );
-
-    if (studentResponse.ok) {
-      console.log("Student data saved to server");
-      alert("Student data saved successfully!");
-    } else {
-      const errorData = await studentResponse.json();
-      console.error("Error saving student data:", errorData);
-      alert(`Error saving student data: ${errorData}`);
     }
   };
 
@@ -139,6 +143,24 @@ function AddNewStudent() {
           id="studentContact"
           name="studentContact"
           placeholder="Contact No"
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="input-group">
+        <input
+          type="file"
+          id="studentImage"
+          name="studentImage"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+      </div>
+      <div className="input-group">
+        <label htmlFor="passExpiry">Pass Expiry Date:</label>
+        <input
+          type="date"
+          id="passExpiry"
+          name="passExpiry"
           onChange={handleInputChange}
         />
       </div>

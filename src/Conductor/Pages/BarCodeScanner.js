@@ -10,6 +10,8 @@ const BarCodeScanner = () => {
   const qrBoxEl = useRef(null);
   const [qrOn, setQrOn] = useState(true);
   const [scannedResult, setScannedResult] = useState("");
+  const [status, setStatus] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const onScanSuccess = (result) => {
@@ -17,7 +19,7 @@ const BarCodeScanner = () => {
       console.log(result);
       setScannedResult(result?.data);
 
-      const data = result.data.split(",");
+      const data = result.data.split("/");
       const qrinfo = {
         PassId: parseInt(data[0]),  // Only pass the PassId
       };
@@ -94,6 +96,32 @@ const BarCodeScanner = () => {
               </p>
             )}
           </div>
+          {status && (
+            <p
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                zIndex: 99999,
+                color: "white",
+              }}
+            >
+              Status: {status}
+            </p>
+          )}
+          {error && (
+            <p
+              style={{
+                position: "absolute",
+                bottom: 20,
+                left: 0,
+                zIndex: 99999,
+                color: "red",
+              }}
+            >
+              Error: {error}
+            </p>
+          )}
         </div>
       </div>
     </div>

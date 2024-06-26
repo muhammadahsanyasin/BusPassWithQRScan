@@ -36,7 +36,7 @@ function BarCodeGenrator() {
     return <div>Loading...</div>;
   }
 
-  const qrValue = data.Students.PassId ? `${data.Students.PassId}` : "undefined";
+  const qrValue = 'BusPassWithQrScan/' +  `${data.Students.PassId}`;
 
   return (
     <div className="barcode-gen">

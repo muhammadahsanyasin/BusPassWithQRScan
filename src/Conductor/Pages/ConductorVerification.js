@@ -5,6 +5,8 @@ import verified from '../../Assets/verified.png';
 function ConductorVerification() {
     const [status, setStatus] = useState('Checking...');
     const [qrInfo, setQrInfo] = useState(null);
+    const [error, setError] = useState(null);
+    const [data, setData] = useState(null); // State to store API response data
 
     useEffect(() => {
         const storedQrInfo = localStorage.getItem("qrinfo");
@@ -22,12 +24,17 @@ function ConductorVerification() {
                 fetch(`http://localhost/WebApi/api/Conductor/ScanQrCode?passId=${passId}&busId=${busId}`)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error(`Server error: ${response.statusText}`);
+                            return response.json().then(errorData => {
+                                throw new Error(`Server error: ${errorData}`);
+                            });
                         }
                         return response.json();
                     })
                     .then(data => {
-                        if (data.isValid) {
+                        console.log('here========================');
+                        console.log(data);
+                        setData(data); // Set the fetched data
+                        if (data.PassStatus === "Active") {
                             setStatus('Valid');
                         } else {
                             setStatus('Invalid');
@@ -35,24 +42,28 @@ function ConductorVerification() {
                     })
                     .catch(error => {
                         console.error('Error fetching the API:', error);
+                        setError(error.message);
                         setStatus('Error');
                     });
             } else {
                 console.error('Error: No conductor details found');
-                setStatus('Error: No conductor details found');
+                setError('No conductor details found');
+                setStatus('Error');
             }
         } else {
             console.error('Error: No QR info found');
-            setStatus('Error: No QR info found');
+            setError('No QR info found');
+            setStatus('Error');
         }
     }, []);
 
     return (
         <div className="verification-screen">
             <div className="verification-container">
-                <img src={verified} alt="Verification" className="verification-image" />
+                <img src={Image} alt="Verification" className="verification-image" />
                 <div className="status">Status: {status}</div>
-                {qrInfo && (
+                {error && <div className="error-message">Error: {error}</div>}
+                {data && (
                     <table className="info-table">
                         <thead>
                             <tr>
@@ -62,8 +73,8 @@ function ConductorVerification() {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{qrInfo.Name}</td>
-                                <td>{qrInfo.RegNo}</td>
+                                <td>{data.Name}</td>
+                                <td>{data.RegNo}</td>
                             </tr>
                         </tbody>
                         <thead>
@@ -74,8 +85,8 @@ function ConductorVerification() {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{qrInfo.RemainingJourneys}</td>
-                                <td>{qrInfo.Gender}</td>
+                                <td>{data.RemainingJourneys}</td>
+                                <td>{data.Gender}</td>
                             </tr>
                         </tbody>
                         <thead>
@@ -86,8 +97,8 @@ function ConductorVerification() {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{qrInfo.PassId}</td>
-                                <td>{qrInfo.PassExpiry}</td>
+                                <td>{data.PassId}</td>
+                                <td>{data.PassExpiry}</td>
                             </tr>
                         </tbody>
                     </table>

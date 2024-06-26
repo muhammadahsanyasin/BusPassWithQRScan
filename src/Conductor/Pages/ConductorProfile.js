@@ -74,7 +74,7 @@ function ConductorProfile() {
           </div>
         </div>
       )}
-      <Link to='/ConductorHistory'>
+      <Link to='/AdminHistory'>
         <button className="conductorhistory-button edit-stops">History</button>
       </Link>
       <Link to="/AdminChangePassword">
